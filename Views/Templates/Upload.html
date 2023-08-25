@@ -9,12 +9,26 @@
   <body>
     <div class="hero">
       <label for="input-file" id="drop-area">
-        <input type="file" accept="file/pdf" id="input-file" />
+        <input
+          type="file"
+          accept="file/pdf"
+          id="input-file"
+          onchange="loadFile(event)"
+          hidden
+        />
         <div id="img-view">
-          <img src="../Static/Img/508-icon.png" />
-          <p>Drag & Drop Images</p>
+          <img
+            id="show-uploaded-image"
+            src="../Static/Img/508-icon.png"
+            accept="application/pdf"
+          />
+          <p class="para-text">
+            Drag and Drop or click here <br />to upload image
+          </p>
+          <span class="span-text">Upload any Invoice from Desktop</span>
         </div>
       </label>
     </div>
+    <script src="../Static/Js/Upload.js"></script>
   </body>
 </html>

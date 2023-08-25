@@ -4,6 +4,7 @@
     font-family: "Poppins" , "sans-serif";
     box-sizing: border-box;
 }
+
 body {
     display: flex;
     align-items: center;
@@ -13,10 +14,12 @@ body {
 .hero{
     width: 100%;
     min-height: 100vh;
-    /* background-color: black; */
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 2px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
 }
 
 #drop-area{
@@ -25,9 +28,7 @@ body {
     padding: 30px;
     background-color: white;
     text-align: center;
-    border: 2px;
     border-radius: 20px;
-    box-shadow: #bbb5ff;
 }
 
 #img-view{
@@ -43,4 +44,10 @@ body {
 #img-view img {
 width: 100px;
 margin-top: 25px;
+}
+#img-view span{
+    display: block;
+    font-size: 12px;
+    color :#777;
+    margin-top: 15px;
 }
