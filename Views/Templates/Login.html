@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Login</title>
-    <link rel="stylesheet" href="../Static/Css/Style.css" />
+    <link rel="stylesheet" href="../Static/Css/Login.css" />
   </head>
   <body>
     <img
@@ -16,13 +16,18 @@
     <div class="container">
       <div class="login form">
         <header>Login</header>
-        <form action="POST">
-          <div class="msg">{{msg}}</div>
-          <input type="text" placeholder="Enter your email" />
-          <input type="password" placeholder="Enter your password" />
+        <form id="login-form" action="POST">
+          <input id="email" type="text" placeholder="Enter your email" />
+          <input
+            id="password"
+            type="password"
+            placeholder="Enter your password"
+          />
           <button type="submit" class="btn" value="Login">Login</button>
         </form>
+        <div id="error-container"></div>
       </div>
     </div>
+    <script src="../Static/Js/Login.js"></script>
   </body>
 </html>
