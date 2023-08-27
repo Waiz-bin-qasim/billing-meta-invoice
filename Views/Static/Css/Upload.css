@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -11,21 +13,32 @@ body {
     justify-content: center;
     min-height: 100vh;
 }
-.hero{
+header{
+    font-size: 2rem;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 1.2rem;
+    color: #363a77;
+  }
+.container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    max-width: 430px;
     width: 100%;
-    min-height: 100vh;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px;
+    background: #fff;
+    border-radius: 7px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-}
+  }
+  .container .form{
+    padding: 2rem;
+  }
 
 #drop-area{
-    width: 500px;
-    height: 300px;
-    padding: 30px;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
     background-color: white;
     text-align: center;
     border-radius: 20px;
@@ -38,12 +51,13 @@ body {
     background-color: white;
     text-align: center;
     border:2px dashed #bbb5ff;
-    background : azure
+    background : azure;
+    padding-bottom: 10px ;
 }
 
 #img-view img {
-width: 100px;
-margin-top: 25px;
+    width: 100px;
+    margin-top: 25px;
 }
 #img-view span{
     display: block;
@@ -51,3 +65,32 @@ margin-top: 25px;
     color :#777;
     margin-top: 15px;
 }
+.btn{
+    height: 40px;
+    width: 90%;
+    padding: 0 15px;
+    font-size: 2px;
+    margin: 1.3rem;
+    color: #fff;
+    background: #363a77;
+    border: 1px solid #ddd;
+    font-size: 1.3rem;
+    font-weight: 400;
+    /* letter-spacing: 1px; */
+    cursor: pointer;
+    outline: none;
+    border-radius: 6px;
+}
+  .btn:hover{
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    }
+    .form input{
+    z-index: -1;
+    }
+    .row {
+    display: flex;
+  }
+  
+  .column {
+    flex: 50%;
+  }
