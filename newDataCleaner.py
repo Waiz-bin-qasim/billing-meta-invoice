@@ -89,5 +89,3 @@ def dataCleaning (outputFile):
 
 
 
-outputFile = 'output.csv'
-dataCleaning(outputFile)

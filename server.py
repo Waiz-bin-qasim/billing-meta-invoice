@@ -38,14 +38,15 @@ def token_required(f):
 def upload():
 
     try:
-        # data = request.json
-        # parserChoice = data.get('parserChoice')
+        data = request.form
+        parserChoice = data.get('parserChoice')
         
         file = request.files['file']
         if file.filename == '':
             return 'No file selected'
         file.save('transaction.pdf')
-        response = dataHandler.run()
+        sql_values = []
+        response = dataHandler.run(sql_values,parserChoice)
         return jsonify(response)
     
     except Exception as ex:
@@ -63,7 +64,7 @@ def upload():
 #         param1 = request.args.get('param1')
 #         param2 = request.args.get('param2')
 #         if param1 and param2:
-            
+        
 #             file_path = getCsv.run(param1, param2)
 #             g.file_path = file_path
 #             return send_file(file_path, as_attachment=True, download_name=f'{param1+param2}.xlsx'),200

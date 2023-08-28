@@ -4,10 +4,10 @@ def establish_connection():
   try:
 
     connection = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="haziq123",
-        database="billing_meta_invoice",
+        host="metabilling.cd15hwmp9bbp.ap-southeast-1.rds.amazonaws.com",
+        user="admin",
+        password="Karachi123",
+        database="billing",
         port='3306'
     )
     cursor = connection.cursor()

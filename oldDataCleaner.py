@@ -38,7 +38,7 @@ def fix_cell (new_line,line):
     return new_line
         
 
-def data_cleaning (pdf_file):
+def dataCleaning (pdf_file):
   
   try:
     new_file = "new_file.csv"

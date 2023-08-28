@@ -1,5 +1,8 @@
-
+import gc
 import oldPdfReader
+import oldDataCleaner
+import newPdfReader
+import newDataCleaner
 import pandas as pd
 import mysql.connector
 import datetime
@@ -7,7 +10,8 @@ import os
 import getpass
 import re
 from Config.dbConfig import establish_connection, close_connection
-from oldDataCleaner import data_cleaning
+from flask import jsonify
+import numpy as np
 
 
 def get_sys_details():
@@ -16,16 +20,27 @@ def get_sys_details():
     return current_datetime,username
 
 
-def insert_database(cursor , connection):
+def insert_database(cursor , connection , sql_values):
 
   try: 
      
     if sql_values:
-      cursor.executemany(sql_query, sql_values)      
+      for record in sql_values:
+    # Convert 'float64' and 'int64' to 'float' and 'int' respectively
+        converted_record = []
+        for value in record:
+            if isinstance(value, (np.float64, np.float32)):
+                converted_record.append(float(value))
+            elif isinstance(value, (np.int64, np.int32)):
+                converted_record.append(int(value))
+            else:
+                converted_record.append(value)
+        cursor.execute(sql_query, converted_record)      
       connection.commit()
       response = {
         'message': 'success'
-      } 
+      }
+      # del converted_record
     else:
       response = {
         'message' : "failed"
@@ -36,10 +51,13 @@ def insert_database(cursor , connection):
     print(f"Error while inserting data to the database: {ex}")
 
 
-def create_dataframe():
+def create_dataframe(parserChoice):
   
   df = pd.read_csv("new_file.csv")
-  df = df.rename(columns={'WABA Name / ID / PO': 'Name', 'Destination Country/Region & Product': 'Product'})
+  if (parserChoice == "0"):
+    df = df.rename(columns={'WABA Name / ID / PO': 'Name', 'Destination Country/Region & Product': 'Product'})
+  else:
+    df = df.rename(columns={'WABA Name' : 'Name', 'Conversations' : 'Quantity'})
   return df
 
 def convert_to_numeric(data_table):
@@ -56,11 +74,13 @@ def delete_files():
       os.remove("output.csv")
   
 
-def computing_totals(data_table,pdf_file):
+def computing_totals(data_table,pdf_file,sql_values,parserChoice):
   
   try:
-
-    inv_num,month,year = oldPdfReader.get_variables(pdf_file)
+    if(parserChoice == "0"):
+      inv_num,month,year = oldPdfReader.getVariables(pdf_file)
+    else:
+      inv_num,month,year = newPdfReader.getVariables(pdf_file)
     current_datetime,username = get_sys_details()
     convert_to_numeric(data_table)
   
@@ -68,7 +88,7 @@ def computing_totals(data_table,pdf_file):
         
         if (not pd.isna(data_table['Name'].iloc[i])):
           if(i!=0):
-            sql_values.append((org_id, inv_num, org_name, waba_id, user_initiated_count,user_initiated_total,business_initiated_count,business_initiated_total,authentication_count,authentication_total,service_count,service_total,marketing_count,marketing_total,utility_count,utility_total,current_datetime,username,current_datetime,username,"https://abc.com",month,year))
+            sql_values.append((org_id, inv_num, org_name, waba_id, int(user_initiated_count),round(user_initiated_total,2),int(business_initiated_count),round(business_initiated_total,2),int(authentication_count),round(authentication_total,2),int(service_count),round(service_total,2),int(marketing_count),round(marketing_total,2),int(utility_count),round(utility_total,2),current_datetime,username,current_datetime,username,"https://abc.com",month,year))
       
           #initialising the variables
           name = data_table['Name'].iloc[i]
@@ -115,37 +135,47 @@ def computing_totals(data_table,pdf_file):
           utility_count += quantity
           utility_total += total
         if(i==len(data_table)-1):
-          sql_values.append((org_id, inv_num, org_name, waba_id, user_initiated_count,user_initiated_total,business_initiated_count,business_initiated_total,authentication_count,authentication_total,service_count,service_total,marketing_count,marketing_total,utility_count,utility_total,current_datetime,username,current_datetime,username,"https://abc.com",month,year))
-       
+          sql_values.append((org_id, inv_num, org_name, waba_id, int(user_initiated_count),round(user_initiated_total,2),int(business_initiated_count),round(business_initiated_total,2),int(authentication_count),round(authentication_total,2),int(service_count),round(service_total,2),int(marketing_count),round(marketing_total,2),int(utility_count),round(utility_total,2),current_datetime,username,current_datetime,username,"https://abc.com",month,year))
+    return sql_values
   except Exception as ex:
     print(f"Error during computing totals: {ex}")
 
 
 
-sql_values = []
+
 sql_query = "INSERT INTO billing_meta_invoice (ORG_ID, INVOICE_NUMBER, ORG_NAME, WABA_ID, USER_INITIATED_COUNT,USER_INITIATED_TOTAL,BUSINESS_INITIATED_COUNT,BUSINESS_INITIATED_TOTAL,AUTHENTICATION_COUNT,AUTHENTICATION_TOTAL,SERVICE_COUNT,SERVICE_TOTAL,MARKETING_COUNT,MARKETING_TOTAL,UTILITY_COUNT,UTILITY_TOTAL,CREATED_ON,CREATED_BY,UPDATED_ON,UPDATED_BY,INV_URL,INV_MONTH,INV_YEAR) VALUES (%s,%s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+print("code is running")
 
-
-def run():
+def run(sql_values,parserChoice):
     
   try:
-    
+      
       pdf_file = "transaction.pdf"
       file = "output.csv"
-      oldPdfReader.read_pdf(pdf_file)
-      
-      data_cleaning(file)
-      data_table = create_dataframe() 
-      computing_totals(data_table,pdf_file)
-      cursor,connection = establish_connection()
-      response = insert_database(cursor , connection)
-      print(sql_values)
+      if (parserChoice == "0"):
+        oldPdfReader.readPdf(pdf_file)
+        oldDataCleaner.dataCleaning(file)
+      elif (parserChoice == "1"):
+        newPdfReader.readPdf(pdf_file)
+        newDataCleaner.dataCleaning(file)
+      else:
+        response = {
+        'message' : "wrong option"
+        }
+      data_table = create_dataframe(parserChoice) 
+      sql_values = computing_totals(data_table , pdf_file , sql_values)
+      cursor,connection = establish_connection() 
+      response = insert_database(cursor , connection , sql_values)
       close_connection(cursor , connection)
-      # delete_files()
+      delete_files()
+      # del sql_values
+      # gc.collect()
+      # sql_values = []
       return response
   
   except FileNotFoundError as e:
         print(f"Error: File not found: {pdf_file}")
+        print(e)
   except Exception as ex:
         print(f"An unexpected error occurred: {ex}")
         

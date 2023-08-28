@@ -4,7 +4,7 @@ import csv
 import os
 
 
-def read_pdf (pdf_file):
+def readPdf (pdf_file):
 
     try:
 
@@ -44,7 +44,7 @@ def read_pdf (pdf_file):
         print(f"An unexpected error occurred: {ex}")
 
 
-def get_variables(pdf_file):
+def getVariables(pdf_file):
 
     try: 
 
