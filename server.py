@@ -1,11 +1,12 @@
-from flask import Flask, render_template, request,jsonify,make_response,send_file,redirect,url_for,g, redirect, url_for
+from flask import Flask, render_template, request,jsonify,make_response,send_file,redirect,url_for,g, Blueprint
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt, get_jwt_identity, verify_jwt_in_request
 from functools import wraps,partial
 import jwt
 import datetime
-# import dataHandler
+# from Middlewares.loginMiddlewares import token_required
+import dataHandler
 # import getCsv
-# import osyPDF
+import os
 from multiprocessing import Process
 import threading
 from Models.loginModels import loginCheck
@@ -13,45 +14,44 @@ from Models.loginModels import loginCheck
 
 #initialising the server
 app = Flask(__name__,template_folder='template')
-# app.config['JWT_SECRET_KEY'] = "thisissecretkey"  
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')  
 
-
-#middleware
-# def token_required(f):
-#     @wraps(f)
-#     def decorated(*args,**kwargs):
-#         token = request.args.get('token')
-#         try:
+def token_required(f):
+    
+    @wraps(f)
+    def decorated(*args,**kwargs):
         
-#             data = jwt.decode(token,app.config['JWT_SECRET_KEY'],algorithms=["HS256"]) 
-#             print(data)
+        try:
+            if 'token' in request.cookies:
+                token = request.cookies['token']
+                data = jwt.decode(token,app.config['SECRET_KEY'],algorithms=["HS256"]) 
+                
             
-#         except:
-#             return jsonify({'message': 'invalid token'}), 401
-#         return f(*args, **kwargs)
-#     return decorated
-
+        except:
+            return jsonify({'message': 'invalid token'}), 401
+        return f(*args, **kwargs)
+    return decorated
 
 # #token verified before executing
 @app.route('/upload', methods=['POST'])
-# @token_required
+@token_required
 def upload():
-    print("upload route")
 
-#     try:
-
-#         file = request.files['file']
-#         if file.filename == '':
-#             return 'No file selected'
-#         file.save('transaction.pdf')
+    try:
+        data = request.form
+        parserChoice = data.get('parserChoice')
         
-#         response = dataHandler.run()
-        
-#         return jsonify(response)
+        file = request.files['file']
+        if file.filename == '':
+            return 'No file selected'
+        file.save('transaction.pdf')
+        sql_values = []
+        response = dataHandler.run(sql_values,parserChoice)
+        return jsonify(response)
     
-#     except Exception as ex:
-#         print(f'Error during file upload: {ex}')
-#         return jsonify({'message': 'An error occurred during file upload.'}), 500
+    except Exception as ex:
+        print(f'Error during file upload: {ex}')
+        return jsonify({'message': 'An error occurred during file upload.'}), 500
 
 
 
@@ -64,7 +64,7 @@ def upload():
 #         param1 = request.args.get('param1')
 #         param2 = request.args.get('param2')
 #         if param1 and param2:
-            
+        
 #             file_path = getCsv.run(param1, param2)
 #             g.file_path = file_path
 #             return send_file(file_path, as_attachment=True, download_name=f'{param1+param2}.xlsx'),200
@@ -96,7 +96,8 @@ def login():
         print(authUsername)
         response = loginCheck(authUsername,authPassword)
         if response != 0:
-            return redirect(url_for('upload'))
+            # return redirect(url_for('upload'),code=307)
+            return jsonify({'token' : response})
         else:
             return jsonify({'message':'incorrect credentials'})
         
