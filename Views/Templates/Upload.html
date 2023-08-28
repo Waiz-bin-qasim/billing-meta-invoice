@@ -7,14 +7,45 @@
     <link rel="stylesheet" href="../Static/Css/Upload.css" />
   </head>
   <body>
-    <div class="hero">
-      <label for="input-file" id="drop-area">
-        <input type="file" accept="file/pdf" id="input-file" />
-        <div id="img-view">
-          <img src="../Static/Img/508-icon.png" />
-          <p>Drag & Drop Images</p>
-        </div>
-      </label>
+    <div class="loading-modal">
+      <div class="loader"></div>
+      <h3>Loading...</h3>
     </div>
+    <div class="container">
+      <header>Upload Invoice</header>
+      <div class="login form">
+        <form id="login-form" action="/api" method="post" enctype="multipart/form-data" >
+          <label for="input-file" id="drop-area">
+          <input
+            type="file"
+            accept="file/pdf"
+            id="input-file"
+            onchange="loadFile(event)"
+            name="file"
+            hidden
+          />
+          <div id="img-view">
+            <img
+              id="show-uploaded-image"
+              src="../Static/Img/508-icon.png"
+              accept="application/pdf"
+            />
+            <p class="para-text">
+              Drag and Drop or click here <br />to upload image
+            </p>
+            <span class="span-text">Upload any Invoice from Desktop</span>
+          </div>
+          <div class="row">
+            <button id ="oldParser" type ="submit" class="btn column" value="0">
+              Old Parser
+            </button>
+            <button id ="newParser" type="submit" class="btn column" value="1">
+              New Parser
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="../Static/Js/Upload.js"></script>
   </body>
 </html>

@@ -1,0 +1,120 @@
+
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box !important; 
+        font-family: 'Poppins', sans-serif !important; 
+      }
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+    /* ------------------------------------ */
+    h1,h2,h3,h4,h5,h6 {margin: 0px;}
+    ul, li {
+    margin: 0px;
+    list-style-type: none;
+    }
+    header{
+        font-size: 2rem;
+        font-weight: 500;
+        text-align: center;
+        margin: 1.1rem;
+        color: #363a77;
+      }
+    .container{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        max-width: 800px;
+        width: 100%;
+        background: #fff;
+        border-radius: 7px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+      }
+
+      .container table{
+        padding: 2rem;
+      }
+    /*//////////////////////////////////////////////////////////////////
+    [ Table ]*/
+    table {
+    width: 100%;
+    background-color: #fff;
+    }
+    th, td {
+    font-weight: unset;
+    padding-right: 10px;
+    border: #06092f ;
+    text-align: center;
+    }
+    .column100 {
+    width: 130px;
+    padding-left: 25px;
+    }
+    .column100.column1 {
+    width: 80px;
+    padding-left: 42px;
+    }
+    .row100.head th {
+    padding-top: 24px;
+    padding-bottom: 20px;
+    }
+    .row100 td {
+    padding-top: 18px;
+    padding-bottom: 14px;
+    }
+    /*==================================================================
+    [ Ver1 ]*/
+    .table100.ver1 td {
+    font-family: Montserrat-Regular;
+    font-size: 14px;
+    color: #06092f;
+    line-height: 1.4;
+    }
+    .table100.ver1 th {
+    font-family: Montserrat-Medium;
+    font-size: 12px;
+    color: #fff;
+    line-height: 1.4;
+    text-transform: uppercase;
+    background-color: #363a77;
+    }
+    .table100.ver1 .row100:hover {
+    background-color: #f2f2f2;
+    }
+    .table100.ver1 .hov-column-ver1 {
+    background-color: #f2f2f2;
+    }
+    .table100.ver1 .hov-column-head-ver1 {
+    background-color: #484848;
+    }
+    .table100.ver1 .row100 td:hover {
+    background-color: #dbdbdb;
+    color: #fff;
+    }
+    /* model--------------- */
+    .loading-modal{
+        display: none;
+        color: #363a77;
+      }
+      .loader {
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #363a77; /* Blue */
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        /* display: none; */
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }    
+    
