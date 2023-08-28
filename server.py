@@ -54,59 +54,48 @@ def upload():
         return jsonify({'message': 'An error occurred during file upload.'}), 500
 
 
-
-
-
-# @app.route('/downloadcsv', methods = ['GET'])
-# @token_required
-# def downloadcsv():
-#     try:
-#         param1 = request.args.get('param1')
-#         param2 = request.args.get('param2')
-#         if param1 and param2:
-        
-#             file_path = getCsv.run(param1, param2)
-#             g.file_path = file_path
-#             return send_file(file_path, as_attachment=True, download_name=f'{param1+param2}.xlsx'),200
-#         else:
-#             return "Please provide both param1 and param2 as query parameters.", 400
-#     except Exception as ex:
-#         print(f"Error during file download: {ex}")
-#         return jsonify({'message': 'ERROR'}), 500   
-# @app.after_request
-# def after_request_func(response):
-#     file_path = getattr(g, 'file_path', None)
-#     print(file_path)
-#     if file_path and os.path.exists(file_path):
-#         start_time = threading.Timer(10, partial(fun, name=file_path))
-#         start_time.start()
-#     return response
-    
-
-
 #for making token
-@app.route('/login',methods = ['POST'])
+@app.route('/login',methods = ['POST',"GET"])
 def login():
     
     try: 
-
-        auth = request.authorization
-        authUsername = [auth.username]
-        authPassword = [auth.password]
-        print(authUsername)
-        response = loginCheck(authUsername,(authPassword))
-        if response != 0:
-            # return redirect(url_for('upload'),code=307)
-            return jsonify({'token' : response})
-        else:
-            return jsonify({'message':'incorrect credentials'})
-        
+        if request.method == "POST":
+            auth = request.authorization
+            authUsername = [auth.username]
+            authPassword = [auth.password]
+            print(authUsername)
+            response = loginCheck(authUsername,(authPassword))
+            if response != 0:
+                # return redirect(url_for('upload'),code=307)
+                return jsonify({'token' : response})
+            else:
+                return jsonify({'message':'incorrect credentials'})
+        elif request.method == "GET":
+            print("waiz")
+            return render_template('Login.html')
+            
     except Exception as ex:
+     print(ex)
      print(f'Error during login: {ex}')
      return jsonify({'message': 'An error occurred during login.'}), 500
 
-# def fun(name):
-#     os.remove(name)
+@app.route('/mau/upload',methods = ['POST',"GET"])
+@token_required
+def mau():
+    try:
+        data = request.form
+        file = request.files['file']
+        if file.filename == '':
+            return 'No file selected'
+        file.save("MAU.xlsx")
+        MAU = parseMAUFile(file)
+        res = insertMAU(MAU)
+        return jsonify(res)
+    except Exception as ex:
+     print(ex)
+     print(f'Error during login: {ex}')
+     return jsonify({'message': 'An error occurred during login.'}), 500 
+
 
 #server starting
 if __name__ == '__main__':
