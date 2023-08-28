@@ -94,7 +94,7 @@ def login():
         authUsername = [auth.username]
         authPassword = [auth.password]
         print(authUsername)
-        response = loginCheck(authUsername,authPassword)
+        response = loginCheck(authUsername,(authPassword))
         if response != 0:
             # return redirect(url_for('upload'),code=307)
             return jsonify({'token' : response})
