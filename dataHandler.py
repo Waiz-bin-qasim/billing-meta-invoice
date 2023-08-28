@@ -23,10 +23,9 @@ def get_sys_details():
 def insert_database(cursor , connection , sql_values):
 
   try: 
-     
+    print("sql_values") 
     if sql_values:
       for record in sql_values:
-    # Convert 'float64' and 'int64' to 'float' and 'int' respectively
         converted_record = []
         for value in record:
             if isinstance(value, (np.float64, np.float32)):
@@ -53,12 +52,14 @@ def insert_database(cursor , connection , sql_values):
 
 def create_dataframe(parserChoice):
   
-  df = pd.read_csv("new_file.csv")
+  df = pd.read_csv("newFile.csv")
   if (parserChoice == "0"):
     df = df.rename(columns={'WABA Name / ID / PO': 'Name', 'Destination Country/Region & Product': 'Product'})
   else:
     df = df.rename(columns={'WABA Name' : 'Name', 'Conversations' : 'Quantity'})
+  print(df)
   return df
+
 
 def convert_to_numeric(data_table):
     data_table['Quantity'] = pd.to_numeric(data_table['Quantity'])
@@ -69,7 +70,7 @@ def delete_files():
     if os.path.exists("transaction.pdf"):             
       os.remove("transaction.pdf")
     if os.path.exists("new_file.csv"):             
-      os.remove("new_file.csv")
+      os.remove("newFile.csv")
     if os.path.exists("output.csv"):             
       os.remove("output.csv")
   
@@ -91,10 +92,14 @@ def computing_totals(data_table,pdf_file,sql_values,parserChoice):
             sql_values.append((org_id, inv_num, org_name, waba_id, int(user_initiated_count),round(user_initiated_total,2),int(business_initiated_count),round(business_initiated_total,2),int(authentication_count),round(authentication_total,2),int(service_count),round(service_total,2),int(marketing_count),round(marketing_total,2),int(utility_count),round(utility_total,2),current_datetime,username,current_datetime,username,"https://abc.com",month,year))
       
           #initialising the variables
-          name = data_table['Name'].iloc[i]
-          parts = name.split("/")
-          org_name = parts[0].strip()
-          waba_id = parts[1].strip()
+          if(parserChoice=="0"):
+            name = data_table['Name'].iloc[i]
+            parts = name.split("/")
+            org_name = parts[0].strip()
+            waba_id = parts[1].strip()
+          else:
+            org_name = data_table['Name'].iloc[i]
+            waba_id = "nothing"
           org_id = re.sub(r"\s+", "", org_name)
           org_id = org_id + "-" + month + "/" + year
           
@@ -163,7 +168,7 @@ def run(sql_values,parserChoice):
         'message' : "wrong option"
         }
       data_table = create_dataframe(parserChoice) 
-      sql_values = computing_totals(data_table , pdf_file , sql_values)
+      sql_values = computing_totals(data_table , pdf_file , sql_values , parserChoice)
       cursor,connection = establish_connection() 
       response = insert_database(cursor , connection , sql_values)
       close_connection(cursor , connection)

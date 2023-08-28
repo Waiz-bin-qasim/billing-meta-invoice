@@ -1,420 +1,419 @@
-WABA Name,Product,Price type,Conversations,Discount percentage,Total
-,Product,Price type,Conversations,Discount percentage,Total
- 1LINK Pvt. Ltd,France - Service,List,11,--,$0.98
-,Germany - Service,List,15,--,$1.21
-,India - Service,List,2,--,$0.00
-,Italy - Service,List,56,--,$2.22
-,Malaysia - Service,List,10,--,$0.20
-,North America - Service,List,42,--,$0.41
-,Other - Service,List,35,--,$0.44
-,Pakistan - Service,List,2600,--,$36.94
-,Rest of Africa - Service,List,5,--,$0.20
-,Rest of Asia Pacific - Service,List,36,--,$0.76
-,Rest of Central & Eastern Europe - Service,List,16,--,$0.44
-,Rest of Middle East - Service,List,1627,--,$35.49
-,Rest of Western Europe - Service,List,38,--,$1.52
-,Saudi Arabia - Service,List,2553,--,$49.79
-,South Africa - Service,List,23,--,$0.40
-,Spain - Service,List,34,--,$1.27
-,United Arab Emirates - Service,List,1298,--,$24.64
-,United Kingdom - Service,List,111,--,$4.31
- Askari Bank Limited,France - Marketing,List,2,--,$0.28
-,France - Utility,List,2,--,$0.16
-,Germany - Marketing,List,3,--,$0.42
-,Germany - Utility,List,2,--,$0.18
-,India - Marketing,List,1,--,$0.01
-,India - Utility,List,1,--,$0.00
-,Indonesia - Utility,List,1,--,$0.02
-,Malaysia - Marketing,List,2,--,$0.18
-,Malaysia - Service,List,2,--,$0.04
-,Malaysia - Utility,List,3,--,$0.06
-,Netherlands - Marketing,List,2,--,$0.32
-,Netherlands - Utility,List,1,--,$0.08
-,Nigeria - Marketing,List,1,--,$0.05
-,Nigeria - Service,List,1,--,$0.03
-,Nigeria - Utility,List,4,--,$0.12
-,North America - Marketing,List,9,--,$0.27
-,North America - Service,List,1,--,$0.01
-,North America - Utility,List,21,--,$0.38
-,Other - Marketing,List,4,--,$0.24
-,Other - Service,List,2,--,$0.02
-,Other - Utility,List,9,--,$0.27
-,Pakistan - Marketing,List,2623,--,$124.09
-,Pakistan - Service,List,771,--,$10.90
-,Pakistan - Utility,List,3759,--,$95.12
-,Rest of Africa - Marketing,List,2,--,$0.04
-,Rest of Africa - Utility,List,3,--,$0.06
-,Rest of Asia Pacific - Marketing,List,9,--,$0.66
-,Rest of Asia Pacific - Utility,List,10,--,$0.47
-,Rest of Central & Eastern Europe - Utility,List,5,--,$0.30
-,Rest of Middle East - Marketing,List,17,--,$0.55
-,Rest of Middle East - Service,List,4,--,$0.08
-,Rest of Middle East - Utility,List,27,--,$0.54
-,Rest of Western Europe - Marketing,List,2,--,$0.12
-,Rest of Western Europe - Utility,List,6,--,$0.24
-,Saudi Arabia - Marketing,List,25,--,$1.00
-,Saudi Arabia - Service,List,6,--,$0.12
-,Saudi Arabia - Utility,List,31,--,$0.85
-,South Africa - Marketing,List,1,--,$0.04
-,South Africa - Utility,List,2,--,$0.04
-,Spain - Marketing,List,1,--,$0.06
-,Spain - Utility,List,2,--,$0.08
-,Turkey - Marketing,List,2,--,$0.02
-,Turkey - Service,List,2,--,$0.00
-,Turkey - Utility,List,5,--,$0.05
-,United Arab Emirates - Marketing,List,48,--,$1.60
-,United Arab Emirates - Service,List,4,--,$0.08
-,United Arab Emirates - Utility,List,58,--,$1.16
-,United Kingdom - Marketing,List,22,--,$1.54
-,United Kingdom - Service,List,2,--,$0.08
-,United Kingdom - Utility,List,31,--,$1.24
- Baitussalam Welfare Trust,North America - Utility,List,1,--,$0.02
-,Pakistan - Utility,List,110,--,$2.87
-,Saudi Arabia - Utility,List,1,--,$0.03
- Brandverse Private Limited,Pakistan - Authentication,List,50,--,$1.13
-,Pakistan - Utility,List,766,--,$19.44
- BRKZ Inc.,Egypt - Authentication,List,54,--,$3.31
-,Egypt - Marketing,List,23,--,$2.45
-,Egypt - Utility,List,28,--,$1.96
-,Pakistan - Authentication,List,46,--,$1.09
-,Pakistan - Marketing,List,77,--,$3.63
-,Pakistan - Utility,List,42,--,$1.12
-,Rest of Middle East - Marketing,List,1,--,$0.03
-,Saudi Arabia - Authentication,List,183,--,$4.15
-,Saudi Arabia - Marketing,List,362,--,$14.74
-,Saudi Arabia - Utility,List,363,--,$9.17
-,United Arab Emirates - Authentication,List,8,--,$0.16
-,United Arab Emirates - Marketing,List,8,--,$0.25
-,United Arab Emirates - Utility,List,2,--,$0.04
- Central Depository Company of Pakistan Limited,Italy - Authentication,List,2,--,$0.08
-,Nigeria - Utility,List,1,--,$0.03
-,North America - Authentication,List,3,--,$0.03
-,North America - Utility,List,1,--,$0.02
-,Pakistan - Authentication,List,103,--,$2.36
-,Pakistan - Marketing,List,2,--,$0.10
-,Pakistan - Utility,List,107,--,$2.73
-,Rest of Africa - Utility,List,1,--,$0.02
-,Rest of Middle East - Authentication,List,9,--,$0.18
-,Rest of Middle East - Utility,List,2,--,$0.04
-,Saudi Arabia - Authentication,List,26,--,$0.61
-,United Arab Emirates - Authentication,List,15,--,$0.29
-,United Arab Emirates - Utility,List,4,--,$0.08
- Dr. Essa Laboratory and Diagnostic Centre,Indonesia - Service,List,1,--,$0.02
-,Nigeria - Service,List,1,--,$0.03
-,North America - Service,List,10,--,$0.10
-,Pakistan - Service,List,1406,--,$19.96
-,Rest of Asia Pacific - Service,List,3,--,$0.06
-,Rest of Middle East - Service,List,3,--,$0.06
-,Rest of Western Europe - Service,List,2,--,$0.08
-,Saudi Arabia - Service,List,4,--,$0.08
-,United Arab Emirates - Service,List,6,--,$0.12
-,United Kingdom - Service,List,2,--,$0.08
- Dubai Islamic Bank Pakistan Limited,North America - Marketing,List,1,--,$0.03
-,Pakistan - Marketing,List,202,--,$9.57
-,Rest of Africa - Marketing,List,1,--,$0.02
-,Rest of Asia Pacific - Marketing,List,2,--,$0.14
-,Saudi Arabia - Marketing,List,3,--,$0.12
-,United Arab Emirates - Marketing,List,5,--,$0.15
-,United Kingdom - Marketing,List,1,--,$0.07
- E Ocean Demo,Pakistan - Marketing,List,12,--,$0.58
- Eocean,Pakistan - Marketing,List,16,--,$0.75
-,Pakistan - Utility,List,1,--,$0.03
-,United Arab Emirates - Marketing,List,1,--,$0.03
- Etisalcom Bahrain,Rest of Middle East - Marketing,List,1024,--,$34.90
- German Medical Centre,Egypt - Marketing,List,16,--,$1.72
-,France - Marketing,List,2,--,$0.28
-,Germany - Marketing,List,4,--,$0.54
-,India - Marketing,List,44,--,$0.44
-,Italy - Marketing,List,2,--,$0.14
-,Mexico - Marketing,List,2,--,$0.08
-,Netherlands - Marketing,List,4,--,$0.64
-,North America - Marketing,List,38,--,$0.96
-,Other - Marketing,List,4,--,$0.24
-,Pakistan - Marketing,List,52,--,$2.46
-,Rest of Africa - Marketing,List,11,--,$0.25
-,Rest of Asia Pacific - Marketing,List,21,--,$1.54
-,Rest of Central & Eastern Europe - Marketing,List,6,--,$0.52
-,Rest of Middle East - Marketing,List,4765,--,$162.49
-,Rest of Western Europe - Marketing,List,6,--,$0.36
-,Russia - Marketing,List,2,--,$0.16
-,Saudi Arabia - Marketing,List,379,--,$15.38
-,South Africa - Marketing,List,2,--,$0.08
-,United Arab Emirates - Marketing,List,37,--,$1.26
-,United Kingdom - Marketing,List,10,--,$0.70
- HABIB BANK LIMITED,Argentina - Service,List,1,--,$0.03
-,Brazil - Service,List,1,--,$0.03
-,Chile - Service,List,1,--,$0.05
-,Egypt - Service,List,1,--,$0.06
-,France - Marketing,List,1,--,$0.14
-,France - Service,List,20,--,$1.75
-,Germany - Marketing,List,3,--,$0.41
-,Germany - Service,List,40,--,$3.25
-,India - Service,List,8,--,$0.01
-,Indonesia - Service,List,3,--,$0.06
-,Italy - Marketing,List,4,--,$0.28
-,Italy - Service,List,60,--,$2.35
-,Malaysia - Marketing,List,5,--,$0.44
-,Malaysia - Service,List,80,--,$1.77
-,Malaysia - Utility,List,4,--,$0.08
-,Mexico - Service,List,1,--,$0.01
-,Netherlands - Service,List,14,--,$1.26
-,Nigeria - Service,List,14,--,$0.42
-,North America - Marketing,List,9,--,$0.24
-,North America - Service,List,329,--,$2.92
-,North America - Utility,List,2,--,$0.04
-,Other - Marketing,List,3,--,$0.18
-,Other - Service,List,80,--,$1.12
-,Pakistan - Marketing,List,16989,--,$803.58
-,Pakistan - Service,List,145056,--,$2059.84
-,Pakistan - Utility,List,39,--,$0.99
-,Rest of Africa - Service,List,38,--,$1.42
-,Rest of Asia Pacific - Marketing,List,13,--,$0.95
-,Rest of Asia Pacific - Service,List,218,--,$4.85
-,Rest of Asia Pacific - Utility,List,3,--,$0.14
-,Rest of Central & Eastern Europe - Marketing,List,1,--,$0.09
-,Rest of Central & Eastern Europe - Service,List,42,--,$1.10
-,Rest of Central & Eastern Europe - Utility,List,2,--,$0.12
-,Rest of Latin America - Service,List,2,--,$0.08
-,Rest of Middle East - Marketing,List,28,--,$0.95
-,Rest of Middle East - Service,List,616,--,$13.48
-,Rest of Middle East - Utility,List,12,--,$0.24
-,Rest of Western Europe - Marketing,List,7,--,$0.42
-,Rest of Western Europe - Service,List,95,--,$3.80
-,Rest of Western Europe - Utility,List,5,--,$0.21
-,Russia - Service,List,4,--,$0.16
-,Saudi Arabia - Marketing,List,190,--,$7.72
-,Saudi Arabia - Service,List,1575,--,$30.72
-,Saudi Arabia - Utility,List,83,--,$2.11
-,South Africa - Marketing,List,4,--,$0.15
-,South Africa - Service,List,43,--,$0.74
-,South Africa - Utility,List,1,--,$0.02
-,Spain - Marketing,List,2,--,$0.12
-,Spain - Service,List,41,--,$1.53
-,Turkey - Service,List,18,--,$0.05
-,United Arab Emirates - Marketing,List,83,--,$2.82
-,United Arab Emirates - Service,List,1430,--,$27.16
-,United Arab Emirates - Utility,List,23,--,$0.46
-,United Kingdom - Marketing,List,33,--,$2.32
-,United Kingdom - Service,List,568,--,$22.04
-,United Kingdom - Utility,List,18,--,$0.72
- Ismail Industries Limited,Germany - Service,List,4,--,$0.32
-,North America - Service,List,3,--,$0.03
-,Pakistan - Marketing,List,5,--,$0.24
-,Pakistan - Service,List,8783,--,$124.70
-,Rest of Asia Pacific - Service,List,2,--,$0.04
-,Rest of Middle East - Service,List,2,--,$0.04
-,Rest of Western Europe - Service,List,1,--,$0.04
-,Saudi Arabia - Service,List,6,--,$0.12
-,Turkey - Service,List,1,--,$0.00
-,United Arab Emirates - Service,List,6,--,$0.12
- Jugnu Tech (Private) Limited,Pakistan - Service,List,1572,--,$22.31
-,Rest of Middle East - Service,List,2,--,$0.04
-,Rest of Western Europe - Service,List,1,--,$0.04
-,Saudi Arabia - Service,List,3,--,$0.06
-,United Arab Emirates - Service,List,3,--,$0.06
-,United Kingdom - Service,List,1,--,$0.04
- Kistpay (Private) Limited,Pakistan - Marketing,List,54,--,$2.52
- KTrade Securities Limited,Italy - Service,List,1,--,$0.04
-,North America - Service,List,5,--,$0.05
-,Other - Service,List,1,--,$0.01
-,Pakistan - Service,List,1528,--,$21.70
-,Rest of Asia Pacific - Service,List,4,--,$0.08
-,Rest of Middle East - Service,List,9,--,$0.18
-,Rest of Western Europe - Service,List,3,--,$0.12
-,Saudi Arabia - Service,List,42,--,$0.84
-,Turkey - Service,List,1,--,$0.00
-,United Arab Emirates - Service,List,25,--,$0.50
-,United Kingdom - Service,List,8,--,$0.32
- Local-E-store,India - Service,List,2,--,$0.00
-,Pakistan - Service,List,1009,--,$14.30
-,Saudi Arabia - Service,List,2,--,$0.04
-,United Kingdom - Service,List,1,--,$0.04
- MAKKAH PHARAMCY (L.L.C),United Arab Emirates - Utility,List,1,--,$0.02
- Mobilink Microfinance Bank Limited,France - Service,List,1,--,$0.09
-,Germany - Service,List,1,--,$0.08
-,India - Service,List,17,--,$0.04
-,Italy - Service,List,6,--,$0.24
-,Malaysia - Service,List,9,--,$0.18
-,Nigeria - Service,List,1,--,$0.03
-,North America - Service,List,14,--,$0.14
-,Pakistan - Service,List,6927,--,$98.36
-,Rest of Africa - Service,List,3,--,$0.12
-,Rest of Asia Pacific - Service,List,8,--,$0.16
-,Rest of Central & Eastern Europe - Service,List,1,--,$0.03
-,Rest of Middle East - Service,List,6,--,$0.12
-,Rest of Western Europe - Service,List,1,--,$0.04
-,Saudi Arabia - Service,List,49,--,$0.98
-,South Africa - Service,List,1,--,$0.02
-,Spain - Service,List,2,--,$0.08
-,Turkey - Service,List,3,--,$0.01
-,United Arab Emirates - Service,List,47,--,$0.94
-,United Kingdom - Service,List,6,--,$0.24
- Multinet Pakistan Pvt. Ltd,Malaysia - Service,List,1,--,$0.02
-,North America - Service,List,8,--,$0.08
-,Pakistan - Service,List,1921,--,$27.26
-,Rest of Asia Pacific - Service,List,3,--,$0.06
-,Rest of Middle East - Service,List,3,--,$0.06
-,Saudi Arabia - Service,List,4,--,$0.08
-,United Arab Emirates - Service,List,14,--,$0.28
-,United Kingdom - Service,List,7,--,$0.28
- Pak Telecom Mobile Limited,Chile - Marketing,List,3,--,$0.27
-,Chile - Service,List,1,--,$0.05
-,Colombia - Marketing,List,1,--,$0.01
-,Egypt - Marketing,List,3,--,$0.33
-,France - Marketing,List,5,--,$0.70
-,Germany - Marketing,List,8,--,$1.12
-,India - Marketing,List,1,--,$0.01
-,Indonesia - Marketing,List,2,--,$0.08
-,Italy - Marketing,List,16,--,$1.12
-,Italy - Service,List,4,--,$0.16
-,Malaysia - Marketing,List,17,--,$1.50
-,Mexico - Marketing,List,1,--,$0.04
-,Netherlands - Marketing,List,5,--,$0.80
-,Nigeria - Marketing,List,2,--,$0.10
-,North America - Marketing,List,136,--,$3.49
-,North America - Service,List,9,--,$0.09
-,Other - Marketing,List,14,--,$0.84
-,Other - Service,List,2,--,$0.02
-,Pakistan - Marketing,List,23210,--,$1097.87
-,Pakistan - Service,List,3284,--,$46.64
-,Rest of Africa - Marketing,List,7,--,$0.15
-,Rest of Asia Pacific - Marketing,List,77,--,$5.63
-,Rest of Asia Pacific - Service,List,7,--,$0.14
-,Rest of Central & Eastern Europe - Marketing,List,16,--,$1.42
-,Rest of Latin America - Marketing,List,1,--,$0.07
-,Rest of Middle East - Marketing,List,256,--,$8.72
-,Rest of Middle East - Service,List,15,--,$0.31
-,Rest of Western Europe - Marketing,List,35,--,$2.10
-,Russia - Marketing,List,1,--,$0.08
-,Saudi Arabia - Marketing,List,286,--,$11.63
-,Saudi Arabia - Service,List,13,--,$0.26
-,South Africa - Marketing,List,4,--,$0.16
-,Spain - Marketing,List,8,--,$0.48
-,Spain - Service,List,4,--,$0.16
-,Turkey - Marketing,List,10,--,$0.10
-,Turkey - Service,List,3,--,$0.00
-,United Arab Emirates - Marketing,List,842,--,$28.63
-,United Arab Emirates - Service,List,64,--,$1.27
-,United Kingdom - Marketing,List,129,--,$9.03
-,United Kingdom - Service,List,4,--,$0.16
- Pakistan Cables Limited,North America - Service,List,1,--,$0.01
-,Pakistan - Marketing,List,191,--,$8.98
-,Pakistan - Service,List,561,--,$7.95
-,Rest of Africa - Service,List,2,--,$0.08
-,Rest of Asia Pacific - Service,List,1,--,$0.02
-,Rest of Middle East - Service,List,1,--,$0.02
-,Saudi Arabia - Service,List,3,--,$0.06
-,Spain - Service,List,2,--,$0.08
-,United Arab Emirates - Service,List,2,--,$0.04
-,United Kingdom - Service,List,3,--,$0.12
- PakQatar Family Takaful Limited,Nigeria - Service,List,1,--,$0.03
-,Pakistan - Service,List,1389,--,$19.71
-,Rest of Middle East - Service,List,1,--,$0.02
-,Saudi Arabia - Service,List,3,--,$0.06
-,United Arab Emirates - Service,List,7,--,$0.14
- Pet Arabia Co. W.L.L,Rest of Middle East - Marketing,List,4,--,$0.12
- Savyour (Private) Limited,Brazil - Service,List,3,--,$0.09
-,France - Service,List,3,--,$0.27
-,India - Service,List,2,--,$0.00
-,Italy - Service,List,2,--,$0.08
-,Malaysia - Service,List,2,--,$0.04
-,North America - Service,List,11,--,$0.11
-,Pakistan - Service,List,9592,--,$136.20
-,Rest of Asia Pacific - Service,List,2,--,$0.04
-,Rest of Middle East - Service,List,6,--,$0.12
-,Rest of Western Europe - Service,List,1,--,$0.04
-,Saudi Arabia - Service,List,16,--,$0.32
-,South Africa - Service,List,1,--,$0.02
-,Spain - Service,List,2,--,$0.08
-,United Arab Emirates - Service,List,24,--,$0.48
-,United Kingdom - Service,List,10,--,$0.40
- SeedCred Financial Services Limited,Rest of Asia Pacific - Utility,List,1,--,$0.05
- Special Communications Organization,Brazil - Service,List,1,--,$0.03
-,France - Service,List,1,--,$0.09
-,Germany - Service,List,1,--,$0.08
-,North America - Service,List,3,--,$0.03
-,Other - Service,List,1,--,$0.01
-,Pakistan - Marketing,List,3,--,$0.14
-,Pakistan - Service,List,2001,--,$28.40
-,Rest of Asia Pacific - Service,List,3,--,$0.06
-,Rest of Central & Eastern Europe - Service,List,2,--,$0.06
-,Rest of Middle East - Service,List,5,--,$0.10
-,Rest of Western Europe - Service,List,2,--,$0.08
-,Saudi Arabia - Service,List,3,--,$0.06
-,South Africa - Service,List,1,--,$0.02
-,Spain - Service,List,1,--,$0.04
-,United Arab Emirates - Service,List,12,--,$0.24
-,United Kingdom - Service,List,10,--,$0.40
- SSFR PVT. LTD,France - Service,List,3,--,$0.26
-,Germany - Service,List,11,--,$0.88
-,India - Service,List,50,--,$0.20
-,Indonesia - Service,List,1,--,$0.02
-,Italy - Service,List,9,--,$0.36
-,Malaysia - Service,List,6,--,$0.12
-,Netherlands - Service,List,7,--,$0.63
-,North America - Service,List,421,--,$3.70
-,Other - Service,List,11,--,$0.14
-,Pakistan - Service,List,1519,--,$21.56
-,Rest of Africa - Service,List,12,--,$0.44
-,Rest of Asia Pacific - Service,List,105,--,$2.35
-,Rest of Central & Eastern Europe - Service,List,3,--,$0.09
-,Rest of Latin America - Service,List,3,--,$0.12
-,Rest of Middle East - Service,List,54,--,$1.19
-,Rest of Western Europe - Service,List,24,--,$0.96
-,Saudi Arabia - Service,List,37,--,$0.74
-,South Africa - Service,List,1,--,$0.02
-,Spain - Service,List,8,--,$0.31
-,United Arab Emirates - Service,List,139,--,$2.65
-,United Kingdom - Service,List,455,--,$17.63
- TCS (Private) Limited,Brazil - Service,List,2,--,$0.06
-,Chile - Service,List,1,--,$0.05
-,Egypt - Service,List,8,--,$0.50
-,France - Service,List,18,--,$1.57
-,Germany - Service,List,64,--,$5.23
-,India - Service,List,31,--,$0.08
-,Indonesia - Service,List,7,--,$0.14
-,Italy - Service,List,35,--,$1.38
-,Malaysia - Service,List,33,--,$0.69
-,Netherlands - Service,List,9,--,$0.81
-,Nigeria - Service,List,13,--,$0.39
-,North America - Service,List,469,--,$4.14
-,Other - Service,List,108,--,$1.58
-,Pakistan - Service,List,86901,--,$1233.96
-,Rest of Africa - Service,List,28,--,$1.03
-,Rest of Asia Pacific - Service,List,195,--,$4.35
-,Rest of Central & Eastern Europe - Service,List,31,--,$0.84
-,Rest of Latin America - Service,List,1,--,$0.04
-,Rest of Middle East - Service,List,347,--,$7.55
-,Rest of Western Europe - Service,List,122,--,$4.88
-,Russia - Service,List,4,--,$0.16
-,Saudi Arabia - Service,List,762,--,$14.87
-,South Africa - Service,List,23,--,$0.42
-,Spain - Service,List,110,--,$4.04
-,Turkey - Service,List,30,--,$0.09
-,United Arab Emirates - Service,List,965,--,$18.34
-,United Kingdom - Service,List,552,--,$21.39
- The Aga Khan Hospital and Medical College Foundation,Argentina - Service,List,1,--,$0.03
-,Egypt - Service,List,1,--,$0.06
-,Germany - Service,List,2,--,$0.16
-,India - Service,List,5,--,$0.01
-,Malaysia - Service,List,1,--,$0.02
-,Netherlands - Service,List,1,--,$0.09
-,Nigeria - Service,List,4,--,$0.12
-,North America - Service,List,38,--,$0.36
-,Other - Service,List,5,--,$0.06
-,Pakistan - Service,List,6419,--,$91.16
-,Rest of Africa - Service,List,10,--,$0.39
-,Rest of Asia Pacific - Service,List,31,--,$0.69
-,Rest of Latin America - Service,List,1,--,$0.04
-,Rest of Middle East - Service,List,27,--,$0.57
-,Rest of Western Europe - Service,List,4,--,$0.16
-,Saudi Arabia - Service,List,58,--,$1.15
-,South Africa - Service,List,1,--,$0.02
-,Turkey - Service,List,2,--,$0.00
-,United Arab Emirates - Service,List,57,--,$1.12
-,United Kingdom - Service,List,17,--,$0.67
- Unilever Food Solutions,North America - Marketing,List,1,--,$0.03
-,Pakistan - Marketing,List,125,--,$5.93
-,Rest of Africa - Marketing,List,1,--,$0.02
- Zod Tech (Pvt) Ltd,North America - Authentication,List,1.0,--,$0.01
-,United Kingdom - Authentication,List,9.0,--,$0.33
+WABA Name,Product,Conversations,Total
+ 1LINK Pvt. Ltd,France - Service,11,0.98
+,Germany - Service,15,1.21
+,India - Service,2,0.00
+,Italy - Service,56,2.22
+,Malaysia - Service,10,0.20
+,North America - Service,42,0.41
+,Other - Service,35,0.44
+,Pakistan - Service,2600,36.94
+,Rest of Africa - Service,5,0.20
+,Rest of Asia Pacific - Service,36,0.76
+,Rest of Central & Eastern Europe - Service,16,0.44
+,Rest of Middle East - Service,1627,35.49
+,Rest of Western Europe - Service,38,1.52
+,Saudi Arabia - Service,2553,49.79
+,South Africa - Service,23,0.40
+,Spain - Service,34,1.27
+,United Arab Emirates - Service,1298,24.64
+,United Kingdom - Service,111,4.31
+ Askari Bank Limited,France - Marketing,2,0.28
+,France - Utility,2,0.16
+,Germany - Marketing,3,0.42
+,Germany - Utility,2,0.18
+,India - Marketing,1,0.01
+,India - Utility,1,0.00
+,Indonesia - Utility,1,0.02
+,Malaysia - Marketing,2,0.18
+,Malaysia - Service,2,0.04
+,Malaysia - Utility,3,0.06
+,Netherlands - Marketing,2,0.32
+,Netherlands - Utility,1,0.08
+,Nigeria - Marketing,1,0.05
+,Nigeria - Service,1,0.03
+,Nigeria - Utility,4,0.12
+,North America - Marketing,9,0.27
+,North America - Service,1,0.01
+,North America - Utility,21,0.38
+,Other - Marketing,4,0.24
+,Other - Service,2,0.02
+,Other - Utility,9,0.27
+,Pakistan - Marketing,2623,124.09
+,Pakistan - Service,771,10.90
+,Pakistan - Utility,3759,95.12
+,Rest of Africa - Marketing,2,0.04
+,Rest of Africa - Utility,3,0.06
+,Rest of Asia Pacific - Marketing,9,0.66
+,Rest of Asia Pacific - Utility,10,0.47
+,Rest of Central & Eastern Europe - Utility,5,0.30
+,Rest of Middle East - Marketing,17,0.55
+,Rest of Middle East - Service,4,0.08
+,Rest of Middle East - Utility,27,0.54
+,Rest of Western Europe - Marketing,2,0.12
+,Rest of Western Europe - Utility,6,0.24
+,Saudi Arabia - Marketing,25,1.00
+,Saudi Arabia - Service,6,0.12
+,Saudi Arabia - Utility,31,0.85
+,South Africa - Marketing,1,0.04
+,South Africa - Utility,2,0.04
+,Spain - Marketing,1,0.06
+,Spain - Utility,2,0.08
+,Turkey - Marketing,2,0.02
+,Turkey - Service,2,0.00
+,Turkey - Utility,5,0.05
+,United Arab Emirates - Marketing,48,1.60
+,United Arab Emirates - Service,4,0.08
+,United Arab Emirates - Utility,58,1.16
+,United Kingdom - Marketing,22,1.54
+,United Kingdom - Service,2,0.08
+,United Kingdom - Utility,31,1.24
+ Baitussalam Welfare Trust,North America - Utility,1,0.02
+,Pakistan - Utility,110,2.87
+,Saudi Arabia - Utility,1,0.03
+ Brandverse Private Limited,Pakistan - Authentication,50,1.13
+,Pakistan - Utility,766,19.44
+ BRKZ Inc.,Egypt - Authentication,54,3.31
+,Egypt - Marketing,23,2.45
+,Egypt - Utility,28,1.96
+,Pakistan - Authentication,46,1.09
+,Pakistan - Marketing,77,3.63
+,Pakistan - Utility,42,1.12
+,Rest of Middle East - Marketing,1,0.03
+,Saudi Arabia - Authentication,183,4.15
+,Saudi Arabia - Marketing,362,14.74
+,Saudi Arabia - Utility,363,9.17
+,United Arab Emirates - Authentication,8,0.16
+,United Arab Emirates - Marketing,8,0.25
+,United Arab Emirates - Utility,2,0.04
+ Central Depository Company of Pakistan Limited,Italy - Authentication,2,0.08
+,Nigeria - Utility,1,0.03
+,North America - Authentication,3,0.03
+,North America - Utility,1,0.02
+,Pakistan - Authentication,103,2.36
+,Pakistan - Marketing,2,0.10
+,Pakistan - Utility,107,2.73
+,Rest of Africa - Utility,1,0.02
+,Rest of Middle East - Authentication,9,0.18
+,Rest of Middle East - Utility,2,0.04
+,Saudi Arabia - Authentication,26,0.61
+,United Arab Emirates - Authentication,15,0.29
+,United Arab Emirates - Utility,4,0.08
+ Dr. Essa Laboratory and Diagnostic Centre,Indonesia - Service,1,0.02
+,Nigeria - Service,1,0.03
+,North America - Service,10,0.10
+,Pakistan - Service,1406,19.96
+,Rest of Asia Pacific - Service,3,0.06
+,Rest of Middle East - Service,3,0.06
+,Rest of Western Europe - Service,2,0.08
+,Saudi Arabia - Service,4,0.08
+,United Arab Emirates - Service,6,0.12
+,United Kingdom - Service,2,0.08
+ Dubai Islamic Bank Pakistan Limited,North America - Marketing,1,0.03
+,Pakistan - Marketing,202,9.57
+,Rest of Africa - Marketing,1,0.02
+,Rest of Asia Pacific - Marketing,2,0.14
+,Saudi Arabia - Marketing,3,0.12
+,United Arab Emirates - Marketing,5,0.15
+,United Kingdom - Marketing,1,0.07
+ E Ocean Demo,Pakistan - Marketing,12,0.58
+ Eocean,Pakistan - Marketing,16,0.75
+,Pakistan - Utility,1,0.03
+,United Arab Emirates - Marketing,1,0.03
+ Etisalcom Bahrain,Rest of Middle East - Marketing,1024,34.90
+ German Medical Centre,Egypt - Marketing,16,1.72
+,France - Marketing,2,0.28
+,Germany - Marketing,4,0.54
+,India - Marketing,44,0.44
+,Italy - Marketing,2,0.14
+,Mexico - Marketing,2,0.08
+,Netherlands - Marketing,4,0.64
+,North America - Marketing,38,0.96
+,Other - Marketing,4,0.24
+,Pakistan - Marketing,52,2.46
+,Rest of Africa - Marketing,11,0.25
+,Rest of Asia Pacific - Marketing,21,1.54
+,Rest of Central & Eastern Europe - Marketing,6,0.52
+,Rest of Middle East - Marketing,4765,162.49
+,Rest of Western Europe - Marketing,6,0.36
+,Russia - Marketing,2,0.16
+,Saudi Arabia - Marketing,379,15.38
+,South Africa - Marketing,2,0.08
+,United Arab Emirates - Marketing,37,1.26
+,United Kingdom - Marketing,10,0.70
+ HABIB BANK LIMITED,Argentina - Service,1,0.03
+,Brazil - Service,1,0.03
+,Chile - Service,1,0.05
+,Egypt - Service,1,0.06
+,France - Marketing,1,0.14
+,France - Service,20,1.75
+,Germany - Marketing,3,0.41
+,Germany - Service,40,3.25
+,India - Service,8,0.01
+,Indonesia - Service,3,0.06
+,Italy - Marketing,4,0.28
+,Italy - Service,60,2.35
+,Malaysia - Marketing,5,0.44
+,Malaysia - Service,80,1.77
+,Malaysia - Utility,4,0.08
+,Mexico - Service,1,0.01
+,Netherlands - Service,14,1.26
+,Nigeria - Service,14,0.42
+,North America - Marketing,9,0.24
+,North America - Service,329,2.92
+,North America - Utility,2,0.04
+,Other - Marketing,3,0.18
+,Other - Service,80,1.12
+,Pakistan - Marketing,16989,803.58
+,Pakistan - Service,145056,2059.84
+,Pakistan - Utility,39,0.99
+,Rest of Africa - Service,38,1.42
+,Rest of Asia Pacific - Marketing,13,0.95
+,Rest of Asia Pacific - Service,218,4.85
+,Rest of Asia Pacific - Utility,3,0.14
+,Rest of Central & Eastern Europe - Marketing,1,0.09
+,Rest of Central & Eastern Europe - Service,42,1.10
+,Rest of Central & Eastern Europe - Utility,2,0.12
+,Rest of Latin America - Service,2,0.08
+,Rest of Middle East - Marketing,28,0.95
+,Rest of Middle East - Service,616,13.48
+,Rest of Middle East - Utility,12,0.24
+,Rest of Western Europe - Marketing,7,0.42
+,Rest of Western Europe - Service,95,3.80
+,Rest of Western Europe - Utility,5,0.21
+,Russia - Service,4,0.16
+,Saudi Arabia - Marketing,190,7.72
+,Saudi Arabia - Service,1575,30.72
+,Saudi Arabia - Utility,83,2.11
+,South Africa - Marketing,4,0.15
+,South Africa - Service,43,0.74
+,South Africa - Utility,1,0.02
+,Spain - Marketing,2,0.12
+,Spain - Service,41,1.53
+,Turkey - Service,18,0.05
+,United Arab Emirates - Marketing,83,2.82
+,United Arab Emirates - Service,1430,27.16
+,United Arab Emirates - Utility,23,0.46
+,United Kingdom - Marketing,33,2.32
+,United Kingdom - Service,568,22.04
+,United Kingdom - Utility,18,0.72
+ Ismail Industries Limited,Germany - Service,4,0.32
+,North America - Service,3,0.03
+,Pakistan - Marketing,5,0.24
+,Pakistan - Service,8783,124.70
+,Rest of Asia Pacific - Service,2,0.04
+,Rest of Middle East - Service,2,0.04
+,Rest of Western Europe - Service,1,0.04
+,Saudi Arabia - Service,6,0.12
+,Turkey - Service,1,0.00
+,United Arab Emirates - Service,6,0.12
+ Jugnu Tech (Private) Limited,Pakistan - Service,1572,22.31
+,Rest of Middle East - Service,2,0.04
+,Rest of Western Europe - Service,1,0.04
+,Saudi Arabia - Service,3,0.06
+,United Arab Emirates - Service,3,0.06
+,United Kingdom - Service,1,0.04
+ Kistpay (Private) Limited,Pakistan - Marketing,54,2.52
+ KTrade Securities Limited,Italy - Service,1,0.04
+,North America - Service,5,0.05
+,Other - Service,1,0.01
+,Pakistan - Service,1528,21.70
+,Rest of Asia Pacific - Service,4,0.08
+,Rest of Middle East - Service,9,0.18
+,Rest of Western Europe - Service,3,0.12
+,Saudi Arabia - Service,42,0.84
+,Turkey - Service,1,0.00
+,United Arab Emirates - Service,25,0.50
+,United Kingdom - Service,8,0.32
+ Local-E-store,India - Service,2,0.00
+,Pakistan - Service,1009,14.30
+,Saudi Arabia - Service,2,0.04
+,United Kingdom - Service,1,0.04
+ MAKKAH PHARAMCY (L.L.C),United Arab Emirates - Utility,1,0.02
+ Mobilink Microfinance Bank Limited,France - Service,1,0.09
+,Germany - Service,1,0.08
+,India - Service,17,0.04
+,Italy - Service,6,0.24
+,Malaysia - Service,9,0.18
+,Nigeria - Service,1,0.03
+,North America - Service,14,0.14
+,Pakistan - Service,6927,98.36
+,Rest of Africa - Service,3,0.12
+,Rest of Asia Pacific - Service,8,0.16
+,Rest of Central & Eastern Europe - Service,1,0.03
+,Rest of Middle East - Service,6,0.12
+,Rest of Western Europe - Service,1,0.04
+,Saudi Arabia - Service,49,0.98
+,South Africa - Service,1,0.02
+,Spain - Service,2,0.08
+,Turkey - Service,3,0.01
+,United Arab Emirates - Service,47,0.94
+,United Kingdom - Service,6,0.24
+ Multinet Pakistan Pvt. Ltd,Malaysia - Service,1,0.02
+,North America - Service,8,0.08
+,Pakistan - Service,1921,27.26
+,Rest of Asia Pacific - Service,3,0.06
+,Rest of Middle East - Service,3,0.06
+,Saudi Arabia - Service,4,0.08
+,United Arab Emirates - Service,14,0.28
+,United Kingdom - Service,7,0.28
+ Pak Telecom Mobile Limited,Chile - Marketing,3,0.27
+,Chile - Service,1,0.05
+,Colombia - Marketing,1,0.01
+,Egypt - Marketing,3,0.33
+,France - Marketing,5,0.70
+,Germany - Marketing,8,1.12
+,India - Marketing,1,0.01
+,Indonesia - Marketing,2,0.08
+,Italy - Marketing,16,1.12
+,Italy - Service,4,0.16
+,Malaysia - Marketing,17,1.50
+,Mexico - Marketing,1,0.04
+,Netherlands - Marketing,5,0.80
+,Nigeria - Marketing,2,0.10
+,North America - Marketing,136,3.49
+,North America - Service,9,0.09
+,Other - Marketing,14,0.84
+,Other - Service,2,0.02
+,Pakistan - Marketing,23210,1097.87
+,Pakistan - Service,3284,46.64
+,Rest of Africa - Marketing,7,0.15
+,Rest of Asia Pacific - Marketing,77,5.63
+,Rest of Asia Pacific - Service,7,0.14
+,Rest of Central & Eastern Europe - Marketing,16,1.42
+,Rest of Latin America - Marketing,1,0.07
+,Rest of Middle East - Marketing,256,8.72
+,Rest of Middle East - Service,15,0.31
+,Rest of Western Europe - Marketing,35,2.10
+,Russia - Marketing,1,0.08
+,Saudi Arabia - Marketing,286,11.63
+,Saudi Arabia - Service,13,0.26
+,South Africa - Marketing,4,0.16
+,Spain - Marketing,8,0.48
+,Spain - Service,4,0.16
+,Turkey - Marketing,10,0.10
+,Turkey - Service,3,0.00
+,United Arab Emirates - Marketing,842,28.63
+,United Arab Emirates - Service,64,1.27
+,United Kingdom - Marketing,129,9.03
+,United Kingdom - Service,4,0.16
+ Pakistan Cables Limited,North America - Service,1,0.01
+,Pakistan - Marketing,191,8.98
+,Pakistan - Service,561,7.95
+,Rest of Africa - Service,2,0.08
+,Rest of Asia Pacific - Service,1,0.02
+,Rest of Middle East - Service,1,0.02
+,Saudi Arabia - Service,3,0.06
+,Spain - Service,2,0.08
+,United Arab Emirates - Service,2,0.04
+,United Kingdom - Service,3,0.12
+ PakQatar Family Takaful Limited,Nigeria - Service,1,0.03
+,Pakistan - Service,1389,19.71
+,Rest of Middle East - Service,1,0.02
+,Saudi Arabia - Service,3,0.06
+,United Arab Emirates - Service,7,0.14
+ Pet Arabia Co. W.L.L,Rest of Middle East - Marketing,4,0.12
+ Savyour (Private) Limited,Brazil - Service,3,0.09
+,France - Service,3,0.27
+,India - Service,2,0.00
+,Italy - Service,2,0.08
+,Malaysia - Service,2,0.04
+,North America - Service,11,0.11
+,Pakistan - Service,9592,136.20
+,Rest of Asia Pacific - Service,2,0.04
+,Rest of Middle East - Service,6,0.12
+,Rest of Western Europe - Service,1,0.04
+,Saudi Arabia - Service,16,0.32
+,South Africa - Service,1,0.02
+,Spain - Service,2,0.08
+,United Arab Emirates - Service,24,0.48
+,United Kingdom - Service,10,0.40
+ SeedCred Financial Services Limited,Rest of Asia Pacific - Utility,1,0.05
+ Special Communications Organization,Brazil - Service,1,0.03
+,France - Service,1,0.09
+,Germany - Service,1,0.08
+,North America - Service,3,0.03
+,Other - Service,1,0.01
+,Pakistan - Marketing,3,0.14
+,Pakistan - Service,2001,28.40
+,Rest of Asia Pacific - Service,3,0.06
+,Rest of Central & Eastern Europe - Service,2,0.06
+,Rest of Middle East - Service,5,0.10
+,Rest of Western Europe - Service,2,0.08
+,Saudi Arabia - Service,3,0.06
+,South Africa - Service,1,0.02
+,Spain - Service,1,0.04
+,United Arab Emirates - Service,12,0.24
+,United Kingdom - Service,10,0.40
+ SSFR PVT. LTD,France - Service,3,0.26
+,Germany - Service,11,0.88
+,India - Service,50,0.20
+,Indonesia - Service,1,0.02
+,Italy - Service,9,0.36
+,Malaysia - Service,6,0.12
+,Netherlands - Service,7,0.63
+,North America - Service,421,3.70
+,Other - Service,11,0.14
+,Pakistan - Service,1519,21.56
+,Rest of Africa - Service,12,0.44
+,Rest of Asia Pacific - Service,105,2.35
+,Rest of Central & Eastern Europe - Service,3,0.09
+,Rest of Latin America - Service,3,0.12
+,Rest of Middle East - Service,54,1.19
+,Rest of Western Europe - Service,24,0.96
+,Saudi Arabia - Service,37,0.74
+,South Africa - Service,1,0.02
+,Spain - Service,8,0.31
+,United Arab Emirates - Service,139,2.65
+,United Kingdom - Service,455,17.63
+ TCS (Private) Limited,Brazil - Service,2,0.06
+,Chile - Service,1,0.05
+,Egypt - Service,8,0.50
+,France - Service,18,1.57
+,Germany - Service,64,5.23
+,India - Service,31,0.08
+,Indonesia - Service,7,0.14
+,Italy - Service,35,1.38
+,Malaysia - Service,33,0.69
+,Netherlands - Service,9,0.81
+,Nigeria - Service,13,0.39
+,North America - Service,469,4.14
+,Other - Service,108,1.58
+,Pakistan - Service,86901,1233.96
+,Rest of Africa - Service,28,1.03
+,Rest of Asia Pacific - Service,195,4.35
+,Rest of Central & Eastern Europe - Service,31,0.84
+,Rest of Latin America - Service,1,0.04
+,Rest of Middle East - Service,347,7.55
+,Rest of Western Europe - Service,122,4.88
+,Russia - Service,4,0.16
+,Saudi Arabia - Service,762,14.87
+,South Africa - Service,23,0.42
+,Spain - Service,110,4.04
+,Turkey - Service,30,0.09
+,United Arab Emirates - Service,965,18.34
+,United Kingdom - Service,552,21.39
+ The Aga Khan Hospital and Medical College Foundation,Argentina - Service,1,0.03
+,Egypt - Service,1,0.06
+,Germany - Service,2,0.16
+,India - Service,5,0.01
+,Malaysia - Service,1,0.02
+,Netherlands - Service,1,0.09
+,Nigeria - Service,4,0.12
+,North America - Service,38,0.36
+,Other - Service,5,0.06
+,Pakistan - Service,6419,91.16
+,Rest of Africa - Service,10,0.39
+,Rest of Asia Pacific - Service,31,0.69
+,Rest of Latin America - Service,1,0.04
+,Rest of Middle East - Service,27,0.57
+,Rest of Western Europe - Service,4,0.16
+,Saudi Arabia - Service,58,1.15
+,South Africa - Service,1,0.02
+,Turkey - Service,2,0.00
+,United Arab Emirates - Service,57,1.12
+,United Kingdom - Service,17,0.67
+ Unilever Food Solutions,North America - Marketing,1,0.03
+,Pakistan - Marketing,125,5.93
+,Rest of Africa - Marketing,1,0.02
+ Zod Tech (Pvt) Ltd,North America - Authentication,1.0,0.01
+,United Kingdom - Authentication,9.0,0.33
