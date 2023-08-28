@@ -9,11 +9,16 @@
 </head>
 
 <body>
+    <div class="loading-modal">
+        <div class="loader"></div>
+        <h3>Loading...</h3>
+      </div>
     <div class="container">
         <div class="limiter">
             <div class="container-table100">
                 <div class="wrap-table100">
                     <div class="table100 ver1 m-b-110">
+                        <Header>Following Invoices Exist</Header>
                         <table data-vertable="ver1">
                             <thead>
                                 <tr class="row100 head">
@@ -22,8 +27,7 @@
                                     <th class="column100 column2" data-column="column2">Option</th>
                                 </tr>
                             </thead>
-                            <tbody class="table-data">
-
+                            <tbody id="table-data">
                             </tbody>
                         </table>
                     </div>
