@@ -14,7 +14,7 @@ const loadFile = function (event) {
     event.target.files[0] &&
     event.target.files[0].type === "application/pdf"
   ) {
-    image.src = "../Static/Img/pdf-icon.webp";
+    image.src = "/static/Img/pdf-icon.webp";
     document.querySelector(".para-text").innerHTML =
       "File has been Uploaded <br/> Select The Parser";
     document.querySelector(".span-text").innerText = event.target.files[0].name;
@@ -26,7 +26,6 @@ const loadFile = function (event) {
 
 function submitForm(form, parserType) {
   console.log(document.activeElement.value);
-  console.log("waiz");
   if (document.activeElement.value == parserType) {
     console.log("Have one.");
     return true;
@@ -48,27 +47,33 @@ formSubmit.addEventListener("submit", function (event) {
   const form = event.currentTarget;
   if (form.file.files[0]) {
     const formData = new FormData(form);
-    const url = "";
+    const url = "http://127.0.0.1:8090/upload";
     if (submitForm(form, "Old Parser")) {
-      formData.parserChoice = 0;
+      formData.append(parserChoice, 0);
     } else if (submitForm(form, "New Parser")) {
-      formData.parserChoice = 1;
+      formData.append(parserChoice, 1);
     }
     const fetchOptions = {
       method: "POST",
+      // Headers: {
+      //   "Content-Type": "multipart/form-data",
+      // },
       body: formData,
     };
     setLoading(true);
     fetch(url, fetchOptions)
-      .then((res) => {
-        setTimeout(() => {
-          setLoading(false);
-        }, 5000);
+      .then(async (res) => {
+        const data = await res.json();
+        console.log(data);
+        // setTimeout(() => {
+        setLoading(false);
+        // }, 5000);
       })
       .catch((err) => {
-        setTimeout(() => {
-          setLoading(false);
-        }, 5000);
+        console.log(err);
+        // setTimeout(() => {
+        setLoading(false);
+        // }, 5000);
       });
   } else {
     alert("No File Uploaded");

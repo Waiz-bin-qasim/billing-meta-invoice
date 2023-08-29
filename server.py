@@ -10,11 +10,13 @@ import os
 from multiprocessing import Process
 import threading
 from Models.loginModels import loginCheck
+import os
 # import computations
 
 #initialising the server
-app = Flask(__name__,template_folder='template')
+app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')  
+
 
 def token_required(f):
     
@@ -33,22 +35,25 @@ def token_required(f):
     return decorated
 
 # #token verified before executing
-@app.route('/upload', methods=['POST'])
+@app.route('/upload', methods=['POST',"GET"])
 @token_required
 def upload():
 
     try:
-        data = request.form
-        parserChoice = data.get('parserChoice')
+        if request.method == "POST":
+            data = request.form
+            parserChoice = data.get('parserChoice')
+            print(parserChoice)
+            file = request.files['file']
+            if file.filename == '':
+                return 'No file selected'
+            file.save('transaction.pdf')
+            sql_values = []
+            response = dataHandler.run(sql_values,parserChoice)
+            return jsonify(response)
+        else:
+            return render_template("Upload.html")
         
-        file = request.files['file']
-        if file.filename == '':
-            return 'No file selected'
-        file.save('transaction.pdf')
-        sql_values = []
-        response = dataHandler.run(sql_values,parserChoice)
-        return jsonify(response)
-    
     except Exception as ex:
         print(f'Error during file upload: {ex}')
         return jsonify({'message': 'An error occurred during file upload.'}), 500
@@ -57,12 +62,11 @@ def upload():
 #for making token
 @app.route('/login',methods = ['POST',"GET"])
 def login():
-    
     try: 
         if request.method == "POST":
-            auth = request.authorization
-            authUsername = [auth.username]
-            authPassword = [auth.password]
+            auth = request.get_json()
+            authUsername = [auth['username']]
+            authPassword = [auth['password']]
             print(authUsername)
             response = loginCheck(authUsername,(authPassword))
             if response != 0:
@@ -70,9 +74,8 @@ def login():
                 return jsonify({'token' : response})
             else:
                 return jsonify({'message':'incorrect credentials'})
-        elif request.method == "GET":
-            print("waiz")
-            return render_template('Login.html')
+        else:
+            return render_template("Login.html")
             
     except Exception as ex:
      print(ex)
@@ -96,6 +99,9 @@ def mau():
      print(f'Error during login: {ex}')
      return jsonify({'message': 'An error occurred during login.'}), 500 
 
+@app.route('/file',methods = ["GET"])
+def file():
+    return render_template("Login.html") 
 
 #server starting
 if __name__ == '__main__':

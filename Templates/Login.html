@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Login</title>
-    <link rel="stylesheet" href="../Static/Css/Login.css" />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='Css/Login.css')}}"
+    />
   </head>
   <body>
     <img
-      src="../Static/Img/eoceanLogos.png"
-      alt=""
+      src="{{url_for('static',filename='Img/EoceanLogos.png')}}"
+      alt="hello world"
       style="max-width: 420px; width: 100%"
     />
     <div class="container">
@@ -28,6 +31,6 @@
         <div id="error-container"></div>
       </div>
     </div>
-    <script src="../Static/Js/Login.js"></script>
+    <script src="{{url_for('static',filename='Js/Login.js')}}"></script>
   </body>
 </html>
