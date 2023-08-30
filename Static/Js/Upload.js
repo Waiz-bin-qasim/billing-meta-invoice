@@ -26,6 +26,7 @@ const loadFile = function (event) {
 
 function submitForm(form, parserType) {
   console.log(document.activeElement.value);
+  console.log(parserType);
   if (document.activeElement.value == parserType) {
     console.log("Have one.");
     return true;
@@ -37,11 +38,22 @@ const setLoading = (bool) => {
   if (bool) {
     loading.style.display = "block";
     container.style.display = "none";
+    document.querySelector("img").style.display = "none";
   } else {
+    document.querySelector("img").style.display = "none";
     loading.style.display = "none";
     container.style.display = "block";
   }
 };
+
+function myFunction(message) {
+  var x = document.getElementById("snackbar");
+  x.innerText = message;
+  x.className = "show";
+  setTimeout(function () {
+    x.className = x.className.replace("show", "");
+  }, 8000);
+}
 
 formSubmit.addEventListener("submit", function (event) {
   const form = event.currentTarget;
@@ -49,24 +61,27 @@ formSubmit.addEventListener("submit", function (event) {
     const formData = new FormData(form);
     const url = "http://127.0.0.1:8090/upload";
     if (submitForm(form, "Old Parser")) {
-      formData.append(parserChoice, 0);
+      console.log("haziq");
+      formData.append("parserChoice", 0);
     } else if (submitForm(form, "New Parser")) {
-      formData.append(parserChoice, 1);
+      formData.append("parserChoice", 1);
     }
+    // formData.append("file", inputFile.files[0]);
+    console.log(formData.get("parserChoice"));
     const fetchOptions = {
       method: "POST",
-      // Headers: {
-      //   "Content-Type": "multipart/form-data",
-      // },
       body: formData,
     };
     setLoading(true);
     fetch(url, fetchOptions)
-      .then(async (res) => {
-        const data = await res.json();
+      .then((response) => response.json())
+      .then((data) => {
+        // const data = await res.json();
         console.log(data);
+        console.log("Waiz");
         // setTimeout(() => {
         setLoading(false);
+        myFunction(data.message);
         // }, 5000);
       })
       .catch((err) => {

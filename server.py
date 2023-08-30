@@ -5,7 +5,7 @@ import jwt
 import datetime
 # from Middlewares.loginMiddlewares import token_required
 import dataHandler
-# import getCsv
+import getCsv
 import os
 from multiprocessing import Process
 import threading
@@ -27,7 +27,8 @@ def token_required(f):
             if 'token' in request.cookies:
                 token = request.cookies['token']
                 data = jwt.decode(token,app.config['SECRET_KEY'],algorithms=["HS256"]) 
-                
+            else:
+                return jsonify({"message":"Unauthorized"})
             
         except:
             return jsonify({'message': 'invalid token'}), 401
@@ -43,6 +44,7 @@ def upload():
         if request.method == "POST":
             data = request.form
             parserChoice = data.get('parserChoice')
+            print(request)
             print(parserChoice)
             file = request.files['file']
             if file.filename == '':
@@ -57,6 +59,31 @@ def upload():
     except Exception as ex:
         print(f'Error during file upload: {ex}')
         return jsonify({'message': 'An error occurred during file upload.'}), 500
+
+@app.route('/downloadcsv', methods = ['GET'])
+@token_required
+def downloadcsv():
+    try:
+        param1 = request.args.get('param1')
+        param2 = request.args.get('param2')
+        if param1 and param2:
+        
+            file_path = getCsv.run(param1, param2)
+            g.file_path = file_path
+            return send_file(file_path, as_attachment=True, download_name=f'{param1+param2}.xlsx'),200
+        else:
+            return "Please provide both param1 and param2 as query parameters.", 400
+    except Exception as ex:
+        print(f"Error during file download: {ex}")
+        return jsonify({'message': 'ERROR'}), 500   
+# @app.after_request
+# def after_request_func(response):
+#     file_path = getattr(g, 'file_path', None)
+#     print(file_path)
+#     if file_path and os.path.exists(file_path):
+#         start_time = threading.Timer(10, partial(fun, name=file_path))
+#         start_time.start()
+#     return response
 
 
 #for making token

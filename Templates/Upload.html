@@ -7,10 +7,13 @@
     <link rel="stylesheet" href="{{url_for('static',filename='Css/Upload.css')}}" />
   </head>
   <body>
+    <div id="snackbar">Some text some message..</div>
+    
     <div class="loading-modal">
       <div class="loader"></div>
       <h3>Loading...</h3>
     </div>
+
     <div class="container">
       <header>Upload Invoice</header>
       <div class="login form">
@@ -36,10 +39,10 @@
             <span class="span-text">Upload any Invoice from Desktop</span>
           </div>
           <div class="row">
-            <button id ="oldParser" type ="submit" class="btn column" value="0">
+            <button id ="oldParser" type ="submit" class="btn column" value="Old Parser">
               Old Parser
             </button>
-            <button id ="newParser" type="submit" class="btn column" value="1">
+            <button id ="newParser" type="submit" class="btn column" value="New Parser">
               New Parser
             </button>
           </div>

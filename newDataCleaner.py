@@ -27,6 +27,27 @@ def remove_comma(new_line):
     return finalLine
         
 
+def removeColumns(new_line):
+
+    comma_count = 0
+    finalLine =""
+
+    for char in new_line:
+
+        if char == ",": 
+            comma_count = comma_count + 1
+        
+        if comma_count == 2: 
+            continue
+
+        if comma_count == 4:
+            continue
+
+        finalLine = finalLine + char
+    
+    return finalLine
+
+
 def dataCleaning (outputFile):
   
   try:
@@ -39,6 +60,8 @@ def dataCleaning (outputFile):
 
             for line in f1:
 
+                
+
                 # removing subtotals 
                 if (line[:4] == ",,,,"):
                     continue
@@ -49,10 +72,14 @@ def dataCleaning (outputFile):
                     if heading == False:
                         heading = True
                         newLine = "WABA Name," + line
+                        newLine = removeColumns(newLine)
                         f2.writelines(newLine.translate({ord('"'): None}))
                         newLine = ""
-                    else:
                         continue
+                    else:
+                        newLine = ""
+                        continue
+
 
                 # WABA Name ConCat Lines
                 if (line[-5:-1] == ",,,,"):
@@ -66,26 +93,24 @@ def dataCleaning (outputFile):
                     newLine = "," + line
 
 
-                # removing commas b/w numbers
+                # removing commas b/w numbers and columns (discount and price type)
                 if newLine.find('"') != -1:
                     final_line = remove_comma(newLine)
-                    f2.writelines(final_line.translate({ord('"'): None}))
+                    final_line = removeColumns(final_line)
+                    f2.writelines(final_line.translate({ord('"'): None, ord('$'): None}))
                     newLine = ""
                 else:
-                    f2.writelines(newLine.translate({ord('"'): None}))
+                    newLine = removeColumns(newLine)
+                    f2.writelines(newLine.translate({ord('"'): None, ord('$'): None}))
                     newLine = ""
+ 
 
-
-        #if os.path.exists(outputFile):
-            #os.remove(outputFile)
+        if os.path.exists(outputFile):
+            os.remove(outputFile)
 
   except IOError as e:
     print(f"Error while processing the file: {e}")
   except Exception as ex:
     print(f"An unexpected error occurred: {ex}")
-
-
-
-
 
 
