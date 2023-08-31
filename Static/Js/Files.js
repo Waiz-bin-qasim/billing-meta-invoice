@@ -25,26 +25,4 @@ const setLoading = (bool) => {
   }
 };
 
-window.onload = function exampleFunction() {
-  const url = "";
-  setLoading(true);
-  const fetchOptions = {
-    method: "GET",
-  };
-  fetch(url, fetchOptions)
-    .then((res) => {
-      if (res.ok) {
-        const data = res.json();
-        addData(data);
-        setLoading(false);
-      }
-    })
-    .catch((err) => {
-      const data = [
-        { fileName: "helloworld", Download: "Link" },
-        { fileName: "helloworld", Download: "Link" },
-      ];
-      addData(data);
-      setLoading(false);
-    });
-};
+
