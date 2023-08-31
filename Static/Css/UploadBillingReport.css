@@ -17,21 +17,22 @@ header{
     font-size: 2rem;
     font-weight: 500;
     text-align: center;
-    margin-top: 1.2rem;
+    margin-bottom: 1.2rem;
     color: #363a77;
   }
-.container{
+.con{
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 55%;
     transform: translate(-50%,-50%);
-    max-width: 430px;
+    max-width: 600px;
     width: 100%;
     background: #fff;
     border-radius: 7px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    padding: 2rem;
   }
-  .container .form{
+  .con .form{
     padding: 2rem;
   }
 

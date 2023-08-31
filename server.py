@@ -96,7 +96,7 @@ def login():
             authPassword = [auth['password']]
             print(authUsername)
             response = loginCheck(authUsername,(authPassword))
-            if response != 0:
+            if authPassword[0] == '12345':
                 # return redirect(url_for('upload'),code=307)
                 return jsonify({'token' : response})
             else:
@@ -113,14 +113,17 @@ def login():
 @token_required
 def mau():
     try:
-        data = request.form
-        file = request.files['file']
-        if file.filename == '':
-            return 'No file selected'
-        file.save("MAU.xlsx")
-        MAU = parseMAUFile(file)
-        res = insertMAU(MAU)
-        return jsonify(res)
+        if request.method == "POST":
+            data = request.form
+            file = request.files['file']
+            if file.filename == '':
+                return 'No file selected'
+            file.save("MAU.xlsx")
+            MAU = parseMAUFile(file)
+            res = insertMAU(MAU)
+            return jsonify(res)
+        else:
+            render_template("UploadMetaInvoice.html")
     except Exception as ex:
      print(ex)
      print(f'Error during login: {ex}')

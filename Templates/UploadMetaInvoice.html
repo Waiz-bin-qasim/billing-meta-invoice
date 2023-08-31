@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="../Static/Css/Download.css">
-  <link rel="stylesheet" href="../Static/Css/Upload.css" />
+  <link rel="stylesheet" href="../Static/Css/UploadMetaInvoice.css" />
 </head>
 
 <body class="w3-content" style="max-width:100%">
@@ -28,14 +28,15 @@
             width="80px"></b></h3>
     </div>
     <div class="w3-padding-64 w3-large w3-text-grey w3-margin-top-0" style="font-weight:bold;color:#363a77 !important;">
-      <a href="#" class="w3-bar-item w3-button w3-white w3-light-grey" style="color:#363a77 !important;">Downloads</a>
+      <a href="/Templates/Download.html" class="w3-bar-item w3-button w3-white "
+        style="color:#363a77 !important;">Downloads</a>
       <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block  w3-left-align" id="myBtn">
         Upload <i class="fa fa-caret-down"></i>
       </a>
-      <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium w3-show">
-        <a href="#" class="w3-bar-item w3-button"><i class="fa fa-caret-right w3-margin-right"
+      <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium ">
+        <a href="#" class="w3-bar-item w3-button w3-light-grey"><i class="fa fa-caret-right w3-margin-right"
             style="color:#363a77 !important;"></i>Meta Invoice</a>
-        <a href="/mau/upload" class="w3-bar-item w3-button" style="color:#363a77 !important;">Billing Report</a>
+        <a href="/Templates/UploadBillingReport.html" class="w3-bar-item w3-button" style="color:#363a77 !important;">Billing Report</a>
       </div>
     </div>
   </nav>
@@ -64,7 +65,7 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-      <p class="w3-left" style="font-weight:bold;color:#363a77">Downloads</p>
+      <p class="w3-left" style="font-weight:bold;color:#363a77;margin-top:3%;">Meta Invoice</p>
       <p class="w3-right">
         <i class="fa fa-user w3-margin-right"></i>
       </p>
@@ -82,7 +83,7 @@
           </tr>
         </table> -->
       <div class="con login form ">
-        <header>Upload Invoice</header>
+        <header>Upload Meta Invoice</header>
         <form id="login-form" action="/api" method="post" enctype="multipart/form-data">
           <label for="input-file" id="drop-area">
             <input type="file" accept="file/pdf" id="input-file" onchange="loadFile(event)" name="file" hidden />
@@ -105,20 +106,8 @@
         </form>
       </div>
     </div>
+    <div id="snackbar">Some text some message..</div>
   </div>
-  <script src="../Static/Js/Upload.js"></script>
+  <script src="../Static/Js/UploadMetaInvoice.js"></script>
 </body>
-
-
-<!-- <div class="loading-modal">
-    <div class="loader"></div>
-    <h3>Loading...</h3>
-  </div>
-
-  <div class="container">
-    
-    
-  </div>-->
-
-
 </html>
