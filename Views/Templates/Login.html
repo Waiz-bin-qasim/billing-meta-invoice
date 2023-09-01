@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Login</title>
+    <link rel="stylesheet" href="../Static/Css/Login.css" />
+  </head>
+  <body>
+    <img
+      src="../Static/Img/eoceanLogos.png"
+      alt=""
+      style="max-width: 420px; width: 100%"
+    />
+    <div class="container">
+      <div class="login form">
+        <header>Login</header>
+        <form id="login-form" action="POST">
+          <input id="email" type="text" placeholder="Enter your email" />
+          <input
+            id="password"
+            type="password"
+            placeholder="Enter your password"
+          />
+          <button type="submit" class="btn" value="Login">Login</button>
+        </form>
+        <div id="error-container"></div>
+      </div>
+    </div>
+    <script src="../Static/Js/Login.js"></script>
+  </body>
+</html>
