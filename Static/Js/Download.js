@@ -36,38 +36,35 @@ const setLoading = (bool) => {
 };
 
 const addData = (data) => {
-  console.log(tableRow);
+  console.log(data);
   let count = 0;
   for (val of data) {
-    count++;
-    tableRow.innerHTML += `<td>${count}</td>
-    <td>${val.fileName}</td>
+    tableRow.innerHTML += `<td>${count + 1}</td>
+    <td>${val}</td>
     <td><button class = "btn">Download</button></td>`;
+    count++;
   }
 };
 
 window.onload = function fetchData() {
-  const url = "";
+  const url = "http://127.0.0.1:8090/files";
   setLoading(true);
   const fetchOptions = {
     method: "GET",
   };
-  setTimeout(() => {
-    fetch(url, fetchOptions)
-      .then((res) => {
-        if (res.ok) {
-          const data = res.json();
-          addData(data);
-          setLoading(false);
-        }
-      })
-      .catch((err) => {
-        const data = [
-          { fileName: "helloworld", Download: "Link" },
-          { fileName: "helloworld", Download: "Link" },
-        ];
+  fetch(url, fetchOptions)
+    .then(async (res) => {
+      if (res.ok) {
+        const data = await res.json();
+        console.log(data);
         addData(data);
         setLoading(false);
-      });
-  }, 5000);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      const data = ["helloworld ", "helloworld"];
+      addData(data);
+      setLoading(false);
+    });
 };

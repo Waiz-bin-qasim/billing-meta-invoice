@@ -15,7 +15,7 @@ from Helper.loginHelpers import passwordDecrypt
 # import computations
 
 #initialising the server
-app = Flask(__name__,template_folder='template')
+app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')  
 app.config['ENCRYPT_KEY'] = os.environ.get('ENCRYPT_KEY')
 
@@ -36,22 +36,24 @@ def token_required(f):
     return decorated
 
 # #token verified before executing
-@app.route('/upload', methods=['POST'])
+@app.route('/upload', methods=['POST',"GET"])
 @token_required
 def upload():
 
     try:
-        data = request.form
-        parserChoice = data.get('parserChoice')
-        
-        file = request.files['file']
-        if file.filename == '':
-            return 'No file selected'
-        file.save('transaction.pdf')
-        sql_values = []
-        response = dataHandler.run(sql_values,parserChoice)
-        return jsonify(response)
-    
+        if request.method == "POST":
+            data = request.form
+            parserChoice = data.get('parserChoice')
+            
+            file = request.files['file']
+            if file.filename == '':
+                return 'No file selected'
+            file.save('transaction.pdf')
+            sql_values = []
+            response = dataHandler.run(sql_values,parserChoice)
+            return jsonify(response)
+        else:
+            return render_template('UploadMetaInvoice.html')
     except Exception as ex:
         print(f'Error during file upload: {ex}')
         return jsonify({'message': 'An error occurred during file upload.'}), 500
@@ -67,13 +69,14 @@ def login():
             authUsername = [auth.username]
             authPassword = [auth.password]
             print(authUsername)
+            print(authPassword)
             response = loginCheck(authUsername,(authPassword))
             if response != 0:
                 # return redirect(url_for('upload'),code=307)
                 return jsonify({'token' : response})
             else:
                 return jsonify({'message':'incorrect credentials'})
-        elif request.method == "GET":
+        else:
             return render_template('Login.html')
             
     except Exception as ex:
@@ -81,40 +84,59 @@ def login():
      print(f'Error during login: {ex}')
      return jsonify({'message': 'An error occurred during login.'}), 500
 
-@app.route('/downloadcsv', methods = ['GET'])
+@app.route('/downloadcsv', methods = ['Post','GET'])
 @token_required
 def downloadcsv():
     try:
-        param1 = request.args.get('param1')
-        param2 = request.args.get('param2')
-        if param1 and param2:
-        
-            file_path = getCsv.run(param1, param2)
-            g.file_path = file_path
-            return send_file(file_path, as_attachment=True, download_name=f'{param1+param2}.xlsx'),200
+        if request.method == "POST":
+            param1 = request.args.get('param1')
+            param2 = request.args.get('param2')
+            if param1 and param2:
+            
+                file_path = getCsv.run(param1, param2)
+                g.file_path = file_path
+                return send_file(file_path, as_attachment=True, download_name=f'{param1+param2}.xlsx'),200
+            else:
+                return "Please provide both param1 and param2 as query parameters.", 400
         else:
-            return "Please provide both param1 and param2 as query parameters.", 400
+            return render_template("Download.html")
     except Exception as ex:
         print(f"Error during file download: {ex}")
         return jsonify({'message': 'ERROR'}), 500   
 
-@app.route('/mau/upload',methods = ['POST'])
+@app.route('/mau/upload',methods = ['POST',"GET"])
 @token_required
 def mau():
     try:
-        data = request.form
-        file = request.files['file']
-        if file.filename == '':
-            return 'No file selected'
-        file.save("MAU.xlsx")
-        response = parseMAUFile()
-        
-        return jsonify(response)
+         if request.method == "POST":
+            data = request.form
+            file = request.files['file']
+            if file.filename == '':
+                return 'No file selected'
+            file.save("MAU.xlsx")
+            response = parseMAUFile()
+            
+            return jsonify(response)
+         else:
+             return render_template("UploadBillingReport.html")
     except Exception as ex:
      print(ex)
      print(f'Error during login: {ex}')
      return jsonify({'message': 'An error occurred during login.'}), 500 
 
+@app.route('/files',methods = ['GET'])
+# @token_required
+def files():
+    try:
+        fileName = os.listdir("excel/")
+        response = []
+        for name in fileName:
+            response.append(name.split('.')[0]) 
+        return jsonify(response)
+    except Exception as ex:
+     print(ex)
+     print(f'Error during login: {ex}')
+     return jsonify({'message': 'An error occurred during login.'}), 500 
 
 #server starting
 if __name__ == '__main__':

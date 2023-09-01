@@ -25,7 +25,7 @@ const loadFile = function (event) {
       "File has been Uploaded <br/> Select The Parser";
     document.querySelector(".span-text").innerText = event.target.files[0].name;
   } else {
-    image.src = "../Static/Img/508-icon.png";
+    image.src = "/static/Img/508-icon.png";
     event.target.files[0] = null;
     alert("Incorrect File Type");
   }

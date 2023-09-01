@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../Static/Css/Download.css">
-    <link rel="stylesheet" href="../Static/Css/UploadBillingReport.css" />
+    <link rel="stylesheet" href="{{url_for('static',filename='Css/UploadBillingReport.css')}}" />
 </head>
 
 <body class="w3-content" style="max-width:100%">
@@ -29,15 +29,15 @@
         </div>
         <div class="w3-padding-64 w3-large w3-text-grey w3-margin-top-0"
             style="font-weight:bold;color:#363a77 !important;">
-            <a href="/Templates/Download.html" class="w3-bar-item w3-button w3-white "
+            <a href="/downloadcsv" class="w3-bar-item w3-button w3-white "
                 style="color:#363a77 !important;">Downloads</a>
             <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block  w3-left-align" id="myBtn">
                 Upload <i class="fa fa-caret-down"></i>
             </a>
             <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium ">
-                <a href="/Templates/UploadMetaInvoice.html" class="w3-bar-item w3-button "><i
+                <a href="/upload" class="w3-bar-item w3-button "><i
                         class="fa fa-caret-right w3-margin-right" style="color:#363a77 !important;"></i>Meta Invoice</a>
-                <a href="/Templates/UploadBillingReport.html" class="w3-bar-item w3-button w3-light-grey"
+                <a href="/mau/upload" class="w3-bar-item w3-button w3-light-grey"
                     style="color:#363a77 !important;">Billing Report</a>
             </div>
         </div>
@@ -103,7 +103,7 @@
 
         <div id="snackbar">Some text some message..</div>
     </div>
-    <script src="../Static/Js/UploadBillingReport.js"></script>
+    <script src="{{url_for('static',filename='Js/UploadBillingReport.js')}}"></script>
 </body>
 
 </html>
