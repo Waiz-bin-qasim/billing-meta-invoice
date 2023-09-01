@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins" , "sans-serif";
+    box-sizing: border-box;
+}
+
+body {
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+header{
+    font-size: 2rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 1.2rem;
+    color: #363a77;
+  }
+.con{
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    transform: translate(-50%,-50%);
+    max-width: 600px;
+    width: 100%;
+    background: #fff;
+    border-radius: 7px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    padding: 2rem;
+  }
+  .con .form{
+    padding: 2rem;
+  }
+
+#drop-area{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    text-align: center;
+    border-radius: 20px;
+}
+
+#img-view{
+    width: 100%;
+    height: 100%;    
+    border-radius: 20px;
+    background-color: white;
+    text-align: center;
+    border:2px dashed #bbb5ff;
+    background : azure;
+    padding-bottom: 10px ;
+}
+
+#img-view img {
+    width: 100px;
+    margin-top: 25px;
+}
+#img-view span{
+    display: block;
+    font-size: 12px;
+    color :#777;
+    margin-top: 15px;
+}
+.btn{
+    height: 40px;
+    width: 90%;
+    padding: 0 15px;
+    font-size: 2px;
+    margin: 1.3rem;
+    color: #fff;
+    background: #363a77;
+    border: 1px solid #ddd;
+    font-size: 1.3rem;
+    font-weight: 400;
+    cursor: pointer;
+    outline: none;
+    border-radius: 6px;
+}
+  .btn:hover{
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    }
+    .row {
+    display: flex;
+  }
+  
+  .column {
+    flex: 50%;
+  }
+
+  /* Modal */
+  .loading-modal{
+    display: none;
+    color: #363a77;
+  }
+  .loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #363a77; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    /* display: none; */
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  /* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+  visibility: hidden; /* Hidden by default. Visible on click */
+  min-width: 250px; /* Set a default minimum width */
+  margin-left: -125px; /* Divide value of min-width by 2 */
+  background-color: #333; /* Black background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 1; /* Add a z-index if needed */
+  left: 50%; /* Center the snackbar */
+  bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+  visibility: visible; /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}

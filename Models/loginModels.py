@@ -12,6 +12,7 @@ def loginCheck(param1,param2):
     sql_query = "SELECT password from login_credentials where username = %s"
     cursor.execute(sql_query,(param1))
     record = cursor.fetchone()
+    print("waiz")
     print(param2)
 
     if record[0] == param2[0]:

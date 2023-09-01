@@ -41,7 +41,7 @@ def fix_cell (new_line,line):
 def dataCleaning (pdf_file):
   
   try:
-    new_file = "new_file.csv"
+    new_file = "newFile.csv"
     with open(pdf_file, "r") as f1, open(new_file, "w") as f2:
    
 

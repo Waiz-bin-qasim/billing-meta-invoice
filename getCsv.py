@@ -1,4 +1,4 @@
-from dataHandler import establish_connection, close_connection
+from Config.dbConfig import establish_connection,close_connection
 import datetime
 import excelDataHandler
 
