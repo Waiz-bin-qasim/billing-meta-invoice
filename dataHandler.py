@@ -184,3 +184,5 @@ def run(sql_values,parserChoice):
   except Exception as ex:
         print(f"An unexpected error occurred: {ex}")
         
+def any():
+   return "waiz"
