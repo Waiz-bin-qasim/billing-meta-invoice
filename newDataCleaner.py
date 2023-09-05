@@ -60,8 +60,6 @@ def dataCleaning (outputFile):
 
             for line in f1:
 
-                
-
                 # removing subtotals 
                 if (line[:4] == ",,,,"):
                     continue
@@ -91,6 +89,11 @@ def dataCleaning (outputFile):
                     newLine = newLine + "," + line
                 else:
                     newLine = "," + line
+
+
+                # exceptions when tabula py fails to recognize columns
+                newLine = newLine.replace(' List', ',List')
+                newLine = newLine.replace(',,', ',')
 
 
                 # removing commas b/w numbers and columns (discount and price type)
