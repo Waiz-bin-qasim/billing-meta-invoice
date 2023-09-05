@@ -91,10 +91,18 @@ header{
     flex: 50%;
   }
 
+  #generateCsv{
+    display: none;
+  }
+
   /* Modal */
   .loading-modal{
     display: none;
     color: #363a77;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
   }
   .loader {
     border: 16px solid #f3f3f3; /* Light grey */

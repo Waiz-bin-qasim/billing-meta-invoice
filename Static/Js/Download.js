@@ -41,7 +41,7 @@ const addData = (data) => {
   for (val of data) {
     tableRow.innerHTML += `<td>${count + 1}</td>
     <td>${val}</td>
-    <td><button class = "btn">Download</button></td>`;
+    <td><button class = "btn" onclick = "downloadFile(this.value)" value = ${val}>Download</button></td>`;
     count++;
   }
 };
@@ -67,4 +67,29 @@ window.onload = function fetchData() {
       addData(data);
       setLoading(false);
     });
+};
+
+const downloadFile = (value) => {
+  const [month, year, _] = value.split(/(\d+)/);
+  // const month = "Jun";
+  // const year = "23";
+  // const url = `http://127.0.0.1:8090/getcsv?param1=${month}&&param2=${year}`;
+  // setLoading(true);
+  // const fetchOptions = {
+  //   method: "GET",
+  // };
+  // fetch(url, fetchOptions)
+  //   .then(async (res) => {
+  //     if (res.ok) {
+  //       const data = await res.json();
+  //       console.log(data);
+  //       addData(data);
+  //     }
+  //     setLoading(false);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //     setLoading(false);
+  //   });
+  window.location.href = `http://127.0.0.1:8090/getcsv?param1=${month}&&param2=${year}`;
 };

@@ -5,7 +5,7 @@ import jwt
 import datetime
 # from Middlewares.loginMiddlewares import token_required
 import dataHandler
-# import getCsv
+import getCsv
 import os
 from multiprocessing import Process
 import threading
@@ -65,10 +65,10 @@ def login():
     
     try: 
         if request.method == "POST":
-            auth = request.authorization
-            authUsername = [auth.username]
-            authPassword = [auth.password]
-            print(authUsername)
+            auth = request.form
+            print(auth)
+            authUsername = [auth['username']]
+            authPassword = [auth["password"]]
             print(authPassword)
             response = loginCheck(authUsername,(authPassword))
             if response != 0:
@@ -77,28 +77,17 @@ def login():
             else:
                 return jsonify({'message':'incorrect credentials'})
         else:
-            return render_template('Login.html')
+            return render_template('./Views/Templates/Login.html')
             
     except Exception as ex:
      print(ex)
      print(f'Error during login: {ex}')
      return jsonify({'message': 'An error occurred during login.'}), 500
 
-@app.route('/downloadcsv', methods = ['Post','GET'])
+@app.route('/downloadcsv', methods = ['GET'])
 @token_required
 def downloadcsv():
     try:
-        if request.method == "POST":
-            param1 = request.args.get('param1')
-            param2 = request.args.get('param2')
-            if param1 and param2:
-            
-                file_path = getCsv.run(param1, param2)
-                g.file_path = file_path
-                return send_file(file_path, as_attachment=True, download_name=f'{param1+param2}.xlsx'),200
-            else:
-                return "Please provide both param1 and param2 as query parameters.", 400
-        else:
             return render_template("Download.html")
     except Exception as ex:
         print(f"Error during file download: {ex}")
@@ -121,11 +110,11 @@ def mau():
              return render_template("UploadBillingReport.html")
     except Exception as ex:
      print(ex)
-     print(f'Error during login: {ex}')
-     return jsonify({'message': 'An error occurred during login.'}), 500 
+     print(f'Error during upload: {ex}')
+     return jsonify({'message': 'An error occurred during upload.'}), 500 
 
 @app.route('/files',methods = ['GET'])
-# @token_required
+@token_required
 def files():
     try:
         fileName = os.listdir("excel/")
@@ -137,6 +126,39 @@ def files():
      print(ex)
      print(f'Error during login: {ex}')
      return jsonify({'message': 'An error occurred during login.'}), 500 
+
+
+@app.route('/generatecsv',methods = ['POST'])
+# @token_required
+def generateCsv():
+    try:
+        param1 = request.args.get('param1')
+        param2 = request.args.get('param2')
+        if param1 and param2:
+            file_path = getCsv.run(param1, param2)
+            g.file_path = file_path
+            return jsonify("File was Generated")
+        else:
+            return "Please provide both param1 and param2 as query parameters.", 400
+    except Exception as e:
+        print(f'Error during generating file: {e}')
+        return jsonify({'message': 'An error occurred during generating csv.'}), 400 
+
+@app.route('/getcsv', methods = ['GET'])
+@token_required
+def getcsv():
+    try:
+        param1 = request.args.get('param1')
+        param2 = request.args.get('param2')
+        if param1 and param2:
+            file_path = "./excel/"+param1+param2+".xlsx"
+            return send_file(file_path, as_attachment=True, download_name=f'{param1+param2}.xlsx'),200
+        else:
+            return "Please provide both param1 and param2 as query parameters.", 400
+    except Exception as e:
+        print(f"Error during file download: {e}")
+        return jsonify({'message': 'ERROR'}), 500   
+
 
 #server starting
 if __name__ == '__main__':

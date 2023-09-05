@@ -66,7 +66,7 @@ formSubmit.addEventListener("submit", function (event) {
   const form = event.currentTarget;
   if (form.file.files[0]) {
     const formData = new FormData(form);
-    const url = "http://127.0.0.1:8090/upload";
+    const url = "http://127.0.0.1:8090/mau/upload";
     if (submitForm(form, "Old Parser")) {
       console.log("haziq");
       formData.append("parserChoice", 0);

@@ -9,6 +9,7 @@ from Helper.loginHelpers import passwordDecrypt
 def loginCheck(param1,param2):
     secret_key = current_app.config.get('SECRET_KEY')
     cursor,connection = establish_connection()
+    print(param1)
     sql_query = "SELECT password from login_credentials where username = %s"
     cursor.execute(sql_query,(param1))
     record = cursor.fetchone()

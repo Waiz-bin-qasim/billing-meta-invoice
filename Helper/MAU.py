@@ -10,10 +10,10 @@ def parseMAUFile():
         ws = wb.active
 
         li = []
-        for row in ws.iter_rows(min_row=2, max_row=ws.max_row,min_col=1, max_col=11, values_only=True):
+        for row in ws.iter_rows(min_row=2, max_row=63,min_col=1, max_col=13, values_only=True):
             li.append(row)
 
-        sqlQuery = "INSERT INTO mau (ORG_NAME_PRM,WHATSAPP_ACCOUNT_ID, MONTHLY_ACTIVE_USER_LIMIT, BAND_PRICE, AGENT_LICENCES, AGENT_LICENSE_PRICE, ADDITIONAL_AGENT_LICENSE_PRICE, SUPPORT_FEE, MONTH_, MAU_Count,ORG_PLAN) VALUES (%s,%s,%s,%s, %s, %s, %s, %s, %s, %s, %s)"
+        sqlQuery = "INSERT INTO mau (ORG_NAME_PRM,WABA_ID, MONTHLY_ACTIVE_USER_LIMIT, BAND_PRICE, AGENT_LICENCES, AGENT_LICENSE_PRICE, ADDITIONAL_AGENT_LICENSE_PRICE, SUPPORT_FEE,INV_MONTH, MAU_Count,INV_YEAR,ORG_PLAN,ADDITIONAL_CHARGES) VALUES (%s,%s,%s,%s, %s, %s, %s, %s, %s, %s,%s, %s,%s)"
         cursor, connection = establish_connection()
         if(li):
             cursor.executemany(sqlQuery, li)

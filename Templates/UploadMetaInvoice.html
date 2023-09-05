@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>W3.CSS Template</title>
+  <title>Upload Meta Invoice</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,12 +30,12 @@
     <div class="w3-padding-64 w3-large w3-text-grey w3-margin-top-0" style="font-weight:bold;color:#363a77 !important;">
       <a href="/downloadcsv" class="w3-bar-item w3-button w3-white "
         style="color:#363a77 !important;">Downloads</a>
-      <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block  w3-left-align" id="myBtn">
+      <a onclick="myAccFunc()" style="color:#363a77 !important;" href="javascript:void(0)" class="w3-button w3-block  w3-left-align" id="myBtn">
         Upload <i class="fa fa-caret-down"></i>
       </a>
       <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium ">
-        <a href="/upload" class="w3-bar-item w3-button w3-light-grey"><i class="fa fa-caret-right w3-margin-right"
-            style="color:#363a77 !important;"></i>Meta Invoice</a>
+        <a href="/upload" class="w3-bar-item w3-button w3-light-grey" style="color:#363a77 !important;" ><i class="fa fa-caret-right w3-margin-right"
+            style="color:#363a77 !important; "></i>Meta Invoice</a>
         <a href="/mau/upload" class="w3-bar-item w3-button" style="color:#363a77 !important;">Billing Report</a>
       </div>
     </div>
@@ -103,6 +103,9 @@
                 New Parser
               </button>
             </div>
+            <button id="generateCsv" class="btn column" value="New Parser" onclick = "generateCsv()">
+              Generate
+            </button>
         </form>
       </div>
     </div>

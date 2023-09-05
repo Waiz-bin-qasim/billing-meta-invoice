@@ -21,9 +21,18 @@ const loadFile = function (event) {
   } else {
     image.src = "/static/Img/508-icon.png";
     event.target.files[0] = null;
-    alert("Incorrect File Type")
+    alert("Incorrect File Type");
   }
 };
+
+function myFunction(message) {
+  var x = document.getElementById("snackbar");
+  x.innerText = message;
+  x.className = "show";
+  setTimeout(function () {
+    x.className = x.className.replace("show", "");
+  }, 8000);
+}
 
 function submitForm(form, parserType) {
   console.log(document.activeElement.value);
@@ -56,13 +65,37 @@ function myFunction(message) {
   }, 8000);
 }
 
+const showGenerateCsv = () => {
+  const btn = document.getElementById("generateCsv");
+  btn.style.display = "";
+};
+
+const generateCsv = () => {
+  const url = "http://127.0.0.1:8090/generatecsbv";
+  const fetchOptions = {
+    method: "POST",
+    body: formData,
+  };
+  setLoading(true);
+  fetch(url, fetchOptions)
+    .then((response) => response.json())
+    .then((data) => {
+      setLoading(false);
+      myFunction(data.message);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+      myFunction(data.message);
+    });
+};
+
 formSubmit.addEventListener("submit", function (event) {
   const form = event.currentTarget;
   if (form.file.files[0]) {
     const formData = new FormData(form);
     const url = "http://127.0.0.1:8090/upload";
     if (submitForm(form, "Old Parser")) {
-      console.log("haziq");
       formData.append("parserChoice", 0);
     } else if (submitForm(form, "New Parser")) {
       formData.append("parserChoice", 1);
@@ -77,19 +110,14 @@ formSubmit.addEventListener("submit", function (event) {
     fetch(url, fetchOptions)
       .then((response) => response.json())
       .then((data) => {
-        // const data = await res.json();
-        console.log(data);
-        console.log("Waiz");
-        // setTimeout(() => {
         setLoading(false);
         myFunction(data.message);
-        // }, 5000);
+        showGenerateCsv();
       })
       .catch((err) => {
         console.log(err);
-        // setTimeout(() => {
         setLoading(false);
-        // }, 5000);
+        myFunction("Error Occured");
       });
   } else {
     alert("No File Uploaded");

@@ -20,3 +20,8 @@ def establish_connection():
 def close_connection(cursor , connection):
     cursor.close()
     connection.close()
+
+
+# cursor,connection = establish_connection()
+# cursor.execute("select * from login_credentials")
+# print(cursor.fetchone())

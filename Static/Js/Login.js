@@ -17,7 +17,9 @@ loginForm.addEventListener("submit", async function (event) {
   event.preventDefault();
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-
+  const formData = new FormData();
+  formData.append("username", email);
+  formData.append("password", password);
   if (!email || !password) {
     errorContainer.textContent = "Please fill in all fields.";
     return;
@@ -27,10 +29,7 @@ loginForm.addEventListener("submit", async function (event) {
     setLoading(true);
     const response = await fetch("http://127.0.0.1:8090/login", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username: email, password: password }),
+      body: formData,
     });
     const data = await response.json();
     setLoading(false);
@@ -39,7 +38,7 @@ loginForm.addEventListener("submit", async function (event) {
       localStorage.setItem("token", data.token);
       console.log(data.token);
       document.cookie = `token=${data.token}`;
-      return (window.location.href = "http://127.0.0.1:8090/upload");
+      return (window.location.href = "http://127.0.0.1:8090/downloadcsv");
     } else {
       errorContainer.textContent = data.message;
     }
