@@ -631,5 +631,7 @@ def data_handler(filename,company_data,total_dollars,total_pkr):
 
    except PermissionError:
         print(f"PermissionError: The file '{filename}' is in use. Please close it and try again.")
+        raise Exception(f"PermissionError: The file '{filename}' is in use. Please close it and try again.")
    except Exception as e:
         print(f"Error occurred: {e}")
+        raise Exception(e)

@@ -40,8 +40,10 @@ def readPdf (pdf_file):
         print("Table extracted and saved")
     except FileNotFoundError as e:
         print(f"Error while reading PDF: {e}")
+        raise Exception(e)
     except Exception as ex:
         print(f"An unexpected error occurred: {ex}")
+        raise Exception(ex)
 
 
 def getVariables(pdf_file):
@@ -69,8 +71,10 @@ def getVariables(pdf_file):
         
     except FileNotFoundError as e:
         print(f"Error while reading PDF: {e}")
+        raise Exception(e)
     except Exception as ex:
         print(f"An unexpected error occurred: {ex}")
+        raise Exception(ex)
 
     return invoice_number, invoice_month, invoice_year
 

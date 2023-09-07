@@ -113,7 +113,9 @@ def dataCleaning (outputFile):
 
   except IOError as e:
     print(f"Error while processing the file: {e}")
+    raise Exception(e)
   except Exception as ex:
     print(f"An unexpected error occurred: {ex}")
+    raise Exception(ex)
 
 

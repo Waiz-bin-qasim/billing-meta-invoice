@@ -48,6 +48,7 @@ def insert_database(cursor , connection , sql_values):
   
   except Exception as ex:
     print(f"Error while inserting data to the database: {ex}")
+    raise Exception(ex)
 
 
 def create_dataframe(parserChoice):
@@ -144,6 +145,8 @@ def computing_totals(data_table,pdf_file,sql_values,parserChoice):
     return sql_values
   except Exception as ex:
     print(f"Error during computing totals: {ex}")
+    raise Exception(ex)
+
 
 
 
@@ -181,8 +184,10 @@ def run(sql_values,parserChoice):
   except FileNotFoundError as e:
         print(f"Error: File not found: {pdf_file}")
         print(e)
+        raise Exception(e)
   except Exception as ex:
         print(f"An unexpected error occurred: {ex}")
+        raise Exception(ex)
         
 def any():
    return "waiz"
