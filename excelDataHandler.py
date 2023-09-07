@@ -136,7 +136,7 @@ def planSubscription(sheet,index,company_data):
     highlight(sheet,"B8CCE4")
 
     # has active users
-    if (company_data[index][10] != ""):
+    if (company_data[index][10] is not None):
 
         # check PKR OR USD
         if company_data[index][11].upper() == "PKR":
@@ -168,7 +168,7 @@ def planSubscription(sheet,index,company_data):
 
 
     # has additional users
-    if (company_data[index][15] != ""):
+    if (company_data[index][15] is not None):
 
         cell = sheet.cell(row=rowMax+addIndexRow,column=3)
         cell.value = f"Additonal Users Outside Tier @${company_data[index][15]}/per user"
@@ -196,7 +196,7 @@ def planSubscription(sheet,index,company_data):
 
 
     # has agent seats
-    if (company_data[index][17] != ""):
+    if (company_data[index][17] is not None):
 
         cell = sheet.cell(row=rowMax+addIndexRow, column=3)
         cell.value = f"{company_data[index][17]}     Agent Seats"
@@ -215,7 +215,7 @@ def planSubscription(sheet,index,company_data):
 
 
     # has platform support 
-    if (company_data[index][20] != ""):
+    if (company_data[index][20] is not None):
 
         cell = sheet.cell(row=rowMax+addIndexRow, column=3)
         cell.value = f"Platform Support"
@@ -256,12 +256,12 @@ def set_subscription(sheet,index,company_data):
     cell.font = font_style
     set_color(sheet)
 
-    if (company_data[index][9] != ""):
+    if (company_data[index][9] is not None):
         planSubscription(sheet,index,company_data)
     else: 
 
         # has active users
-        if (company_data[index][10] != ""):
+        if (company_data[index][10] is not None):
 
             # check if PKR OR USD
             if company_data[index][11].upper() == 'PKR': 
@@ -295,7 +295,7 @@ def set_subscription(sheet,index,company_data):
 
 
         # has additional users
-        if (company_data[index][15] != ""):
+        if (company_data[index][15] is not None):
 
             cell = sheet.cell(row=rowMax+addIndexRow,column=3)
             cell.value = f"Additonal Users Outside Tier @${company_data[index][15]}/per user"
@@ -321,7 +321,7 @@ def set_subscription(sheet,index,company_data):
 
 
         # has agent seats
-        if (company_data[index][17] != ""):
+        if (company_data[index][17] is not None):
 
             cell = sheet.cell(row=rowMax+addIndexRow, column=3)
             cell.value = f"{company_data[index][17]}     Agent Seats"
@@ -338,7 +338,7 @@ def set_subscription(sheet,index,company_data):
 
 
         # has platform support 
-        if (company_data[index][20] != ""):
+        if (company_data[index][20] is not None):
 
             cell = sheet.cell(row=rowMax+addIndexRow, column=3)
             cell.value = f"Platform Support"
@@ -450,7 +450,7 @@ def insert_data(sheet,company_data):
     for row in range(num_rows):
 
         # empty data
-        if company_data[row][0] == 0:
+        if company_data[row][0] == None:
             continue
     
         
@@ -542,23 +542,23 @@ def calculateSubtotal(company_data,index):
     result = float(company_data[index][22])
 
     # add monthly price if exists 
-    if company_data[index][12] != "":
+    if company_data[index][12] is not None:
         # check if USD
         if company_data[index][11].upper() == "USD":
             result = result + float(company_data[index][14])
 
     # add additonal user if exists
-    if company_data[index][15] != "":
+    if company_data[index][15] is not None:
         # only add if not negative
         if int(company_data[index][16]) > 0:
             result = result + float(company_data[index][15]) * int(company_data[index][16])
 
     # add agent seats if exists
-    if company_data[index][17] != "":
+    if company_data[index][17] is not None:
         result = result + float(company_data[index][18])
 
     # add platform if exists
-    if company_data[index][20] != "":
+    if company_data[index][20] is not None:
         # check if in USD
         if company_data[index][19].upper() == "USD":
             result = result + float(company_data[index][20])
