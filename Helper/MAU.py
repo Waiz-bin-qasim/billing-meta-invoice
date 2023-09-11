@@ -26,6 +26,7 @@ def parseMAUFile():
             response = {
                 'message' : 'failed'
             }
+            raise Exception("Failed to insert data in Excel File")
         return response
     except Exception as ex:
         print(f"error during inserting excel file: {ex}")

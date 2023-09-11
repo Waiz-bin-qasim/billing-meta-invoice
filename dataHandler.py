@@ -44,6 +44,8 @@ def insert_database(cursor , connection , sql_values):
       response = {
         'message' : "failed"
       }
+      raise Exception("Failed to insert data in the Database")
+
     return response
   
   except Exception as ex:
@@ -170,6 +172,8 @@ def run(sql_values,parserChoice):
         response = {
         'message' : "wrong option"
         }
+        raise Exception("Wrong Option Selected")
+      
       data_table = create_dataframe(parserChoice) 
       sql_values = computing_totals(data_table , pdf_file , sql_values , parserChoice)
       cursor,connection = establish_connection() 
