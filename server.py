@@ -60,7 +60,7 @@ def upload(user):
             print(parserChoice)
             file = request.files['file']
             if file.filename == '':
-                return 'No file selected'
+                raise Exception('No file selected')
             file.save('transaction.pdf')
             sql_values = []
             print(user[0])
@@ -97,14 +97,14 @@ def login():
                 # return redirect(url_for('upload'),code=307)
                 return jsonify({'token' : response})
             else:
-                return jsonify({'message':'incorrect credentials'})
+                raise Exception({'message':'incorrect credentials'})
         else:
             return render_template('Login.html')
             
     except Exception as ex:
      print(ex)
      print(f'Error during login: {ex}')
-     return jsonify({'message': 'An error occurred during login.'}), 500
+     return jsonify({'Error Occured' : ex}), 400
 
 @app.route('/downloadcsv', methods = ['GET'])
 @token_required
@@ -113,7 +113,7 @@ def downloadcsv(user):
             return render_template("Download.html")
     except Exception as ex:
         print(f"Error during file download: {ex}")
-        return jsonify({'message': 'ERROR'}), 500   
+        return jsonify({'Error Occured' : ex}), 500  
 
 @app.route('/mau/upload',methods = ['POST',"GET"])
 @token_required
@@ -123,7 +123,7 @@ def mau(user):
             data = request.form
             file = request.files['file']
             if file.filename == '':
-                return 'No file selected'
+                raise Exception('No file selected')
             file.save("MAU.xlsx")
             if (checkMauLogs() == True):
                 response = parseMAUFile(user[0])
@@ -137,7 +137,7 @@ def mau(user):
     except Exception as ex:
      print(ex)
      print(f'Error during upload: {ex}')
-     return jsonify({'message': 'An error occurred during upload.'}), 500 
+     return jsonify({'Error Occured' : ex}), 400
 
 @app.route('/files',methods = ['GET'])
 # @token_required
@@ -151,7 +151,7 @@ def files():
     except Exception as ex:
      print(ex)
      print(f'Error during login: {ex}')
-     return jsonify({'message': 'An error occurred during login.'}), 500 
+     return jsonify({'Error Occured' : ex}), 500
 
 
 @app.route('/generatecsv',methods = ['POST'])
@@ -169,10 +169,10 @@ def generateCsv():
                 response = generateCheck()
                 return response
         else:
-            return "Please provide both param1 and param2 as query parameters.", 400
+            raise Exception("Please provide both param1 and param2 as query parameters.")
     except Exception as e:
         print(f'Error during generating file: {e}')
-        return jsonify({'message': 'An error occurred during generating csv.'}), 400 
+        return jsonify({'Error Ocuured': e}), 400 
 
 @app.route('/getcsv', methods = ['GET'])
 # @token_required
@@ -184,10 +184,10 @@ def getcsv():
             file_path = "./excel/"+param1+param2+".xlsx"
             return send_file(file_path, as_attachment=True, download_name=f'{param1+param2}.xlsx'),200
         else:
-            return "Please provide both param1 and param2 as query parameters.", 400
+            raise Exception("Please provide both param1 and param2 as query parameters.")
     except Exception as e:
         print(f"Error during file download: {e}")
-        return jsonify({'message': 'ERROR'}), 500   
+        return jsonify({'Error Occured' : e}), 400 
 
 
 #server starting

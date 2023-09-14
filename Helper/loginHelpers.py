@@ -16,4 +16,4 @@ def passwordDecrypt(encryptedPassword):
         return decrypted_text
     except Exception as ex:
         print(f"Error during password decryption: {ex}")
-        return ex
+        raise Exception(ex)

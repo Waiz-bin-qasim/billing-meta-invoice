@@ -44,10 +44,13 @@ def insert_database(cursor , connection , sql_values, month , year, current_date
       response = {
         'message' : "failed"
       }
+      raise Exception("Failed to insert data in the Database")
+
     return response
   
   except Exception as ex:
     print(f"Error while inserting data to the database: {ex}")
+    raise Exception(ex)
 
 
 def create_dataframe(parserChoice):
@@ -143,6 +146,8 @@ def computing_totals(data_table,pdf_file,sql_values,parserChoice,username):
     return sql_values,month,year,current_datetime
   except Exception as ex:
     print(f"Error during computing totals: {ex}")
+    raise Exception(ex)
+
 
 
 
@@ -166,6 +171,8 @@ def run(sql_values,parserChoice,user):
         response = {
         'message' : "wrong option"
         }
+        raise Exception("Wrong Option Selected")
+      
       data_table = create_dataframe(parserChoice) 
       sql_values,month,year,current_datetime = computing_totals(data_table , pdf_file , sql_values , parserChoice,user)
       cursor,connection = establish_connection() 
@@ -177,6 +184,9 @@ def run(sql_values,parserChoice,user):
   except FileNotFoundError as e:
         print(f"Error: File not found: {pdf_file}")
         print(e)
+        raise Exception(e)
   except Exception as ex:
         print(f"An unexpected error occurred: {ex}")
+        raise Exception(ex)
         
+

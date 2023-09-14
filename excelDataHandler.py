@@ -130,21 +130,40 @@ def planSubscription(sheet,index,company_data):
     rowMax = sheet.max_row + 1
     addIndexRow = 1
 
-    cell = sheet.cell(row=rowMax, column=3, value=company_data[index][9])
-    cell.font = font_style
+    # description
+    if company_data[index][23] is not None:
+        cell = sheet.cell(row=rowMax, column=2, value=company_data[index][23])
+
+    # plan name
+    cell = sheet.cell(row=rowMax, column=3)
+
+    if (company_data[index][10] is not None) and (company_data[index][10] != 0):
+
+        if company_data[index][11].upper() == "PKR":
+            cell.value = f"{company_data[index][9]} PKR{company_data[index][12]}/month"
+            cell.font = font_style
+        else:
+            cell.value = f"{company_data[index][9]} ${company_data[index][12]}/month"
+            cell.font = font_style
+
+    else:
+        cell = sheet.cell(row=rowMax, column=3, value=company_data[index][9])
+        cell.font = font_style
+
+
     set_color(sheet)
     highlight(sheet,"B8CCE4")
 
     # has active users
-    if (company_data[index][10] != ""):
+    if (company_data[index][10] is not None) and (company_data[index][10] != 0):
 
         # check PKR OR USD
         if company_data[index][11].upper() == "PKR":
             cell = sheet.cell(row=rowMax+addIndexRow, column=3)
-            cell.value = f"{company_data[index][10]}     Monthly Active Users @PKR{company_data[index][12]}/month"
+            cell.value = f"{int(company_data[index][10])}     Monthly Active Users @PKR{company_data[index][12]}/month"
         else:
             cell = sheet.cell(row=rowMax+addIndexRow, column=3)
-            cell.value = f"{company_data[index][10]}     Monthly Active Users @${company_data[index][12]}/month"
+            cell.value = f"{int(company_data[index][10])}     Monthly Active Users @${company_data[index][12]}/month"
 
         cell = sheet.cell(row=rowMax+addIndexRow, column=4)
         cell.value = company_data[index][21] #date
@@ -168,7 +187,7 @@ def planSubscription(sheet,index,company_data):
 
 
     # has additional users
-    if (company_data[index][15] != ""):
+    if (company_data[index][15] is not None) and (company_data[index][15] != 0):
 
         cell = sheet.cell(row=rowMax+addIndexRow,column=3)
         cell.value = f"Additonal Users Outside Tier @${company_data[index][15]}/per user"
@@ -177,18 +196,13 @@ def planSubscription(sheet,index,company_data):
         cell.value = company_data[index][21] #date
 
         cell = sheet.cell(row=rowMax+addIndexRow,column=5)
-        if int(company_data[index][16]) < 0: #qty
-            cell.value = 0
-        else: 
+        if int(company_data[index][16]) > 0: #qty 
             cell.value = int(company_data[index][16])
 
         cell = sheet.cell(row=rowMax+addIndexRow, column=6)
-        if int(company_data[index][16]) < 0:
-            cell.value = 0
-        else:
+        if int(company_data[index][16]) > 0:
             cell.value = float(company_data[index][15]) * int(company_data[index][16]) #amount
-
-        cell.number_format = '$#,##0.00'
+            cell.number_format = '$#,##0.00'
 
         set_color(sheet)
         highlight(sheet,'D8E4BC')
@@ -196,18 +210,21 @@ def planSubscription(sheet,index,company_data):
 
 
     # has agent seats
-    if (company_data[index][17] != ""):
+    if (company_data[index][17] is not None) and (company_data[index][17] != 0):
 
         cell = sheet.cell(row=rowMax+addIndexRow, column=3)
-        cell.value = f"{company_data[index][17]}     Agent Seats"
+        if company_data[index][18] != 0:
+            cell.value = f"{int(company_data[index][17])}     Agent Seats @${float(company_data[index][18] / company_data[index][17])} per agent/month"
+        else:
+            cell.value = f"{int(company_data[index][17])}     Agent Seats"
 
         cell = sheet.cell(row=rowMax+addIndexRow, column=4)
         cell.value = company_data[index][21] #date
 
-        cell = sheet.cell(row=rowMax+addIndexRow, column=6)
-        cell.value = float(company_data[index][18]) #amount
-
-        cell.number_format = '$#,##0.00'
+        if company_data[index][18] != 0:
+            cell = sheet.cell(row=rowMax+addIndexRow, column=6)
+            cell.value = float(company_data[index][18]) #amount
+            cell.number_format = '$#,##0.00'
 
         set_color(sheet)
         highlight(sheet,'D8E4BC')
@@ -215,7 +232,7 @@ def planSubscription(sheet,index,company_data):
 
 
     # has platform support 
-    if (company_data[index][20] != ""):
+    if (company_data[index][20] is not None):
 
         cell = sheet.cell(row=rowMax+addIndexRow, column=3)
         cell.value = f"Platform Support"
@@ -238,10 +255,35 @@ def planSubscription(sheet,index,company_data):
         addIndexRow = addIndexRow + 1
     
 
-    # sub heading
-    cell = sheet.cell(row=rowMax+addIndexRow, column=3, value="WHATSAPP CONVERSATIONS")
-    cell.font = font_style
-    set_color(sheet)
+
+
+def set_addOns(sheet,index,company_data):
+
+    font_style = Font(bold=True, name='Arial', size=9)
+    rowMax = sheet.max_row + 1
+
+    # add on if there are
+    if company_data[index][24] != 0 and company_data[index][24] is not None:
+            
+        cell = sheet.cell(row=rowMax, column=3, value="ADD-ONS")
+        cell.font = font_style
+        set_color(sheet)
+
+        # agent seats
+        cell = sheet.cell(row=rowMax+1, column=3)
+        cell.value = f"{int(company_data[index][24])}     Agent Seats"
+
+        cell = sheet.cell(row=rowMax+1, column=4)
+        cell.value = company_data[index][21] #date
+
+        if company_data[index][25] != 0:
+            cell = sheet.cell(row=rowMax+1, column=6)
+            cell.value = float(company_data[index][25]) #amount
+            cell.number_format = '$#,##0.00'
+
+        set_color(sheet)
+        highlight(sheet,'D8E4BC')
+
 
 
 
@@ -256,17 +298,21 @@ def set_subscription(sheet,index,company_data):
     cell.font = font_style
     set_color(sheet)
 
-    if (company_data[index][9] != ""):
+    if (company_data[index][9] is not None) and (company_data[index][9].upper() != "CUSTOM"):
         planSubscription(sheet,index,company_data)
     else: 
 
+        # description
+        if company_data[index][23] is not None:
+            cell = sheet.cell(row=rowMax+1, column=2, value=company_data[index][23])
+
         # has active users
-        if (company_data[index][10] != ""):
+        if (company_data[index][10] is not None) and (company_data[index][10] != 0):
 
             # check if PKR OR USD
             if company_data[index][11].upper() == 'PKR': 
                 cell = sheet.cell(row=rowMax+addIndexRow, column=3)
-                cell.value = f"{company_data[index][10]}     Monthly Active Users @PKR{company_data[index][12]}/month"
+                cell.value = f"{int(company_data[index][10])}     Monthly Active Users @PKR{company_data[index][12]}/month"
 
             elif company_data[index][11].upper() == 'USD':
                 cell = sheet.cell(row=rowMax+addIndexRow, column=3)
@@ -295,7 +341,7 @@ def set_subscription(sheet,index,company_data):
 
 
         # has additional users
-        if (company_data[index][15] != ""):
+        if (company_data[index][15] is not None) and (company_data[index][15] != 0):
 
             cell = sheet.cell(row=rowMax+addIndexRow,column=3)
             cell.value = f"Additonal Users Outside Tier @${company_data[index][15]}/per user"
@@ -304,41 +350,42 @@ def set_subscription(sheet,index,company_data):
             cell.value = company_data[index][21] #date
 
             cell = sheet.cell(row=rowMax+addIndexRow,column=5)
-            if int(company_data[index][16]) < 0: #qty
-                cell.value = 0
-            else: 
+            if int(company_data[index][16]) > 0: #qty
                 cell.value = int(company_data[index][16])
 
             cell = sheet.cell(row=rowMax+addIndexRow, column=6)
-            if int(company_data[index][16]) < 0:
-                cell.value = 0
-            else:
+            if int(company_data[index][16]) > 0:
                 cell.value = float(company_data[index][15]) * int(company_data[index][16]) #amount
-
-            cell.number_format = '$#,##0.00'
+                cell.number_format = '$#,##0.00'
+            
             set_color(sheet)
             addIndexRow = addIndexRow + 1
 
 
         # has agent seats
-        if (company_data[index][17] != ""):
+        if (company_data[index][17] is not None) and (company_data[index][17] != 0):
 
             cell = sheet.cell(row=rowMax+addIndexRow, column=3)
-            cell.value = f"{company_data[index][17]}     Agent Seats"
+
+            if company_data[index][18] == 0:
+                cell.value = f"{company_data[index][17]}     Agent Seats"
+            else:
+                cell.value = f"{company_data[index][17]}     Agent Seats @${float(company_data[index][18] / company_data[index][17])} per agent/month"
 
             cell = sheet.cell(row=rowMax+addIndexRow, column=4)
             cell.value = company_data[index][21] #date
 
-            cell = sheet.cell(row=rowMax+addIndexRow, column=6)
-            cell.value = float(company_data[index][18]) #amount
+            if (company_data[index][18] != 0):
+                cell = sheet.cell(row=rowMax+addIndexRow, column=6)
+                cell.value = float(company_data[index][18]) #amount
+                cell.number_format = '$#,##0.00'
 
-            cell.number_format = '$#,##0.00'
             set_color(sheet)
             addIndexRow = addIndexRow + 1
 
 
         # has platform support 
-        if (company_data[index][20] != ""):
+        if (company_data[index][20] is not None):
 
             cell = sheet.cell(row=rowMax+addIndexRow, column=3)
             cell.value = f"Platform Support"
@@ -358,17 +405,11 @@ def set_subscription(sheet,index,company_data):
                 cell.number_format = '$#,##0.00'
 
             set_color(sheet)
-            addIndexRow = addIndexRow + 1
-
-
-        # sub heading
-        cell = sheet.cell(row=rowMax+addIndexRow, column=3, value="WHATSAPP CONVERSATIONS")
-        cell.font = font_style
-        set_color(sheet)
 
 
 
-def set_heading (sheet,dataNumber,customerName):
+
+def set_heading (sheet,dataNumber,customerName,description):
 
     rowMax = sheet.max_row
      
@@ -381,11 +422,11 @@ def set_heading (sheet,dataNumber,customerName):
 
     cell = sheet.cell(row=rowMax+1, column=2, value=customerName)
     cell.font = font_style
-
     set_color(sheet)
+
+    
     
   
-
 def set_footer(sheet):
 
     rowMax = sheet.max_row
@@ -438,6 +479,8 @@ def set_color(sheet):
 
 def insert_data(sheet,company_data):
 
+    font_style = Font(bold=True, name='Arial', size=9)
+
     # empty array
     if company_data is None or len(company_data) == 0:
         print("EMPTY DATA ARRAY")
@@ -450,13 +493,19 @@ def insert_data(sheet,company_data):
     for row in range(num_rows):
 
         # empty data
-        if company_data[row][0] == 0:
+        if company_data[row][0] == None:
             continue
     
         
-        set_heading(sheet,row+1,company_data[row][0])
+        set_heading(sheet,row+1,company_data[row][0],company_data[row][23])
         set_subscription(sheet,row,company_data)
+        set_addOns(sheet,row,company_data)
 
+        # sub heading
+        rowMax = sheet.max_row
+        cell = sheet.cell(row=rowMax+1, column=3, value="WHATSAPP CONVERSATIONS")
+        cell.font = font_style
+        set_color(sheet)
 
         # inserting conversation fee
         rowMax = sheet.max_row
@@ -475,7 +524,7 @@ def insert_data(sheet,company_data):
 
         # inserting Service
         rowMax = sheet.max_row
-        sheet.cell(row=rowMax+1, column=3, value="Service Conversation(Formerly User-Initiated)")
+        sheet.cell(row=rowMax+1, column=3, value="Service Conversation (Formerly User-Initiated)")
         sheet.cell(row=rowMax+1, column=4, value=company_data[row][21]) #date
 
         cell = sheet.cell(row=rowMax+1, column=5, value=int(company_data[row][1])) #qty
@@ -490,7 +539,7 @@ def insert_data(sheet,company_data):
             
         #inserting Marketing
         rowMax = sheet.max_row
-        sheet.cell(row=rowMax+1, column=3, value="Marketing Conversation(Formerly Business-Initiated)")
+        sheet.cell(row=rowMax+1, column=3, value="Marketing Conversation (Formerly Business-Initiated)")
         sheet.cell(row=rowMax+1, column=4, value=company_data[row][21]) #date
 
         cell = sheet.cell(row=rowMax+1, column=5, value=int(company_data[row][2])) #qty
@@ -505,7 +554,7 @@ def insert_data(sheet,company_data):
 
         #inserting Utility
         rowMax = sheet.max_row
-        sheet.cell(row=rowMax+1, column=3, value="Utility Conversation(Formerly Business-Initiated)")
+        sheet.cell(row=rowMax+1, column=3, value="Utility Conversation (Formerly Business-Initiated)")
         sheet.cell(row=rowMax+1, column=4, value=company_data[row][21]) #date
 
         cell = sheet.cell(row=rowMax+1, column=5, value=int(company_data[row][3])) #qty
@@ -520,7 +569,7 @@ def insert_data(sheet,company_data):
 
         #inserting Authentication
         rowMax = sheet.max_row
-        sheet.cell(row=rowMax+1, column=3, value="Authentication Conversation(Formerly Business-Initiated)")
+        sheet.cell(row=rowMax+1, column=3, value="Authentication Conversation (Formerly Business-Initiated)")
         sheet.cell(row=rowMax+1, column=4, value=company_data[row][21]) #date
 
         cell = sheet.cell(row=rowMax+1, column=5, value=int(company_data[row][4])) #qty
@@ -533,35 +582,39 @@ def insert_data(sheet,company_data):
         set_color(sheet)
 
         result = calculateSubtotal(company_data,row)
-
         set_subtotal(sheet,result)
         
     
+
 def calculateSubtotal(company_data,index):
 
     result = float(company_data[index][22])
 
     # add monthly price if exists 
-    if company_data[index][12] != "":
+    if (company_data[index][12] is not None) and (company_data[index][12] != 0):
         # check if USD
         if company_data[index][11].upper() == "USD":
             result = result + float(company_data[index][14])
 
     # add additonal user if exists
-    if company_data[index][15] != "":
+    if (company_data[index][15] is not None) and (company_data[index][15] != 0):
         # only add if not negative
         if int(company_data[index][16]) > 0:
             result = result + float(company_data[index][15]) * int(company_data[index][16])
 
     # add agent seats if exists
-    if company_data[index][17] != "":
+    if (company_data[index][18] is not None) and (company_data[index][18] != 0):
         result = result + float(company_data[index][18])
 
     # add platform if exists
-    if company_data[index][20] != "":
+    if (company_data[index][20] is not None) and (company_data[index][20] != 0):
         # check if in USD
         if company_data[index][19].upper() == "USD":
             result = result + float(company_data[index][20])
+
+    # check if add on agent price exist 
+    if company_data[index][25] != 0 and company_data[index][25] is not None:
+        result = result + company_data[index][25]
     
     return result
 
@@ -631,5 +684,7 @@ def data_handler(filename,company_data,total_dollars,total_pkr):
 
    except PermissionError:
         print(f"PermissionError: The file '{filename}' is in use. Please close it and try again.")
+        raise Exception(f"PermissionError: The file '{filename}' is in use. Please close it and try again.")
    except Exception as e:
         print(f"Error occurred: {e}")
+        raise Exception(e)
