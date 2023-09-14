@@ -21,15 +21,15 @@
     <header>My App</header>
     <ul>
       <li>
-        <a href="/MetaInvoice"><i class="fas fa-file-invoice"></i>Meta
+        <a href="/upload"><i class="fas fa-file-invoice"></i>Meta
           Invoices</a>
       </li>
       <li>
-        <a href="/billing"><i class="fas fa-file-invoice-dollar"></i>Billing
+        <a href="/mau/upload"><i class="fas fa-file-invoice-dollar"></i>Billing
           MAUs</a>
       </li>
       <li>
-        <a href="/Reports"><i class="fas fa-file-invoice-dollar"></i>Reports</a>
+        <a href="/downloadcsv"><i class="fas fa-file-invoice-dollar"></i>Reports</a>
       </li>
     </ul>
   </div>
@@ -55,10 +55,10 @@
                 <span class="span-text">Upload any Invoice from Desktop</span>
               </div>
               <div class="row">
-                <button id="oldParser" type="submit" class="btn column" value="0">
+                <button id="oldParser" type="submit" class="btn column" value="0" onclick = "setParserChoice(0)">
                   Old Parser
                 </button>
-                <button id="newParser" type="submit" class="btn column" value="1">
+                <button id="newParser" type="submit" class="btn column" value="1" onclick="setParserChoice(1)">
                   New Parser
                 </button>
               </div>

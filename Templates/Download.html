@@ -10,13 +10,17 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{url_for('static',filename='Css/Download.css')}}">
+    <script lang="javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script lang="javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 </head>
 
 <body class="w3-content" style="max-width:100%">
 
     <!-- Sidebar/menu -->
     <nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top "
-        style="z-index:3;width:200px;box-shadow: 0 5px 10px rgba(0,0,0,0.3);" id="mySidebar">
+        style="z-index:3;width:200px;box-shadow: 0 5px 10px rgba(0,0,0,0.3); background-color:#363a77 !important;"
+        id="mySidebar">
         <div class="w3-container w3-display-container w3-padding-16">
             <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
             <h3 class="w3-wide"><b><img
@@ -26,16 +30,16 @@
                         alt="" width="80px"></b></h3>
         </div>
         <div class="w3-padding-64 w3-large w3-text-grey w3-margin-top-0"
-            style="font-weight:bold;color:#363a77 !important;">
-            <a href="/downloadcsv" class="w3-bar-item w3-button w3-white w3-light-grey"
-                style="color:#363a77 !important;">Downloads</a>
-            <a onclick="myAccFunc()" href="javascript:void(0)" style="color:#363a77 !important;" class="w3-button w3-block  w3-left-align" id="myBtn">
+            style="font-weight:bold;color:#f0f8fe !important;">
+            <a href="/downloadcsv" class="w3-bar-item w3-button " style="color:#f0f8fe !important;">Downloads</a>
+            <a onclick="myAccFunc()" href="javascript:void(0)" style="color:#f0f8fe !important;"
+                class="w3-button w3-block  w3-left-align" id="myBtn">
                 Upload <i class="fa fa-caret-down"></i>
             </a>
             <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium w3-show">
-                <a href="/upload" class="w3-bar-item w3-button" style="color:#363a77 !important;"><i
-                        class="fa fa-caret-right w3-margin-right" style="color:#363a77 !important;"></i>Meta Invoice</a>
-                <a href="/mau/upload" class="w3-bar-item w3-button" style="color:#363a77 !important;">Billing Report</a>
+                <a href="/upload" class="w3-bar-item w3-button" style="color:#f0f8fe !important;"><i
+                        class="fa fa-caret-right w3-margin-right" style="color:#f0f8fe !important;"></i>Meta Invoice</a>
+                <a href="/mau/upload" class="w3-bar-item w3-button" style="color:#f0f8fe !important;">Billing Report</a>
             </div>
         </div>
     </nav>
@@ -57,7 +61,11 @@
         id="myOverlay"></div>
 
     <!-- !PAGE CONTENT! -->
-    <div class="w3-main" style="margin-left:300px">
+    <!-- <div class="loading-modal">
+        <div class="loader"></div>
+        <h3>Loading...</h3>
+    </div> -->
+    <div class="w3-main " style="margin-left:20%;">
 
         <!-- Push down content on small screens -->
         <div class="w3-hide-large" style="margin-top:83px"></div>
@@ -65,24 +73,16 @@
         <!-- Top header -->
         <header class="w3-container w3-xlarge">
             <p class="w3-left" style="font-weight:bold;color:#363a77;margin-top:3%;">Downloads</p>
-            <p class="w3-right">
+            <p class="w3-right" style="margin-top:3%;margin-right: 7%;">
                 <i class="fa fa-user w3-margin-right"></i>
             </p>
         </header>
-        <div class="w3-row-padding" style="margin:0 -16px">
-            <div class="loading-modal">
-                <div class="loader"></div>
-                <h3>Loading...</h3>
+        <button class="btn">upload</button>
+        <div class="w3-row-padding" width="80%">
+            <div id="myDropdown" class="dropdown-content">
+                <table id="example" class="stripe" width="100%"></table>
             </div>
-            <table class="con w3-table w3-striped w3-white">
-                <tr>
-                    <th>S.no</th>
-                    <th>File Name </th>
-                    <th><i>Options</i></th>
-                </tr>
-            </table>
         </div>
-    </div>
 </body>
 <script src="{{url_for('static',filename='Js/Download.js')}}"></script>
 </body>

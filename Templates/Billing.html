@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Sider Menu Bar CSS</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />
+    <link rel="stylesheet" href="{{url_for('static',filename='Css/billing.css')}}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body>
+    <input type="checkbox" id="check" />
+    <label for="check">
+        <i class="fas fa-bars" id="btn"></i>
+        <!-- <i class="fas fa-times" id="cancel"></i> -->
+    </label>
+    <div class="sidebar">
+        <header>My App</header>
+        <ul>
+            <li>
+              <a href="/upload"><i class="fas fa-file-invoice"></i>Meta
+                Invoices</a>
+            </li>
+            <li>
+              <a href="/mau/upload"><i class="fas fa-file-invoice-dollar"></i>Billing
+                MAUs</a>
+            </li>
+            <li>
+              <a href="/downloadcsv"><i class="fas fa-file-invoice-dollar"></i>Reports</a>
+            </li>
+          </ul>
+    </div>
+    <section>
+        <div class="title text">Billing</div>
+
+        <!-- MetaInvoice Modal -->
+        <div id="MetaInvoice" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content container">
+                <span class="close">&times;</span>
+                <header>Upload Billing Report</header>
+                <div class="con login form ">
+                    <form id="login-form" action="/api" method="post" enctype="multipart/form-data">
+                        <label id="drop-area">
+                            <input type="file" accept="file/pdf" id="input-file" onchange="loadFile(event)" name="file"
+                                hidden />
+                            <div id="img-view">
+                                <img id="show-uploaded-image" src="{{url_for('static',filename='Img/508-icon.png')}}" />
+                                <p class="para-text">
+                                    Drag and Drop or click here <br />to upload image
+                                </p>
+                                <span class="span-text">Upload any Invoice from Desktop</span>
+                            </div>
+                            <div class="row">
+                                <button id="oldParser" type="submit" class="btn column" value="Old Parser">
+                                    Upload
+                                </button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="table">
+            <table id="example" class="display" style="width: 100%">
+                <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Year</th>
+                      <th>Created By</th>
+                      <th>Created On</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in data %}
+                    <tr>
+                      <td>{{ item[0] }}</td>
+                      <td>{{ item[1] }}</td>
+                      <td>{{ item[2]}}</td>
+                      <td>{{ item[3] }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+            </table>
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="{{url_for('static',filename='Js/billing.js')}}"></script>
+</body>
+
+</html>

@@ -67,7 +67,6 @@ def upload(user):
             # raise Exception("waiz")
             if(checkBillingLogs(parserChoice) == True):
                 response = dataHandler.run(sql_values,parserChoice,user[0])
-                print("waiz")
                 return jsonify(response)
             else:
                 return jsonify({'message': 'Bad Request'}), 400
@@ -75,7 +74,8 @@ def upload(user):
             # return jsonify(response)  
         else:
             data = getAllBilling()
-            return render_template('MetaInvoice.html')
+            print(data)
+            return render_template('MetaInvoice.html',data=data)
     except Exception as ex:
         print(f'Error during file upload: {ex}')
         return jsonify({'message': 'An error occurred during file upload.'}), 400
@@ -110,7 +110,14 @@ def login():
 @token_required
 def downloadcsv(user):
     try:
-            return render_template("Download.html")
+            # data =[['1','jul23']]
+            fileName = os.listdir("excel/")
+            response = []
+            count = 0
+            for name in fileName:
+                response.append([count+1,name.split('.')[0]]) 
+                count +=1
+            return render_template("Reports.html",data = response)
     except Exception as ex:
         print(f"Error during file download: {ex}")
         return jsonify({'Error Occured' : ex}), 500  
@@ -133,7 +140,9 @@ def mau(user):
             
          else:
              data = getAllMau()
-             return render_template("UploadBillingReport.html")
+             print("waiz")
+             print(data)
+             return render_template("Billing.html",data=data)
     except Exception as ex:
      print(ex)
      print(f'Error during upload: {ex}')

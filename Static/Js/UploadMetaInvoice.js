@@ -108,24 +108,16 @@ formSubmit.addEventListener("submit", function (event) {
     };
     setLoading(true);
     fetch(url, fetchOptions)
-      .then((response) => {
-        console.log(response)
-        setLoading(false);
-        if(response.ok){
-          myFunction(data.message);
-          showGenerateCsv();
-        }else{
-          let message = response.json()
-          throw message.message
-        }
-      })
+      .then((response) => response.json())
       .then((data) => {
-        console.log(data.status)
+        setLoading(false);
+        myFunction(data.message);
+        showGenerateCsv();
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
-        myFunction(err);
+        myFunction("Error Occured");
       });
   } else {
     alert("No File Uploaded");

@@ -5,15 +5,14 @@ const oldParserbtn = document.querySelector("#oldParser");
 const newParserbtn = document.querySelector("#newParser");
 const btn = document.getElementById("myBtn");
 const span = document.getElementsByClassName("close")[0];
-let parserChoice;
-// Alerts
+
+// ALerts
 const successAlert = () => {
-  Swal.fire("Successful", "Meta Invoice Uploaded", "success");
+  Swal.fire("Successful", "Billing MAU uploaded", "success");
 };
-const errorAlert = (message) => {
+const errorALert = (message) => {
   MetaInvoicemodal.style.display = "none";
   Swal.fire({
-    position: "center",
     icon: "error",
     title: "Error!",
     text: message,
@@ -36,11 +35,11 @@ new DataTable("#example", {
     },
   ],
 });
-// Get the modal
+
+// modal Js
 span.onclick = function () {
   MetaInvoicemodal.style.display = "none";
 };
-
 window.onclick = function (event) {
   if (event.target == MetaInvoicemodal) {
     MetaInvoicemodal.style.display = "none";
@@ -49,36 +48,27 @@ window.onclick = function (event) {
 
 // Meta Invoice Upload
 const loadFile = function (event) {
-  const image = document.getElementById("show-uploaded-image");
+  var image = document.getElementById("show-uploaded-image");
   console.log(event.target.files[0].type);
-
   if (
     event.target.files[0] &&
-    event.target.files[0].type === "application/pdf"
+    (event.target.files[0].type === ".xlsx" ||
+      event.target.files[0].type === "application/vnd.openx" ||
+      event.target.files[0].type ===
+        "mlformats-officedocument.spreadsheetml.sheet" ||
+      event.target.files[0].type ===
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   ) {
-    image.src = "/static/Img/pdf-icon.webp";
+    image.src = "/static/Img/download.png";
     document.querySelector(".para-text").innerHTML =
       "File has been Uploaded <br/> Select The Parser";
     document.querySelector(".span-text").innerText = event.target.files[0].name;
   } else {
     image.src = "/static/Img/508-icon.png";
     event.target.files[0] = null;
-    errorAlert("Incorrect File Type");
+    document.querySelector(".span-text").innerText = "";
+    errorALert("Incorrect File Type");
   }
-};
-
-function submitForm(form, parserType) {
-  console.log(document.activeElement.value);
-  console.log(parserType);
-  if (document.activeElement.value == parserType) {
-    console.log("Have one.");
-    return true;
-  }
-  return false;
-}
-
-const setParserChoice = (value) => {
-  parserChoice = value;
 };
 
 formSubmit.addEventListener("submit", function (event) {
@@ -86,9 +76,7 @@ formSubmit.addEventListener("submit", function (event) {
   const form = event.currentTarget;
   if (form.file.files[0]) {
     const formData = new FormData(form);
-    console.log(parserChoice);
-    formData.append("parserChoice", parserChoice);
-    const url = "http://localhost:8090/upload";
+    const url = "http://localhost:8090/mau/upload";
     const fetchOptions = {
       method: "POST",
       body: formData,
@@ -99,13 +87,14 @@ formSubmit.addEventListener("submit", function (event) {
           successAlert();
         } else {
           let err = res.json();
+          console.log(err.message);
           throw err.message;
         }
       })
       .catch((err) => {
-        errorAlert(err);
+        errorALert(err);
       });
   } else {
-    errorAlert("No File Uploaded");
+    errorALert("No File Uploaded");
   }
 });

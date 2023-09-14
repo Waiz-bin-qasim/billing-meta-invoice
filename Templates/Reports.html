@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Sider Menu Bar CSS</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='Css/Reports.css')}}"
+    />
+  </head>
+
+  <body>
+    <input type="checkbox" id="check" />
+    <label for="check">
+      <i class="fas fa-bars" id="btn"></i>
+      <!-- <i class="fas fa-times" id="cancel"></i> -->
+    </label>
+    <div class="sidebar">
+      <header>My App</header>
+      <ul>
+        <li>
+          <a href="/upload"><i class="fas fa-file-invoice"></i>Meta Invoices</a>
+        </li>
+        <li>
+          <a href="/mau/upload"
+            ><i class="fas fa-file-invoice-dollar"></i>Billing MAUs</a
+          >
+        </li>
+        <li>
+          <a href="/downloadcsv"
+            ><i class="fas fa-file-invoice-dollar"></i>Reports</a
+          >
+        </li>
+      </ul>
+    </div>
+    <section>
+      <div class="title text">Reports</div>
+
+      <!-- MetaInvoice Modal -->
+      <div id="MetaInvoice" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content container">
+          <span class="close">&times;</span>
+          <header>Generate Report</header>
+          <div class="con-login-form">
+            <form
+              id="login-form"
+              action="/api"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              <div class="justify-center" style="margin-top: 1rem">
+                <p>Select the month for report generation.</p>
+              </div>
+              <div class="justify-center">
+                <input
+                  id="date"
+                  type="Month"
+                  value="2023-09"
+                  style="margin-top: 1rem"
+                />
+              </div>
+
+              <div class="justify-center">
+                <button id="Generate" class="btn" type="submit">
+                  Generate
+                </button>
+              </div>
+            </form>
+            <div id="progress" class="progress-container wrapper">
+              <div class="progress-bar">
+                <span id="progressBar" data-width="0%"></span>
+              </div>
+              <p class="progress-text">Loading ...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table">
+        <table id="example" class="display" style="width: 100%">
+          <thead>
+            <tr>
+              <th>serial</th>
+              <th>FileName</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in data %}
+            <tr>
+              <td>{{ item[0] }}</td>
+              <td>{{ item[1] }}</td>
+              <td><button class="btn">Downlaod</button></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <script src="cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="{{url_for('static',filename='Js/Reports.js')}}"></script>
+  </body>
+</html>
