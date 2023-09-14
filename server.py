@@ -70,7 +70,7 @@ def upload(user):
                 print("waiz")
                 return jsonify(response)
             else:
-                return jsonify({'message': 'fuck linda'}), 400
+                return jsonify({'message': 'Bad Request'}), 400
             # response = dataHandler.run(sql_values,parserChoice,user[0])
             # return jsonify(response)  
         else:
