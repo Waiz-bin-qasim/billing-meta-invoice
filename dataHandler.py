@@ -13,14 +13,13 @@ from Config.dbConfig import establish_connection, close_connection
 from flask import jsonify
 import numpy as np
 
-
+sqlQuery = "INSERT INTO billing_logs(INV_MONTH,INV_YEAR, CREATED_BY, CREATED_ON) VALUES(%s,%s,%s,%s)"
 def get_sys_details():
     current_datetime = datetime.datetime.now()
-    username = getpass.getuser()
-    return current_datetime,username
+    return current_datetime
 
 
-def insert_database(cursor , connection , sql_values):
+def insert_database(cursor , connection , sql_values, month , year, current_datetime,user):
 
   try: 
     print("sql_values") 
@@ -39,7 +38,8 @@ def insert_database(cursor , connection , sql_values):
       response = {
         'message': 'success'
       }
-      
+      cursor.execute(sqlQuery,(month,year,user,current_datetime))
+      connection.commit()
     else:
       response = {
         'message' : "failed"
@@ -75,14 +75,15 @@ def delete_files():
       os.remove("output.csv")
   
 
-def computing_totals(data_table,pdf_file,sql_values,parserChoice):
+def computing_totals(data_table,pdf_file,sql_values,parserChoice,username):
   
   try:
     if(parserChoice == "0"):
       inv_num,month,year = oldPdfReader.getVariables(pdf_file)
     else:
       inv_num,month,year = newPdfReader.getVariables(pdf_file)
-    current_datetime,username = get_sys_details()
+    current_datetime = get_sys_details()
+    
     convert_to_numeric(data_table)
   
     for i in range(len(data_table)):
@@ -92,14 +93,12 @@ def computing_totals(data_table,pdf_file,sql_values,parserChoice):
             sql_values.append((org_id, inv_num, org_name, waba_id, int(user_initiated_count),round(user_initiated_total,2),int(business_initiated_count),round(business_initiated_total,2),int(authentication_count),round(authentication_total,2),int(service_count),round(service_total,2),int(marketing_count),round(marketing_total,2),int(utility_count),round(utility_total,2),current_datetime,username,current_datetime,username,"https://abc.com",month,year))
       
           #initialising the variables
-          if(parserChoice=="0"):
-            name = data_table['Name'].iloc[i]
-            parts = name.split("/")
-            org_name = parts[0].strip()
-            waba_id = parts[1].strip()
-          else:
-            org_name = data_table['Name'].iloc[i]
-            waba_id = "nothing"
+          
+          name = data_table['Name'].iloc[i]
+          parts = name.split("/")
+          org_name = parts[0].strip()
+          waba_id = parts[1].strip()
+          
           org_id = re.sub(r"\s+", "", org_name)
           org_id = org_id + "-" + month + "/" + year
           
@@ -141,7 +140,7 @@ def computing_totals(data_table,pdf_file,sql_values,parserChoice):
           utility_total += total
         if(i==len(data_table)-1):
           sql_values.append((org_id, inv_num, org_name, waba_id, int(user_initiated_count),round(user_initiated_total,2),int(business_initiated_count),round(business_initiated_total,2),int(authentication_count),round(authentication_total,2),int(service_count),round(service_total,2),int(marketing_count),round(marketing_total,2),int(utility_count),round(utility_total,2),current_datetime,username,current_datetime,username,"https://abc.com",month,year))
-    return sql_values
+    return sql_values,month,year,current_datetime
   except Exception as ex:
     print(f"Error during computing totals: {ex}")
 
@@ -151,7 +150,7 @@ def computing_totals(data_table,pdf_file,sql_values,parserChoice):
 sql_query = "INSERT INTO billing_meta_invoice (ORG_ID, INVOICE_NUMBER, ORG_NAME, WABA_ID, USER_INITIATED_COUNT,USER_INITIATED_TOTAL,BUSINESS_INITIATED_COUNT,BUSINESS_INITIATED_TOTAL,AUTHENTICATION_COUNT,AUTHENTICATION_TOTAL,SERVICE_COUNT,SERVICE_TOTAL,MARKETING_COUNT,MARKETING_TOTAL,UTILITY_COUNT,UTILITY_TOTAL,CREATED_ON,CREATED_BY,UPDATED_ON,UPDATED_BY,INV_URL,INV_MONTH,INV_YEAR) VALUES (%s,%s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 print("code is running")
 
-def run(sql_values,parserChoice):
+def run(sql_values,parserChoice,user):
     
   try:
       
@@ -168,14 +167,11 @@ def run(sql_values,parserChoice):
         'message' : "wrong option"
         }
       data_table = create_dataframe(parserChoice) 
-      sql_values = computing_totals(data_table , pdf_file , sql_values , parserChoice)
+      sql_values,month,year,current_datetime = computing_totals(data_table , pdf_file , sql_values , parserChoice,user)
       cursor,connection = establish_connection() 
-      response = insert_database(cursor , connection , sql_values)
+      response = insert_database(cursor , connection , sql_values,month,year,current_datetime,user)
       close_connection(cursor , connection)
       delete_files()
-      # del sql_values
-      # gc.collect()
-      # sql_values = []
       return response
   
   except FileNotFoundError as e:
@@ -184,5 +180,3 @@ def run(sql_values,parserChoice):
   except Exception as ex:
         print(f"An unexpected error occurred: {ex}")
         
-def any():
-   return "waiz"

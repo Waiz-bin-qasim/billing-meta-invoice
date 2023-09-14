@@ -475,7 +475,7 @@ def insert_data(sheet,company_data):
 
         # inserting Service
         rowMax = sheet.max_row
-        sheet.cell(row=rowMax+1, column=3, value="Service Conversation")
+        sheet.cell(row=rowMax+1, column=3, value="Service Conversation(Formerly User-Initiated)")
         sheet.cell(row=rowMax+1, column=4, value=company_data[row][21]) #date
 
         cell = sheet.cell(row=rowMax+1, column=5, value=int(company_data[row][1])) #qty
@@ -490,7 +490,7 @@ def insert_data(sheet,company_data):
             
         #inserting Marketing
         rowMax = sheet.max_row
-        sheet.cell(row=rowMax+1, column=3, value="Marketing Conversation")
+        sheet.cell(row=rowMax+1, column=3, value="Marketing Conversation(Formerly Business-Initiated)")
         sheet.cell(row=rowMax+1, column=4, value=company_data[row][21]) #date
 
         cell = sheet.cell(row=rowMax+1, column=5, value=int(company_data[row][2])) #qty
@@ -505,7 +505,7 @@ def insert_data(sheet,company_data):
 
         #inserting Utility
         rowMax = sheet.max_row
-        sheet.cell(row=rowMax+1, column=3, value="Utility Conversation")
+        sheet.cell(row=rowMax+1, column=3, value="Utility Conversation(Formerly Business-Initiated)")
         sheet.cell(row=rowMax+1, column=4, value=company_data[row][21]) #date
 
         cell = sheet.cell(row=rowMax+1, column=5, value=int(company_data[row][3])) #qty
@@ -520,7 +520,7 @@ def insert_data(sheet,company_data):
 
         #inserting Authentication
         rowMax = sheet.max_row
-        sheet.cell(row=rowMax+1, column=3, value="Authentication Conversation")
+        sheet.cell(row=rowMax+1, column=3, value="Authentication Conversation(Formerly Business-Initiated)")
         sheet.cell(row=rowMax+1, column=4, value=company_data[row][21]) #date
 
         cell = sheet.cell(row=rowMax+1, column=5, value=int(company_data[row][4])) #qty
