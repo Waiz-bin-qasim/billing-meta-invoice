@@ -12,6 +12,7 @@ import re
 from Config.dbConfig import establish_connection, close_connection
 from flask import jsonify
 import numpy as np
+from Sockets.sockets import updateProgress
 
 sqlQuery = "INSERT INTO billing_logs(INV_MONTH,INV_YEAR, CREATED_BY, CREATED_ON) VALUES(%s,%s,%s,%s)"
 def get_sys_details():
@@ -155,7 +156,7 @@ def computing_totals(data_table,pdf_file,sql_values,parserChoice,username):
 sql_query = "INSERT INTO billing_meta_invoice (ORG_ID, INVOICE_NUMBER, ORG_NAME, WABA_ID, USER_INITIATED_COUNT,USER_INITIATED_TOTAL,BUSINESS_INITIATED_COUNT,BUSINESS_INITIATED_TOTAL,AUTHENTICATION_COUNT,AUTHENTICATION_TOTAL,SERVICE_COUNT,SERVICE_TOTAL,MARKETING_COUNT,MARKETING_TOTAL,UTILITY_COUNT,UTILITY_TOTAL,CREATED_ON,CREATED_BY,UPDATED_ON,UPDATED_BY,INV_URL,INV_MONTH,INV_YEAR) VALUES (%s,%s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 print("code is running")
 
-def run(sql_values,parserChoice,user):
+def run(sql_values,parserChoice,user,socketio):
     
   try:
       
@@ -163,10 +164,14 @@ def run(sql_values,parserChoice,user):
       file = "output.csv"
       if (parserChoice == "0"):
         oldPdfReader.readPdf(pdf_file)
+        updateProgress(socketio,"ascsac",60)
         oldDataCleaner.dataCleaning(file)
+        updateProgress(socketio,"ascsac",70)
       elif (parserChoice == "1"):
         newPdfReader.readPdf(pdf_file)
+        updateProgress(socketio,"ascsac",60)
         newDataCleaner.dataCleaning(file)
+        updateProgress(socketio,"ascsac",70)
       else:
         response = {
         'message' : "wrong option"
@@ -178,6 +183,7 @@ def run(sql_values,parserChoice,user):
       cursor,connection = establish_connection() 
       response = insert_database(cursor , connection , sql_values,month,year,current_datetime,user)
       close_connection(cursor , connection)
+      updateProgress(socketio,"ascsac",80)
       delete_files()
       return response
   

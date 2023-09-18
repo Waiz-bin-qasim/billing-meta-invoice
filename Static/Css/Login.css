@@ -10,6 +10,9 @@ body{
   min-height: 100vh;
   width: 100%;
   background: #ffff;
+  
+  background-color: #f0f8fe;
+
 }
 .container{
   position: absolute;

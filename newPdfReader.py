@@ -77,6 +77,19 @@ def getVariables(pdfFile):
                 elif invoiceCheck == True:
                     invoiceNumber = line.replace("Invoice date","")
                     break
+        
+
+        if (len(deliveryYear) != 0):
+            if(len(deliveryYear) == 2):
+                deliveryYear = "20" + deliveryYear
+        else:
+            raise Exception("Data Variable fail to Extract")
+
+
+        if(len(deliveryMonth) !=0):
+            deliveryMonth = deliveryMonth[0].upper() + deliveryMonth[1:3]
+        else:
+            raise Exception("Data Variable fail to Extract")
 
         
     except FileNotFoundError as e:
@@ -87,4 +100,9 @@ def getVariables(pdfFile):
         raise Exception(ex)
 
     return invoiceNumber, deliveryMonth, deliveryYear
+
+
+# file = "new-1.pdf"
+# number, month, year = getVariables(file)
+# print(number,month,year)
 

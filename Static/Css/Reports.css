@@ -8,6 +8,9 @@
 }
 body {
   font-family: 'Lexend Deca','Roboto', sans-serif;
+  
+  background-color: #f0f8fe;
+
 }
 
 ul li:hover{
@@ -105,8 +108,8 @@ section .title{
     margin: 60px 0 0 0;
 }
 .text{
-    font-size: 50px;
-    font-weight: 500;
+    font-size: 33px;
+    font-weight: 300;
     color: var(--text-color);
     margin-left: 10px;
 }

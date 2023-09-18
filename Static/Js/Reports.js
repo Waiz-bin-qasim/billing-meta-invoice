@@ -3,6 +3,7 @@ const formSubmit = document.querySelector("form");
 const span = document.getElementsByClassName("close")[0];
 // Alerts
 const successAlert = () => {
+  MetaInvoicemodal.style.display = "none";
   Swal.fire("Successful", "Report Generated ", "success").then((e) => {
     window.location.href = "/downloadcsv";
   });
@@ -70,7 +71,7 @@ const parseDate = () => {
 
 formSubmit.addEventListener("submit", function (event) {
   event.preventDefault();
-  showProgressBar();
+  showProgressBar("Generating Report");
   let socket = initSocketsToAutoUpdateProgressBar();
   const [year, month] = parseDate();
   const url = `/generatecsv/${socketId}?param1=${month}&&param2=${year}`;
@@ -85,7 +86,7 @@ formSubmit.addEventListener("submit", function (event) {
 
   fetch(url, fetchOptions)
     .then((res) => {
-      hideProgressBar();
+      hideProgressBar("Generate Report");
       if (res.ok) {
         successAlert();
         return;
@@ -101,6 +102,7 @@ formSubmit.addEventListener("submit", function (event) {
       }
     })
     .catch((err) => {
+      hideProgressBar("Upload Billing Report");
       errorAlert(err);
     });
 });

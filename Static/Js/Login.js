@@ -6,9 +6,11 @@ const container = document.querySelector(".container");
 const setLoading = (bool) => {
   if (bool) {
     loading.style.display = "block";
+    loading.style.backgroundColor = "#f0f8fe";
     container.style.display = "none";
   } else {
     loading.style.display = "none";
+    loading.style.backgroundColor = "#fff";
     container.style.display = "block";
   }
 };

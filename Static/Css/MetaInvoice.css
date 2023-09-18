@@ -4,15 +4,20 @@
   padding: 0;
   margin: 0;
   list-style: none;
-  text-decoration: none;
+  /* text-decoration: none; */
 }
 body {
-  font-family: 'Lexend Deca','Roboto', sans-serif
+  font-family: 'Lexend Deca','Roboto', sans-serif;
+  background-color: #f0f8fe;
 }
 
 ul li:hover{
   background-color: #777;
   color: #363a77;
+}
+
+ul.navList li {
+  padding: 0.8rem 0 1.2rem;
 }
 
 .sidebar {
@@ -26,29 +31,25 @@ ul li:hover{
   margin-left: -2%;
 }
 .sidebar header {
-  font-size: 22px;
   color: white;
-  line-height: 70px;
-  text-align: center;
   background: #363a77;
-  user-select: none;
+  margin-top: 2rem;
 }
 .sidebar ul a{
   display: block;
   height: 100%;
   width: 100%;
-  line-height: 65px;
-  font-size: 17px;
+  line-height: 1.2;
+  font-size: 14px;
   color: white;
-  padding-left: 40px;
+  padding-left: 3rem;
   box-sizing: border-box;
   transition: .4s;
-  text-decoration: none
-
+  text-decoration: none;
 }
 ul li:hover a{
   text-decoration: none;
-  padding-left: 50px;
+  padding-left: 4rem;
 }
 .sidebar ul a i{
   margin-right: 16px;
@@ -80,7 +81,7 @@ section{
   transition: var(--tran-05);
   /* width: 85%; */
   margin-left: 150px;
-  width: 76%;
+  width: 76%
 }
 section .top{
   position: fixed;
@@ -102,11 +103,12 @@ section .table{
 section .title{
   display: flex;
   align-items: center;
-  margin: 60px 0 0 0;
+  /* margin: 60px 0 0 0; */
+  font-family: 'Lexend Deca', sans-serif !important;
 }
 .text{
-  font-size: 50px;
-  font-weight: 500;
+  font-size: 33px;
+  font-weight: 300;
   color: var(--text-color);
   margin-left: 10px;
 }
@@ -229,12 +231,14 @@ section .title{
   outline: none;
   border-radius: 6px;
 }
-header{
-  font-size: 2rem;
-  font-weight: 500;
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 400;
   text-align: center;
-  margin-top: 1.2rem;
-  color: #363a77;
 }
 .btn:hover{
   box-shadow: 0 5px 10px rgba(0,0,0,0.3);
@@ -290,4 +294,20 @@ header{
   border-radius: 30px;
   background: linear-gradient(90deg, rgba(76, 175, 80, 1) 50%, rgba(50, 222, 132, 1) 100%);
   transition: width .5s linear;
+}
+
+.container header{
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #363a77;
+}
+
+span .headerTitle{
+    font-size: 1.3rem;
+    padding: 3px 0 0px 10px;
+    padding-left: 0.3rem;
+}
+
+ul.navList li {
+  padding: 0.8rem 0 1rem;
 }

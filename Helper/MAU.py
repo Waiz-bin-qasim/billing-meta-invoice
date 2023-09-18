@@ -2,9 +2,9 @@ import pandas as pd
 from Config.dbConfig import establish_connection, close_connection
 import openpyxl
 import datetime
+from Sockets.sockets import updateProgress
 
-
-def parseMAUFile(user):
+def parseMAUFile(user,socketio):
     try:
         print(type(user))
         loc = "MAU.xlsx"
@@ -16,18 +16,20 @@ def parseMAUFile(user):
             if all(cell is None for cell in row):
                 break
             li.append(row)
-
         sqlQuery = "INSERT INTO mau (ORG_NAME_PRM,WABA_ID, MONTHLY_ACTIVE_USER_LIMIT, BAND_PRICE, AGENT_LICENCES, AGENT_LICENSE_PRICE, ADDITIONAL_AGENT_LICENSE_PRICE, SUPPORT_FEE,INV_MONTH, MAU_Count,INV_YEAR,ORG_PLAN,ADDITIONAL_CHARGES,DESCRIP,ADD_ONS,ADD_ONS_AGENT_PRICE) VALUES (%s,%s,%s,%s,%s,%s,%s, %s, %s, %s, %s, %s, %s,%s, %s,%s)"
         cursor, connection = establish_connection()
+        updateProgress(socketio,"a",50)
         if(li):
             month,year = getCredentials()
             cursor.executemany(sqlQuery, li)
             connection.commit()
             sqlquery = "INSERT INTO mau_logs(INV_MONTH,INV_YEAR, CREATED_BY, CREATED_ON) VALUES(%s,%s,%s,%s)"
+            updateProgress(socketio,"a",70)
             current_datetime = datetime.datetime.now()
             cursor.execute(sqlquery,(month,year,user,current_datetime))
             connection.commit()
             close_connection(cursor, connection)
+            updateProgress(socketio,"a",80)
             response = {
                 'message': 'success'
             }

@@ -4,7 +4,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <link rel="shortcut icon" href="{{ url_for('static', filename='Img/eocean-logo-half(1).png') }}">
+  <link rel="icon" href="{{ url_for('static', filename='img/waiz.png') }}">
   <title>Sider Menu Bar CSS</title>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />
@@ -21,9 +21,11 @@
     <!-- <i class="fas fa-times" id="cancel"></i> -->
   </label>
   <div class="sidebar">
-
-    <header> <img scr="{{url_for('static',filename='Img/508-icon.png')}}" alt="dsavdksv " />My App</header>
-    <ul>
+    <header>
+      <img class = "headerLogo" src="{{url_for('static',filename='Img/dclogo.png')}}" style="width:2rem" />
+      <span class = "headerTitle"> Billing </span>
+    </header>  
+    <ul class = "navList">
       <li>
         <a href="/upload"><i class="fas fa-file-invoice"></i>Meta
           Invoices</a>
@@ -45,7 +47,7 @@
       <!-- Modal content -->
       <div class="modal-content container">
         <span class="close">&times;</span>
-        <header>Upload Invoice</header>
+        <header >Upload Invoice</header>
         <div class="login form">
           <form id="login-form" action="/api" method="post" enctype="multipart/form-data">
             <label for="input-file" id="drop-area">
@@ -106,7 +108,6 @@
     </div>
   </section>
   </section>
-  <script src="cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
   <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
@@ -114,6 +115,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
     crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
   <script src="{{url_for('static',filename='Js/LoadingBarSockets.js')}}"></script>
   <script src="{{url_for('static',filename='Js/MetaInvoice.js')}}"></script>
 </body>

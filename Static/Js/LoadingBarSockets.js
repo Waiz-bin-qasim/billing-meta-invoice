@@ -5,22 +5,22 @@ const progressBarHeader = document.querySelector(".container header");
 const form = document.querySelector("#login-form");
 let socketId;
 
-const showProgressBar = () => {
+const showProgressBar = (value) => {
   form.style.display = "none";
   progressBar.style.display = "block";
   document.querySelector(".progress-container ").style.display = "block";
   progressBarContainer.style.height = "256px";
   // progressBarPara.style.display = "none";
-  progressBarHeader.innerText = "Generating Report";
+  progressBarHeader.innerText = value;
 };
 
-const hideProgressBar = () => {
+const hideProgressBar = (value) => {
   form.style.display = "block";
   document.querySelector(".progress-container ").style.display = "none";
   progressBar.style.display = "none";
   progressBarContainer.style.height = "";
   // progressBarPara.style.display = "";
-  progressBarHeader.innerText = "Generate Report";
+  progressBarHeader.innerText = value;
 };
 
 const updateProgressBar = (value) => {

@@ -6,17 +6,9 @@ const newParserbtn = document.querySelector("#newParser");
 const btn = document.getElementById("myBtn");
 const span = document.getElementsByClassName("close")[0];
 
-// window.onload = () => {
-//   const modal = document.querySelector(".con");
-//   modal.innerHTML += `<div id="progress" class="progress-container wrapper">
-//   <div class="progress-bar">
-//       <span id="progressBar" data-width="0%" style = "width:20%"></span>
-//   </div>
-// </div>`;
-// };
-
 // ALerts
 const successAlert = () => {
+  MetaInvoicemodal.style.display = "none";
   Swal.fire("Successful", "Billing MAU uploaded", "success").then((e) => {
     window.location.href = "/mau/upload";
   });
@@ -82,11 +74,9 @@ const loadFile = function (event) {
   }
 };
 
-showProgressBar();
-updateProgressBar(15);
 formSubmit.addEventListener("submit", function (event) {
   event.preventDefault();
-  showProgressBar();
+  showProgressBar("Uploading Billing MAU");
   let socket = initSocketsToAutoUpdateProgressBar();
   const form = event.currentTarget;
   if (form.file.files[0]) {
@@ -103,7 +93,7 @@ formSubmit.addEventListener("submit", function (event) {
     });
     fetch(url, fetchOptions)
       .then((res) => {
-        hideProgressBar();
+        hideProgressBar("Upload Billing Report");
         if (res.ok) {
           successAlert();
         } else {
@@ -113,6 +103,7 @@ formSubmit.addEventListener("submit", function (event) {
         }
       })
       .catch((err) => {
+        hideProgressBar("Upload Billing Report");
         errorALert(err);
       });
   } else {

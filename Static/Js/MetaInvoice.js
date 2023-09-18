@@ -87,7 +87,8 @@ const setParserChoice = (value) => {
 // showProgressBar();
 formSubmit.addEventListener("submit", function (event) {
   event.preventDefault();
-  showProgressBar();
+  let socket = initSocketsToAutoUpdateProgressBar();
+  showProgressBar("Uploading Meta Invoice");
   const form = event.currentTarget;
   if (form.file.files[0]) {
     const formData = new FormData(form);
@@ -106,7 +107,7 @@ formSubmit.addEventListener("submit", function (event) {
     fetch(url, fetchOptions)
       .then((res) => {
         console.log(res);
-        hideProgressBar();
+        hideProgressBar("Upload MEta Invoice");
         if (res.status == 200) {
           return successAlert();
         } else if (res.status === 400) {
@@ -121,6 +122,7 @@ formSubmit.addEventListener("submit", function (event) {
         }
       })
       .catch((err) => {
+        hideProgressBar("Upload MEta Invoice");
         console.log(err);
         errorAlert(err);
       });

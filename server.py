@@ -21,10 +21,13 @@ from Sockets.sockets import updateProgress
 # import computations
 
 #initialising the server
+IMG = os.path.join('Static', 'Img')
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')  
 app.config['ENCRYPT_KEY'] = os.environ.get('ENCRYPT_KEY')
 socketio = SocketIO(app)
+app.config['sideBarImage'] = IMG
 
 def token_required(f):
     
@@ -59,6 +62,7 @@ def upload(user):
 
     try:
         if request.method == "POST":
+            updateProgress(socketio,"ascsac",20)
             data = request.form
             parserChoice = data.get('parserChoice')
             print(parserChoice)
@@ -68,17 +72,21 @@ def upload(user):
             file.save('transaction.pdf')
             sql_values = []
             print(user[0])
+            updateProgress(socketio,"ascsac",35)
             if(checkBillingLogs(parserChoice) == True):
-                response = dataHandler.run(sql_values,parserChoice,user[0])
+                updateProgress(socketio,"ascsac",50)
+                response = dataHandler.run(sql_values,parserChoice,user[0],socketio)
+                updateProgress(socketio,"ascsac",90)
                 if response['message'] == 'failed':
                     return jsonify(response),400
                 return jsonify(response),200
             else:
+                updateProgress(socketio,"ascsac",90)
                 return jsonify({'message': 'Meta Invoice Already Exists'}), 400
         else:
             data = getAllBilling()
-            print(data)
-            return render_template('MetaInvoice.html',data=data)
+            fileName = os.path.join(app.config['sideBarImage'],'dc-new-logo.png')
+            return render_template('MetaInvoice.html',data=data,image_src= fileName)
     except Exception as ex:
         print(f'Error during file upload: {ex}')
         return jsonify({'message': 'An error occurred during file upload.'}), 400
@@ -128,22 +136,25 @@ def downloadcsv(user):
 def mau(user):
     try:
          if request.method == "POST":
+            updateProgress(socketio,"a",20)
             print(user[0])
             data = request.form
             file = request.files['file']
             if file.filename == '':
                 raise Exception('No file selected')
             file.save("MAU.xlsx")
+            updateProgress(socketio,"a",30)
             if (checkMauLogs() == True):
-                response = parseMAUFile(user[0])
+                updateProgress(socketio,"a",40)
+                response = parseMAUFile(user[0],socketio)
+                updateProgress(socketio,"a",80)
                 return jsonify(response)
             else:
+                updateProgress(socketio,"a",80)
                 return jsonify({'error': 'Bad Request'}), 400
             
          else:
              data = getAllMau()
-             print("waiz")
-             print(data)
              return render_template("Billing.html",data=data)
     except Exception as ex:
      print(ex)

@@ -35,7 +35,14 @@
       <!-- <i class="fas fa-times" id="cancel"></i> -->
     </label>
     <div class="sidebar">
-      <header>My App</header>
+      <header>
+        <img
+          class="headerLogo"
+          src="{{url_for('static',filename='Img/dclogo.png')}}"
+          style="width: 2rem"
+        />
+        <span class="headerTitle"> Billing </span>
+      </header>
       <ul>
         <li>
           <a href="/upload"><i class="fas fa-file-invoice"></i>Meta Invoices</a>
