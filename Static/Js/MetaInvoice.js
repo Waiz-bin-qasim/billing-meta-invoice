@@ -8,7 +8,10 @@ const span = document.getElementsByClassName("close")[0];
 let parserChoice;
 // Alerts
 const successAlert = () => {
-  Swal.fire("Successful", "Meta Invoice Uploaded", "success");
+  MetaInvoicemodal.style.display = "none";
+  Swal.fire("Successful", "Meta Invoice Uploaded", "success").then((e) => {
+    window.location.href = "/upload";
+  });
 };
 const errorAlert = (message) => {
   MetaInvoicemodal.style.display = "none";
@@ -81,28 +84,44 @@ const setParserChoice = (value) => {
   parserChoice = value;
 };
 
+// showProgressBar();
 formSubmit.addEventListener("submit", function (event) {
   event.preventDefault();
+  showProgressBar();
   const form = event.currentTarget;
   if (form.file.files[0]) {
     const formData = new FormData(form);
     console.log(parserChoice);
     formData.append("parserChoice", parserChoice);
-    const url = "http://localhost:8090/upload";
+    const url = "/upload";
     const fetchOptions = {
       method: "POST",
       body: formData,
     };
+    updateProgressBar(13);
+    socket.on("Update Progress", (value) => {
+      console.log(value);
+      updateProgressBar(value);
+    });
     fetch(url, fetchOptions)
       .then((res) => {
-        if (res.ok) {
-          successAlert();
+        console.log(res);
+        hideProgressBar();
+        if (res.status == 200) {
+          return successAlert();
+        } else if (res.status === 400) {
+          return res.json();
         } else {
-          let err = res.json();
-          throw err.message;
+          throw "An Error Occurred";
+        }
+      })
+      .then((data) => {
+        if (data && data.message) {
+          errorAlert(data.message);
         }
       })
       .catch((err) => {
+        console.log(err);
         errorAlert(err);
       });
   } else {

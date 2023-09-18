@@ -10,7 +10,8 @@ def generateCheck(month,year):
         resultBilling = cursor.fetchone() is not None
         cursor.execute(queryMau,(month,year))
         resultMau = cursor.fetchone() is not None
-        
+        print(resultBilling)
+        print(resultMau)
         if(resultBilling and resultMau):
             return True
         elif(resultBilling):

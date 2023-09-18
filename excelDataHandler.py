@@ -614,7 +614,7 @@ def calculateSubtotal(company_data,index):
 
     # check if add on agent price exist 
     if company_data[index][25] != 0 and company_data[index][25] is not None:
-        result = result + company_data[index][25]
+        result = result + float(company_data[index][25])
     
     return result
 

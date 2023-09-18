@@ -27,10 +27,11 @@ loginForm.addEventListener("submit", async function (event) {
   errorContainer.textContent = "";
   try {
     setLoading(true);
-    const response = await fetch("http://127.0.0.1:8090/login", {
+    const response = await fetch("/", {
       method: "POST",
       body: formData,
     });
+    console.log(response);
     const data = await response.json();
     setLoading(false);
     console.log(data.token);
@@ -38,7 +39,7 @@ loginForm.addEventListener("submit", async function (event) {
       localStorage.setItem("token", data.token);
       console.log(data.token);
       document.cookie = `token=${data.token}`;
-      return (window.location.href = "http://127.0.0.1:8090/downloadcsv");
+      return (window.location.href = "/downloadcsv");
     } else {
       errorContainer.textContent = data.message;
     }

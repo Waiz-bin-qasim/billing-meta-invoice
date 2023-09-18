@@ -6,9 +6,20 @@ const newParserbtn = document.querySelector("#newParser");
 const btn = document.getElementById("myBtn");
 const span = document.getElementsByClassName("close")[0];
 
+// window.onload = () => {
+//   const modal = document.querySelector(".con");
+//   modal.innerHTML += `<div id="progress" class="progress-container wrapper">
+//   <div class="progress-bar">
+//       <span id="progressBar" data-width="0%" style = "width:20%"></span>
+//   </div>
+// </div>`;
+// };
+
 // ALerts
 const successAlert = () => {
-  Swal.fire("Successful", "Billing MAU uploaded", "success");
+  Swal.fire("Successful", "Billing MAU uploaded", "success").then((e) => {
+    window.location.href = "/mau/upload";
+  });
 };
 const errorALert = (message) => {
   MetaInvoicemodal.style.display = "none";
@@ -71,18 +82,28 @@ const loadFile = function (event) {
   }
 };
 
+showProgressBar();
+updateProgressBar(15);
 formSubmit.addEventListener("submit", function (event) {
   event.preventDefault();
+  showProgressBar();
+  let socket = initSocketsToAutoUpdateProgressBar();
   const form = event.currentTarget;
   if (form.file.files[0]) {
     const formData = new FormData(form);
-    const url = "http://localhost:8090/mau/upload";
+    const url = "/mau/upload";
     const fetchOptions = {
       method: "POST",
       body: formData,
     };
+    updateProgressBar(15);
+    socket.on("Update Progress", (value) => {
+      console.log(value);
+      updateProgressBar(value);
+    });
     fetch(url, fetchOptions)
       .then((res) => {
+        hideProgressBar();
         if (res.ok) {
           successAlert();
         } else {
