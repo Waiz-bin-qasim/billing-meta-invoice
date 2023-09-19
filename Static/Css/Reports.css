@@ -4,54 +4,57 @@
   padding: 0;
   margin: 0;
   list-style: none;
-  text-decoration: none;
+  /* text-decoration: none; */
 }
 body {
   font-family: 'Lexend Deca','Roboto', sans-serif;
-  
   background-color: #f0f8fe;
-
 }
 
 ul li:hover{
-    background-color: #777;
-    color: #363a77;
+  background-color: #777;
+  color: #363a77;
+}
+
+ul.navList li {
+  padding: 0.8rem 0 1.2rem;
 }
 
 .sidebar {
   position: fixed;
-  margin-top: -3%;
+  /* margin-top: -3%; */
   left: 0;
   width: 250px;
-  height: 103%;
+  height: 100%;
   background: #363a77;
   transition: all .5s ease;
   margin-left: -2%;
 }
 .sidebar header {
-  font-size: 22px;
   color: white;
-  line-height: 70px;
-  text-align: center;
   background: #363a77;
-  user-select: none;
+  margin-top: 2rem;
+}
+span .headerTitle{
+  font-size: 1.3rem;
+  padding: 3px 0 0px 10px;
+  padding-left: 0.3rem;
 }
 .sidebar ul a{
   display: block;
   height: 100%;
   width: 100%;
-  line-height: 65px;
-  font-size: 17px;
+  line-height: 1.2;
+  font-size: 14px;
   color: white;
-  padding-left: 40px;
+  padding-left: 3rem;
   box-sizing: border-box;
   transition: .4s;
   text-decoration: none;
-
 }
 ul li:hover a{
-  padding-left: 50px;
   text-decoration: none;
+  padding-left: 4rem;
 }
 .sidebar ul a i{
   margin-right: 16px;
@@ -238,13 +241,15 @@ section .title{
     outline: none;
     border-radius: 6px;
 }
-header{
-  font-size: 2rem;
-    font-weight: 500;
-    text-align: center;
-    margin-top: 1.2rem;
-    color: #363a77;
-  }
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-align: center;
+}
 .btn:hover{
     box-shadow: 0 5px 10px rgba(0,0,0,0.3);
   color: #363a77;
@@ -308,3 +313,29 @@ header{
 .card{
   margin-top: 2rem;
 }
+
+
+span .headerTitle{
+  font-size: 1.3rem;
+  padding: 3px 0 0px 10px;
+  padding-left: 0.3rem;
+}
+
+ul.navList li {
+padding: 0.8rem 0 1rem;
+}
+ul li:hover {
+  background-color: #777;
+  color: #363a77;
+}
+.sidebar header {
+  color: white;
+  background: #363a77;
+  margin-top: 2rem;
+}
+
+/* .container header{
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #363a77;
+} */

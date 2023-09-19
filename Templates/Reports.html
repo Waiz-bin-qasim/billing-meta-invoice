@@ -4,6 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Meta Billing | Reports</title>
+    <link rel="icon" href="{{ url_for('static', filename='img/waiz.png') }}" />
     <link
       rel="stylesheet"
       href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
@@ -30,18 +31,16 @@
   </head>
 
   <body>
-    <input type="checkbox" id="check" />
-    <label for="check">
-      <i class="fas fa-bars" id="btn"></i>
-      <!-- <i class="fas fa-times" id="cancel"></i> -->
-    </label>
     <div class="sidebar">
-      <header>My App</header>
-      <img
-        scr="{{url_for('static',filename='Img/dc-new-logo.png')}}"
-        alt="dsavdksv "
-      />
-      <ul>
+      <header>
+        <img
+          class="headerLogo"
+          src="{{url_for('static',filename='Img/dclogo.png')}}"
+          style="width: 2rem"
+        />
+        <span class="headerTitle"> Billing </span>
+      </header>
+      <ul class="navList">
         <li>
           <a href="/upload"><i class="fas fa-file-invoice"></i>Meta Invoices</a>
         </li>

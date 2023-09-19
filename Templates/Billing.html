@@ -3,7 +3,8 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
-    <title>Sider Menu Bar CSS</title>
+    <title>Billing | Mau</title>
+    <link rel="icon" href="{{ url_for('static', filename='img/waiz.png') }}" />
     <link
       rel="stylesheet"
       href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
@@ -29,11 +30,6 @@
   </head>
 
   <body>
-    <input type="checkbox" id="check" />
-    <label for="check">
-      <i class="fas fa-bars" id="btn"></i>
-      <!-- <i class="fas fa-times" id="cancel"></i> -->
-    </label>
     <div class="sidebar">
       <header>
         <img
@@ -43,7 +39,7 @@
         />
         <span class="headerTitle"> Billing </span>
       </header>
-      <ul>
+      <ul class="navList">
         <li>
           <a href="/upload"><i class="fas fa-file-invoice"></i>Meta Invoices</a>
         </li>

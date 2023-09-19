@@ -22,7 +22,6 @@ ul.navList li {
 
 .sidebar {
   position: fixed;
-  margin-top: -3%;
   left: 0;
   width: 250px;
   height: 103%;
@@ -103,7 +102,7 @@ section .table{
 section .title{
   display: flex;
   align-items: center;
-  /* margin: 60px 0 0 0; */
+  margin: 60px 0 0 0;
   font-family: 'Lexend Deca', sans-serif !important;
 }
 .text{
@@ -296,11 +295,11 @@ header {
   transition: width .5s linear;
 }
 
-.container header{
+/* .container header{
   margin-top: 0;
   margin-bottom: 0;
   color: #363a77;
-}
+} */
 
 span .headerTitle{
     font-size: 1.3rem;
@@ -310,4 +309,8 @@ span .headerTitle{
 
 ul.navList li {
   padding: 0.8rem 0 1rem;
+}
+ul li:hover {
+    background-color: #777;
+    color: #363a77;
 }
