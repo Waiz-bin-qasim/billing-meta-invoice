@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Meta Billing | Reports</title>
+    <link rel="icon" href="{{ url_for('static', filename='img/waiz.png') }}" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='css/FinanceReport.css')}}"
+    />
+  </head>
+
+  <body>
+    <div class="sidebar">
+      <header>
+        <img
+          class="headerLogo"
+          src="{{url_for('static',filename='Img/dclogo.png')}}"
+          style="width: 2rem"
+        />
+        <span class="headerTitle"> Billing </span>
+      </header>
+      <ul class="navList">
+        <li><i class="fas fa-file-invoice"></i>Meta Invoices</li>
+        <li><i class="fas fa-file-invoice-dollar"></i>Billing MAUs</li>
+        <li><i class="fas fa-file-invoice-dollar"></i>Reports</li>
+        <li>
+          <a href="/finance/reports"
+            ><i class="fas fa-file-invoice-dollar"></i>Finance Reports</a
+          >
+        </li>
+      </ul>
+    </div>
+    <section>
+      <div class="title text">Reports</div>
+
+      <!-- MetaInvoice Modal -->
+      <div id="MetaInvoice" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content container">
+          <span class="close">&times;</span>
+          <header>Generate Report</header>
+          <div class="con-login-form">
+            <form
+              id="login-form"
+              action="/api"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              <div class="justify-center" style="margin-top: 1rem">
+                <p>Select the month for report generation.</p>
+              </div>
+              <div class="justify-center">
+                <input
+                  id="date"
+                  type="Month"
+                  value="2023-09"
+                  style="margin-top: 1rem"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="justify-center">
+                <button id="Generate" class="btn mt-4" type="submit">
+                  Generate
+                </button>
+              </div>
+            </form>
+            <div id="progress" class="progress-container wrapper">
+              <div class="progress-bar">
+                <span id="progressBar" data-width="0%"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="table">
+          <table id="example" class="display" style="width: 100%">
+            <thead>
+              <tr>
+                <th>Serial</th>
+                <th>FileName</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in data %}
+              <tr>
+                <td>{{ item[0] }}</td>
+                <td>{{ item[1] }}</td>
+                <td>
+                  <button
+                    class="btn"
+                    value="{{item[1]}}"
+                    onclick="downloadFile(this.value)"
+                  >
+                    <i
+                      class="fa fa-download"
+                      aria-hidden="true"
+                      style="padding-right: 4px"
+                    ></i
+                    >Downlaod
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="{{url_for('static',filename='js/FinanceReports.js')}}"></script>
+  </body>
+</html>

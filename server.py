@@ -216,6 +216,20 @@ def getcsv(user):
         print(f"Error during file download: {e}")
         return jsonify({'Error Occured' : e}), 400 
 
+@app.route('/finance/reports',methods = ['get'])
+@token_required
+def FinanceReport(user):
+    try:
+        fileName = os.listdir("excel/")
+        response = []
+        count = 0
+        for name in fileName:
+            response.append([count+1,name.split('.')[0]]) 
+            count +=1
+        return render_template("FinanceReports.html",data = response)
+    except Exception as ex:
+        print(f"Error during file download: {ex}")
+        return jsonify({'Error Occured' : ex}), 500  
 
 #server starting
 if __name__ == '__main__':
