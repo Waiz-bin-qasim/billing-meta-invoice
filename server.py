@@ -18,6 +18,7 @@ from Helper.csvHelpers import generateCheck
 from flask_socketio import SocketIO
 from Sockets.sockets import showBar
 from Sockets.sockets import updateProgress
+
 # import computations
 
 #initialising the server
@@ -41,11 +42,13 @@ def token_required(f):
                 
                 # Extract the 'user' value from the decoded token
                 user = data.get('user')
+                permissions = data.get('permissions', [])
                 if user is None:
                     return jsonify({'message': 'Invalid token: user not found'}), 401
                 
                 # Pass the 'user' as a keyword argument to the wrapped function
                 kwargs['user'] = user
+                kwargs['permissions'] = permissions
             
         except jwt.ExpiredSignatureError:
             return jsonify({'message': 'Token has expired'}), 401
@@ -55,12 +58,21 @@ def token_required(f):
     
     return decorated
 
+def checkPermission(route,permissions):
+    if(route in permissions):
+        return True
+    return False
+
+
 # #token verified before executing
 @app.route('/upload', methods=['POST',"GET"])
 @token_required
-def upload(user):
+def upload(user,permissions):
 
     try:
+        route = request.endpoint
+        if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400 
         if request.method == "POST":
             updateProgress(socketio,"ascsac",20)
             data = request.form
@@ -97,16 +109,17 @@ def upload(user):
 def login():
     
     try: 
+        
         if request.method == "POST":
             auth = request.form
             print(auth)
             authUsername = [auth['username']]
             authPassword = [auth["password"]]
             print(authPassword)
-            response = loginCheck(authUsername,(authPassword))
-            if response != 0:
+            token,roleName = loginCheck(authUsername,(authPassword))
+            if token != 0:
                 # return redirect(url_for('upload'),code=307)
-                return jsonify({'token' : response})
+                return jsonify({'token' : token , 'roleName' : roleName})
             else:
                return jsonify({"message":"Incorrect Credentials"}),401
         else:
@@ -118,8 +131,11 @@ def login():
 
 @app.route('/downloadcsv', methods = ['GET'])
 @token_required
-def downloadcsv(user):
+def downloadcsv(user,permissions):
     try:
+            route = request.endpoint
+            if(checkPermission(route,permissions) == False):
+                return jsonify({'message': 'Permission Not Given'}), 400
             fileName = os.listdir("excel/")
             response = []
             count = 0
@@ -133,8 +149,11 @@ def downloadcsv(user):
 
 @app.route('/mau/upload',methods = ['POST',"GET"])
 @token_required
-def mau(user):
+def mau(user,permissions):
     try:
+         route = request.endpoint
+         if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400
          if request.method == "POST":
             updateProgress(socketio,"a",20)
             print(user[0])
@@ -161,25 +180,14 @@ def mau(user):
      print(f'Error during upload: {ex}')
      return jsonify({'Error Occured' : ex}), 400
 
-@app.route('/files',methods = ['GET'])
-# @token_required
-def files():
-    try:
-        fileName = os.listdir("excel/")
-        response = []
-        for name in fileName:
-            response.append(name.split('.')[0]) 
-        return jsonify(response)
-    except Exception as ex:
-     print(ex)
-     print(f'Error during login: {ex}')
-     return jsonify({'Error Occured' : ex}), 500
-
 
 @app.route('/generatecsv/<socketId>',methods = ['POST'])
 @token_required
-def generateCsv(user,socketId):
+def generateCsv(user,permissions,socketId):
     try:
+        route = request.endpoint
+        if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400
         param1 = request.args.get('param1')
         param2 = request.args.get('param2')
         if param1 and param2:
@@ -203,8 +211,11 @@ def generateCsv(user,socketId):
 
 @app.route('/getcsv', methods = ['GET'])
 @token_required
-def getcsv(user):
+def getcsv(user,permissions):
     try:
+        route = request.endpoint
+        if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400
         param1 = request.args.get('param1')
         param2 = request.args.get('param2')
         if param1 and param2:
@@ -218,8 +229,12 @@ def getcsv(user):
 
 @app.route('/finance/reports',methods = ['get'])
 @token_required
-def FinanceReport(user):
+def FinanceReport(user,permissions):
     try:
+        route = request.endpoint
+        if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400
+        
         fileName = os.listdir("excel/")
         response = []
         count = 0
