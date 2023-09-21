@@ -15,13 +15,16 @@
 </head>
 
 <body>
-  
+
   <div class="sidebar">
     <header>
-      <img class = "headerLogo" src="{{url_for('static',filename='Img/dclogo.png')}}" style="width:2rem" />
-      <span class = "headerTitle"> Billing </span>
-    </header>  
-    <ul class = "navList">
+      <img class="headerLogo" src="{{url_for('static',filename='Img/dclogo.png')}}" style="width:2rem" />
+      <span class="headerTitle"> Billing </span>
+    </header>
+    <ul class="navList">
+      <li>
+        <a href="/downloadcsv"><i class="fas fa-file-invoice-dollar"></i>Reports</a>
+      </li>
       <li>
         <a href="/upload"><i class="fas fa-file-invoice"></i>Meta
           Invoices</a>
@@ -31,7 +34,7 @@
           MAUs</a>
       </li>
       <li>
-        <a href="/downloadcsv"><i class="fas fa-file-invoice-dollar"></i>Reports</a>
+        <a href="/finance/reports"><i class="fas fa-file-invoice-dollar"></i>Finance Reports</a>
       </li>
     </ul>
   </div>
@@ -43,7 +46,7 @@
       <!-- Modal content -->
       <div class="modal-content container">
         <span class="close">&times;</span>
-        <header >Upload Invoice</header>
+        <header>Upload Invoice</header>
         <div class="login form">
           <form id="login-form" action="/api" method="post" enctype="multipart/form-data">
             <label for="input-file" id="drop-area">
@@ -58,14 +61,14 @@
                 <span class="span-text">Upload any Invoice from Desktop</span>
               </div>
             </label>
-              <div class="row">
-                <button id="oldParser" type="submit" class="btn column" value="0" onclick="setParserChoice(0)">
-                  Old Parser
-                </button>
-                <button id="newParser" type="submit" class="btn column" value="1" onclick="setParserChoice(1)">
-                  New Parser
-                </button>
-              </div>
+            <div class="row">
+              <button id="oldParser" type="submit" class="btn column" value="0" onclick="setParserChoice(0)">
+                Old Parser
+              </button>
+              <button id="newParser" type="submit" class="btn column" value="1" onclick="setParserChoice(1)">
+                New Parser
+              </button>
+            </div>
           </form>
           <div id="progress" class="progress-container wrapper">
             <div class="progress-bar">
@@ -87,6 +90,7 @@
               <th>Year</th>
               <th>Created By</th>
               <th>Created On </th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -96,6 +100,9 @@
               <td>{{ item[1] }}</td>
               <td>{{ item[2] }}</td>
               <td>{{ item[3] }}</td>
+              <td> <button class="btn" value="{{item[0] + item[1]}}" onclick="downloadFile(this.value)">
+                  <i class="fa fa-download" aria-hidden="true" style="padding-right: 4px"></i>Download
+                </button></td>
             </tr>
             {% endfor %}
           </tbody>

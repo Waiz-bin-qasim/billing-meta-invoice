@@ -229,7 +229,7 @@ section .title{
 }
 .btn{
     width: auto;
-    padding: 2px 15px;
+    padding: 1px 15px;
     font-size: 2px;
     margin: 0.2rem;
     color: #fff;

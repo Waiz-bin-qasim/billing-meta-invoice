@@ -130,3 +130,10 @@ formSubmit.addEventListener("submit", function (event) {
     errorAlert("No File Uploaded");
   }
 });
+
+const downloadFile = (value) => {
+  console.log(value);
+  const [month, year, _] = value.split(/(\d+)/);
+  // Yahan maha ka link ayega
+  window.location.href = `/getcsv?param1=${month}&&param2=${year}`;
+};

@@ -14,22 +14,10 @@ body {
 ul li:hover{
   background-color: #777;
   color: #363a77;
-  text-decoration: none;
-  padding-left: 4rem;
 }
 
 ul.navList li {
   padding: 0.8rem 0 1.2rem;
-  display: block;
-  height: 100%;
-  width: 100%;
-  line-height: 1.2;
-  font-size: 14px;
-  color: white;
-  padding-left: 3rem;
-  box-sizing: border-box;
-  transition: .4s;
-  text-decoration: none;
 }
 
 .sidebar {

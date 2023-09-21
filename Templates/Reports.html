@@ -42,6 +42,11 @@
       </header>
       <ul class="navList">
         <li>
+          <a href="/downloadcsv"
+            ><i class="fas fa-file-invoice-dollar"></i>Reports</a
+          >
+        </li>
+        <li>
           <a href="/upload"><i class="fas fa-file-invoice"></i>Meta Invoices</a>
         </li>
         <li>
@@ -50,8 +55,8 @@
           >
         </li>
         <li>
-          <a href="/downloadcsv"
-            ><i class="fas fa-file-invoice-dollar"></i>Reports</a
+          <a href="/finance/reports"
+            ><i class="fas fa-file-invoice-dollar"></i>Finance Reports</a
           >
         </li>
       </ul>
@@ -99,6 +104,59 @@
           </div>
         </div>
       </div>
+
+      <div id="uploadReport" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content container">
+          <span class="close">&times;</span>
+          <header>Upload Billing Report For Finance</header>
+          <div class="con login form">
+            <form
+              id="Report"
+              action="/api"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              <label id="drop-area">
+                <input
+                  type="file"
+                  accept="file/pdf"
+                  id="input-file"
+                  onchange="loadFile(event)"
+                  name="file"
+                  hidden
+                />
+                <div id="img-view">
+                  <img
+                    id="show-uploaded-image"
+                    src="{{url_for('static',filename='Img/508-icon.png')}}"
+                  />
+                  <p class="para-text">
+                    Drag and Drop or click here <br />to upload Report
+                  </p>
+                  <span class="span-text">Upload any Report from Desktop</span>
+                </div>
+              </label>
+              <div class="row">
+                <button
+                  id="oldParser"
+                  type="submit"
+                  class="btn column"
+                  value=""
+                >
+                  Upload
+                </button>
+              </div>
+            </form>
+            <div id="progress" class="progress-container wrapper">
+              <div class="progress-bar">
+                <span id="progressBar" data-width="0%"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="card">
         <div class="table">
           <table id="example" class="display" style="width: 100%">
@@ -125,7 +183,14 @@
                       aria-hidden="true"
                       style="padding-right: 4px"
                     ></i
-                    >Downlaod
+                    >Download
+                  </button>
+                  <button
+                    class="btn"
+                    value="{{item[1] + 'Corrention'}}"
+                    onclick="uploadFile(this.value)"
+                  >
+                    <i class="fa fa-upload" aria-hidden="true"></i>Upload
                   </button>
                 </td>
               </tr>

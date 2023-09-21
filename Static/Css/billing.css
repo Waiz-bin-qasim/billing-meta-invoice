@@ -103,14 +103,13 @@ section .title {
   margin-left: 10px;
 }
 .button {
-  /* position: relative; */
   height: 20px;
   max-width: 100px;
   width: 100%;
   background: #7d2ae8;
   border-radius: 6px;
   cursor: pointer;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
   overflow: hidden;
 }
 .button .text-icon {
@@ -202,13 +201,10 @@ section .title {
   margin-top: 15px;
 }
 .btn {
-  height: 30px;
-  width: 30%;
-  padding: 0 15px;
+  width: auto;
+  padding: 2px 15px;
   font-size: 2px;
-  margin-left: 1.2rem;
-  margin-top: 1.1rem;
-  margin-bottom: 1.1rem;
+  margin: 0.2rem;
   color: #fff;
   background: #363a77;
   border: 1px solid #ddd;
@@ -228,11 +224,9 @@ header {
   text-align: center;
 }
 .btn:hover {
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.3);
   color: #363a77;
   background: #fff;
-  font-weight: 300;
-  font-size: 1rem;
 }
 .row {
   display: flex;

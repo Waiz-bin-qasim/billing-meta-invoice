@@ -41,6 +41,11 @@
       </header>
       <ul class="navList">
         <li>
+          <a href="/downloadcsv"
+            ><i class="fas fa-file-invoice-dollar"></i>Reports</a
+          >
+        </li>
+        <li>
           <a href="/upload"><i class="fas fa-file-invoice"></i>Meta Invoices</a>
         </li>
         <li>
@@ -49,14 +54,14 @@
           >
         </li>
         <li>
-          <a href="/downloadcsv"
-            ><i class="fas fa-file-invoice-dollar"></i>Reports</a
+          <a href="/finance/reports"
+            ><i class="fas fa-file-invoice-dollar"></i>Finance Reports</a
           >
         </li>
       </ul>
     </div>
     <section>
-      <div class="title text">Billing</div>
+      <div class="title text">Billing MAUs</div>
 
       <!-- MetaInvoice Modal -->
       <div id="MetaInvoice" class="modal">
@@ -120,6 +125,7 @@
                 <th>Year</th>
                 <th>Created By</th>
                 <th>Created On</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -129,6 +135,20 @@
                 <td>{{ item[1] }}</td>
                 <td>{{ item[2]}}</td>
                 <td>{{ item[3] }}</td>
+                <td>
+                  <button
+                    class="btn"
+                    value="{{item[0] + item[1]}}"
+                    onclick="downloadFile(this.value)"
+                  >
+                    <i
+                      class="fa fa-download"
+                      aria-hidden="true"
+                      style="padding-right: 4px"
+                    ></i
+                    >Download
+                  </button>
+                </td>
               </tr>
               {% endfor %}
             </tbody>
