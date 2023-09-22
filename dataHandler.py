@@ -71,8 +71,8 @@ def convert_to_numeric(data_table):
 
 
 def delete_files():
-    if os.path.exists("transaction.pdf"):             
-      os.remove("transaction.pdf")
+    #if os.path.exists("transaction.pdf"):             
+    # os.remove("transaction.pdf")
     if os.path.exists("new_file.csv"):             
       os.remove("newFile.csv")
     if os.path.exists("output.csv"):             
