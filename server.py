@@ -19,6 +19,20 @@ from flask_socketio import SocketIO
 from Sockets.sockets import showBar
 from Sockets.sockets import updateProgress
 
+
+
+
+# month and year from MAU Billing
+from Helper.MAU import getCredentials
+# month and year from PDF Files
+from oldPdfReader import getVariables as oldGetVariables
+from newPdfReader import getVariables as newGetVariables
+# for copying files
+import shutil
+
+
+
+
 # import computations
 
 #initialising the server
@@ -81,7 +95,16 @@ def upload(user,permissions):
             file = request.files['file']
             if file.filename == '':
                 raise Exception('No file selected')
-            file.save('transaction.pdf')
+            
+
+
+
+            fileName = 'transaction.pdf'
+            file.save(fileName)
+            
+
+
+
             sql_values = []
             print(user[0])
             updateProgress(socketio,"ascsac",35)
@@ -91,6 +114,26 @@ def upload(user,permissions):
                 updateProgress(socketio,"ascsac",90)
                 if response['message'] == 'failed':
                     return jsonify(response),400
+                
+
+
+
+                # place after parsing is confirmed
+                if parserChoice == '0':
+                    # old pdf reader
+                    invoice_number, invoice_month, invoice_year = oldGetVariables(fileName)
+                    file_path = f'./metaInvoiceFiles/{invoice_month}{invoice_year}{fileName}'
+                    shutil.copy(fileName, file_path)
+
+                elif parserChoice == '1':
+                    # new pdf reader
+                    invoice_number, invoice_month, invoice_year = newGetVariables(fileName)
+                    file_path = f'./metaInvoiceFiles/{invoice_month}{invoice_year}{fileName}'
+                    shutil.copy(fileName, file_path)
+
+
+
+
                 return jsonify(response),200
             else:
                 updateProgress(socketio,"ascsac",90)
@@ -161,7 +204,20 @@ def mau(user,permissions):
             file = request.files['file']
             if file.filename == '':
                 raise Exception('No file selected')
-            file.save("MAU.xlsx")
+            
+
+
+            fileName = 'MAU.xlsx'
+            file.save(fileName)
+
+            # place after parsing is confirmed
+            month, year = getCredentials()
+            file_path = f'./billingMAUFiles/{month}{year}MAU.xlsx'
+            shutil.copy(fileName, file_path)
+
+
+
+
             updateProgress(socketio,"a",30)
             if (checkMauLogs() == True):
                 updateProgress(socketio,"a",40)
@@ -226,6 +282,96 @@ def getcsv(user,permissions):
     except Exception as e:
         print(f"Error during file download: {e}")
         return jsonify({'Error Occured' : e}), 400 
+
+
+
+
+
+@app.route('/getpdf', methods = ['GET'])
+@token_required
+def getpdf(user,permissions):
+    try:
+        route = request.endpoint
+        if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400
+        
+        param1 = request.args.get('param1')
+        param2 = request.args.get('param2')
+        if param1 and param2: 
+            file_path = "./metaInvoiceFiles/"+param1+param2+"transaction.pdf"
+            return send_file(file_path, as_attachment=True, download_name=f'{param1 + param2}.pdf'),200
+        else: 
+            raise Exception("Please provide both param1 and param2")
+        
+    except Exception as e:
+        print("Error occured: ", {e})
+        return jsonify({"Error Occured " : e}), 400        
+
+
+
+@app.route('/getmau', methods = ['GET'])
+@token_required
+def getmau(user,permissions):
+    try:
+        route = request.endpoint
+        if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400
+    
+        param1 = request.args.get('param1')
+        param2 = request.args.get('param2')
+        if param1 and param2: 
+            file_path = "./billingMAUFiles/"+param1+param2+"MAU.xlsx"
+            return send_file(file_path, as_attachment=True, download_name=f'{param1 + param2}.xlsx'),200
+        else: 
+            raise Exception("Please provide both param1 and param2")
+        
+    except Exception as e:
+        print("Error occured: ", {e})
+        return jsonify({"Error Occured " : e}), 400   
+    
+
+
+@app.route('/finance/upload',methods = ['POST'])
+@token_required
+def financeUpload(user,permissions):
+    try:
+        route = request.endpoint
+        if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400
+        
+        if request.method == "POST":
+            file = request.files['file']
+            if file.filename == '':
+                raise Exception('No file selected')
+            
+
+            fileName = 'financeReport.xlsx'
+            file.save(fileName)
+
+            # <getting month and year>
+            import openpyxl
+            wb = openpyxl.load_workbook(fileName)
+            ws = wb.active
+            month = ws.cell(row=3, column=1).value
+            year = ws.cell(row=3, column=1).value
+            month = month[:3]
+            year = year[4:]
+
+
+            # storing it in folder
+            file_path = f'./financeReportFiles/{month}{year}financeReport.xlsx'
+            shutil.copy(fileName, file_path)
+            return jsonify({'message': 'File uploaded successfully'}),200
+
+    
+    except Exception as ex:
+     print(ex)
+     print(f'Error during upload: {ex}')
+     return jsonify({'Error Occured' : ex}), 400
+    
+
+
+
 
 @app.route('/finance/reports',methods = ['get'])
 @token_required
