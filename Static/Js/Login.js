@@ -38,10 +38,16 @@ loginForm.addEventListener("submit", async function (event) {
     setLoading(false);
     console.log(data.token);
     if (response.ok && data.token) {
+      console.log(data.roleName);
       localStorage.setItem("token", data.token);
       console.log(data.token);
-      document.cookie = `token=${data.token}`;
-      return (window.location.href = "/downloadcsv");
+      if (data.roleName === "admin") {
+        document.cookie = `token=${data.token}`;
+        return (window.location.href = "/downloadcsv");
+      } else if (data.roleName === "finance") {
+        document.cookie = `token=${data.token}`;
+        return (window.location.href = "/finance/reports");
+      }
     } else {
       errorContainer.textContent = data.message;
     }

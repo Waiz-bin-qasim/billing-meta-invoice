@@ -41,15 +41,19 @@ def token_required(f):
                 data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"]) 
                 
                 # Extract the 'user' value from the decoded token
+                print(data)
                 user = data.get('user')
                 permissions = data.get('permissions', [])
+                role = data.get('role')
+                print(role)
                 if user is None:
                     return jsonify({'message': 'Invalid token: user not found'}), 401
                 
                 # Pass the 'user' as a keyword argument to the wrapped function
                 kwargs['user'] = user
                 kwargs['permissions'] = permissions
-            
+                kwargs['role'] = role
+
         except jwt.ExpiredSignatureError:
             return jsonify({'message': 'Token has expired'}), 401
         except jwt.InvalidTokenError:
@@ -67,7 +71,7 @@ def checkPermission(route,permissions):
 # #token verified before executing
 @app.route('/upload', methods=['POST',"GET"])
 @token_required
-def upload(user,permissions):
+def upload(user,permissions,role):
 
     try:
         route = request.endpoint
@@ -131,7 +135,7 @@ def login():
 
 @app.route('/downloadcsv', methods = ['GET'])
 @token_required
-def downloadcsv(user,permissions):
+def downloadcsv(user,permissions,role):
     try:
             route = request.endpoint
             if(checkPermission(route,permissions) == False):
@@ -145,11 +149,11 @@ def downloadcsv(user,permissions):
             return render_template("Reports.html",data = response)
     except Exception as ex:
         print(f"Error during file download: {ex}")
-        return jsonify({'Error Occured' : ex}), 500  
+        return jsonify({'Error Ocurred' : ex}), 500  
 
 @app.route('/mau/upload',methods = ['POST',"GET"])
 @token_required
-def mau(user,permissions):
+def mau(user,permissions,role):
     try:
          route = request.endpoint
          if(checkPermission(route,permissions) == False):
@@ -178,7 +182,7 @@ def mau(user,permissions):
     except Exception as ex:
      print(ex)
      print(f'Error during upload: {ex}')
-     return jsonify({'Error Occured' : ex}), 400
+     return jsonify({'Error Ocurred' : ex}), 400
 
 
 @app.route('/generatecsv/<socketId>',methods = ['POST'])
@@ -211,7 +215,7 @@ def generateCsv(user,permissions,socketId):
 
 @app.route('/getcsv', methods = ['GET'])
 @token_required
-def getcsv(user,permissions):
+def getcsv(user,permissions,role):
     try:
         route = request.endpoint
         if(checkPermission(route,permissions) == False):
@@ -225,11 +229,11 @@ def getcsv(user,permissions):
             raise Exception("Please provide both param1 and param2 as query parameters.")
     except Exception as e:
         print(f"Error during file download: {e}")
-        return jsonify({'Error Occured' : e}), 400 
+        return jsonify({'Error Ocurred' : e}), 400 
 
 @app.route('/finance/reports',methods = ['get'])
 @token_required
-def FinanceReport(user,permissions):
+def FinanceReport(user,permissions,role):
     try:
         route = request.endpoint
         if(checkPermission(route,permissions) == False):
@@ -241,10 +245,13 @@ def FinanceReport(user,permissions):
         for name in fileName:
             response.append([count+1,name.split('.')[0]]) 
             count +=1
-        return render_template("FinanceReports.html",data = response)
+        flag = False
+        if(role == 'admin'):
+            flag = True
+        return render_template("FinanceReports.html",data = response,option = flag)
     except Exception as ex:
         print(f"Error during file download: {ex}")
-        return jsonify({'Error Occured' : ex}), 500  
+        return jsonify({'Error Ocurred' : ex}), 500  
 
 #server starting
 if __name__ == '__main__':

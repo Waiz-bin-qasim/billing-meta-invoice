@@ -13,12 +13,12 @@ def loginCheck(param1,param2):
     sql_query = "SELECT org_roles.org_name, org_roles.permissions,login_credentials.password FROM login_credentials INNER JOIN org_roles ON login_credentials.role_id = org_roles.role_id WHERE login_credentials.username =%s"
     cursor.execute(sql_query,(param1))
     record = cursor.fetchone()
-    print(record[2])
+    print(record[0])
     decryptedPassword = passwordDecrypt(record[2])
     print(decryptedPassword)
 
     if decryptedPassword == param2[0]:
-        token = jwt.encode({'user' :param1, 'permissions' : record[1], 'exp' : datetime.datetime.utcnow() + datetime.timedelta(hours=24)},secret_key ,algorithm="HS256")
+        token = jwt.encode({'user' :param1, 'permissions' : record[1],'role':record[0], 'exp' : datetime.datetime.utcnow() + datetime.timedelta(hours=24)},secret_key ,algorithm="HS256")
         response = make_response("Cookie set and login successful!")
         response.set_cookie('token', token, max_age=3600, httponly=True)
         print(response.headers['Set-Cookie'])
