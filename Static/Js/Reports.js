@@ -160,7 +160,7 @@ reportForm.addEventListener("submit", (event) => {
   const form = event.currentTarget;
   if (form.file.files[0]) {
     const formData = new FormData(form);
-    const url = ""; //-. yahan link ayega
+    const url = "/finance/upload"; //-. yahan link ayega
     const fetchOptions = {
       method: "POST",
       body: formData,

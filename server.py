@@ -114,7 +114,7 @@ def upload(user,permissions,role):
             updateProgress(socketio,"ascsac",35)
             if(checkBillingLogs(parserChoice) == True):
                 updateProgress(socketio,"ascsac",50)
-                response = dataHandler.run(sql_values,parserChoice,user[0],socketio)
+                response = dataHandler.run(sql_values,parserChoice,user,socketio)
                 updateProgress(socketio,"ascsac",90)
                 if response['message'] == 'failed':
                     return jsonify(response),400
@@ -126,13 +126,13 @@ def upload(user,permissions,role):
                 if parserChoice == '0':
                     # old pdf reader
                     invoice_number, invoice_month, invoice_year = oldGetVariables(fileName)
-                    file_path = f'./metaInvoiceFiles/{invoice_month}{invoice_year}{fileName}'
+                    file_path = f'./metaInvoiceFiles/{invoice_month}{invoice_year}'
                     shutil.copy(fileName, file_path)
 
                 elif parserChoice == '1':
                     # new pdf reader
                     invoice_number, invoice_month, invoice_year = newGetVariables(fileName)
-                    file_path = f'./metaInvoiceFiles/{invoice_month}{invoice_year}{fileName}'
+                    file_path = f'./metaInvoiceFiles/{invoice_month}{invoice_year}'
                     shutil.copy(fileName, file_path)
 
 
@@ -216,7 +216,7 @@ def mau(user,permissions,role):
 
             # place after parsing is confirmed
             month, year = getCredentials()
-            file_path = f'./billingMAUFiles/{month}{year}MAU.xlsx'
+            file_path = f'./billingMAUFiles/{month}{year}.xlsx'
             shutil.copy(fileName, file_path)
 
 
@@ -225,7 +225,7 @@ def mau(user,permissions,role):
             updateProgress(socketio,"a",30)
             if (checkMauLogs() == True):
                 updateProgress(socketio,"a",40)
-                response = parseMAUFile(user[0],socketio)
+                response = parseMAUFile(user,socketio)
                 updateProgress(socketio,"a",80)
                 return jsonify(response)
             else:
@@ -234,6 +234,7 @@ def mau(user,permissions,role):
             
          else:
              data = getAllMau()
+             print(data)
              return render_template("Billing.html",data=data)
     except Exception as ex:
      print(ex)
@@ -293,7 +294,7 @@ def getcsv(user,permissions,role):
 
 @app.route('/getpdf', methods = ['GET'])
 @token_required
-def getpdf(user,permissions):
+def getpdf(user,permissions,role):
     try:
         route = request.endpoint
         if(checkPermission(route,permissions) == False):
@@ -302,7 +303,7 @@ def getpdf(user,permissions):
         param1 = request.args.get('param1')
         param2 = request.args.get('param2')
         if param1 and param2: 
-            file_path = "./metaInvoiceFiles/"+param1+param2+"transaction.pdf"
+            file_path = "./metaInvoiceFiles/"+param1+param2+".pdf"
             return send_file(file_path, as_attachment=True, download_name=f'{param1 + param2}.pdf'),200
         else: 
             raise Exception("Please provide both param1 and param2")
@@ -315,7 +316,7 @@ def getpdf(user,permissions):
 
 @app.route('/getmau', methods = ['GET'])
 @token_required
-def getmau(user,permissions):
+def getmau(user,permissions,role):
     try:
         route = request.endpoint
         if(checkPermission(route,permissions) == False):
@@ -324,7 +325,7 @@ def getmau(user,permissions):
         param1 = request.args.get('param1')
         param2 = request.args.get('param2')
         if param1 and param2: 
-            file_path = "./billingMAUFiles/"+param1+param2+"MAU.xlsx"
+            file_path = "./billingMAUFiles/"+param1+param2+".xlsx"
             return send_file(file_path, as_attachment=True, download_name=f'{param1 + param2}.xlsx'),200
         else: 
             raise Exception("Please provide both param1 and param2")
@@ -335,9 +336,9 @@ def getmau(user,permissions):
     
 
 
-@app.route('/finance/upload',methods = ['POST'])
+@app.route('/finance/upload',methods = ['POST','GET'])
 @token_required
-def financeUpload(user,permissions):
+def financeUpload(user,permissions,role):
     try:
         route = request.endpoint
         if(checkPermission(route,permissions) == False):
@@ -363,19 +364,23 @@ def financeUpload(user,permissions):
 
 
             # storing it in folder
-            file_path = f'./financeReportFiles/{month}{year}financeReport.xlsx'
+            file_path = f'./financeReportFiles/{month}{year}.xlsx'
             shutil.copy(fileName, file_path)
             return jsonify({'message': 'File uploaded successfully'}),200
-
+        else:
+            param1 = request.args.get('param1')
+            param2 = request.args.get('param2')
+            if param1 and param2: 
+                file_path = "./financeReportFiles/"+param1+param2+".xlsx"
+                return send_file(file_path, as_attachment=True, download_name=f'{param1 + param2}.xlsx'),200
+            else: 
+                raise Exception("Please provide both param1 and param2")
     
     except Exception as ex:
      print(ex)
      print(f'Error during upload: {ex}')
      return jsonify({'Error Occured' : ex}), 400
     
-
-
-
 
 @app.route('/finance/reports',methods = ['get'])
 @token_required
@@ -385,7 +390,7 @@ def FinanceReport(user,permissions,role):
         if(checkPermission(route,permissions) == False):
             return jsonify({'message': 'Permission Not Given'}), 400
         
-        fileName = os.listdir("excel/")
+        fileName = os.listdir("financeReportFiles/")
         response = []
         count = 0
         for name in fileName:

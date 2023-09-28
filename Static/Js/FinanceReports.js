@@ -25,5 +25,5 @@ const parseDate = () => {
 const downloadFile = (value) => {
   console.log(value);
   const [month, year, _] = value.split(/(\d+)/);
-  window.location.href = `/getcsv?param1=${month}&&param2=${year}`;
+  window.location.href = `/finance/upload?param1=${month}&&param2=${year}`;
 };

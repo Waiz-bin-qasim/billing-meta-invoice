@@ -8,6 +8,7 @@ def getAllMau():
         query = 'SELECT * FROM mau_logs'  
         cursor.execute(query)
         result = cursor.fetchall()
+        print(result)
         return result
     except Exception as ex:
         print(ex)

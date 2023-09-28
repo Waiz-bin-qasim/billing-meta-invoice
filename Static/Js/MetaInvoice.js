@@ -135,5 +135,5 @@ const downloadFile = (value) => {
   console.log(value);
   const [month, year, _] = value.split(/(\d+)/);
   // Yahan maha ka link ayega
-  window.location.href = `/getcsv?param1=${month}&&param2=${year}`;
+  window.location.href = `/getpdf?param1=${month}&&param2=${year}`;
 };
