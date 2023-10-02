@@ -18,7 +18,7 @@ def loginCheck(param1,param2):
             decryptedPassword = passwordDecrypt(record[2])
 
             if decryptedPassword == param2[0]:
-                token = jwt.encode({'user' :record[3], 'permissions' : record[1], 'exp' : datetime.datetime.utcnow() + datetime.timedelta(hours=24)},secret_key ,algorithm="HS256")
+                token = jwt.encode({'user' :record[3], 'permissions' : record[1], 'exp' : datetime.datetime.utcnow() + datetime.timedelta(hours=24),"role":record[0]},secret_key ,algorithm="HS256")
                 response = make_response("Cookie set and login successful!")
                 response.set_cookie('token', token, max_age=3600, httponly=True)
                 print(response.headers['Set-Cookie'])
