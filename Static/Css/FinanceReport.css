@@ -52,7 +52,7 @@ span .headerTitle{
   transition: .4s;
   text-decoration: none;
 }
-ul li:hover a{
+ul li:hover a.nonDisabled{
   text-decoration: none;
   padding-left: 4rem;
 }
@@ -339,3 +339,11 @@ ul li:hover {
   margin-bottom: 0;
   color: #363a77;
 } */
+
+.disabled{
+  color :rgb(217, 217, 217) !important;
+}
+
+.disabled:hover{
+
+}

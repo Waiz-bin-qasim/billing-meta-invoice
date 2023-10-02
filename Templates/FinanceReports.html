@@ -41,32 +41,58 @@
         <span class="headerTitle"> Billing </span>
       </header>
       <ul class="navList">
+        {% if option %}
         <li>
-          <a
-            href={{'/downloadcsv' if option else '#'}}
-            style={{"pointer-events: none" if option else ''}}
+          <a href="/downloadcsv" class="nonDisabled"
             ><i class="fas fa-file-invoice-dollar"></i>Reports
           </a>
         </li>
         <li>
-          <a href="/finance/reports"
+          <a href="/finance/reports" class="nonDisabled"
+            ><i class="fas fa-file-invoice-dollar"></i>Finance Reports</a
+          >
+        </li>
+        <li>
+          <a href="/upload" class="nonDisabled"
+            ><i class="fas fa-file-invoice"></i>Meta Invoices</a
+          >
+        </li>
+        <li>
+          <a href="/mau/upload" class="nonDisabled"
+            ><i class="fas fa-file-invoice-dollar"></i>Billing MAUs</a
+          >
+        </li>
+        {% else %}
+        <li>
+          <a href="/finance/reports" class="nonDisabled"
             ><i class="fas fa-file-invoice-dollar"></i>Finance Reports</a
           >
         </li>
         <li>
           <a
-            href={{'/upload' if option else '#'}}
-            style={{"pointer-events: none" if option else ''}}
-            ><i class="fas fa-file-invoice"></i>Meta Invoices</a
-          >
+            style="pointer-events: none !important; opacity: 0.7 !important"
+            href=""
+            ><i class="fas fa-file-invoice-dollar"></i>Reports
+            <i class="fas fa-lock fa-sm"></i>
+          </a>
         </li>
         <li>
           <a
-            href={{'/mau/upload' if option else '#'}}
-            style={{"pointer-events: none" if option else ''}}
-            ><i class="fas fa-file-invoice-dollar"></i>Billing MAUs</a
-          >
+            href=""
+            style="pointer-events: none !important; opacity: 0.7 !important"
+            ><i class="fas fa-file-invoice"></i>Meta Invoices
+            <i class="fas fa-lock fa-sm"></i
+          ></a>
         </li>
+        <li>
+          <a
+            href=""
+            style="pointer-events: none !important; opacity: 0.7 !important"
+            ><i class="fas fa-file-invoice-dollar"></i>Billing MAUs
+            <i class="fas fa-lock fa-sm"></i
+          ></a>
+        </li>
+        {% endif %}
       </ul>
     </div>
     <section>
@@ -119,6 +145,8 @@
               <tr>
                 <th>Serial</th>
                 <th>FileName</th>
+                <th>Created At</th>
+                <th>Updated At</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -127,6 +155,8 @@
               <tr>
                 <td>{{ item[0] }}</td>
                 <td>{{ item[1] }}</td>
+                <td>{{ item[2] }}</td>
+                <td>{{ item[3] }}</td>
                 <td>
                   <button
                     class="btn"

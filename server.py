@@ -166,7 +166,7 @@ def login():
             token,roleName = loginCheck(authUsername,(authPassword))
             if token != 0:
                 # return redirect(url_for('upload'),code=307)
-                return jsonify({'token' : token , 'roleName' : roleName})
+                return jsonify({'token' : token,"roleName":roleName})
             else:
                return jsonify({"message":"Incorrect Credentials"}),401
         else:
@@ -187,7 +187,12 @@ def downloadcsv(user,permissions,role):
             response = []
             count = 0
             for name in fileName:
-                response.append([count+1,name.split('.')[0]]) 
+                updatedtAt = datetime.datetime.fromtimestamp(os.path.getmtime("./excel/"+name))
+                updatedtAt = updatedtAt.strftime('%B %d, %Y ')
+                print(updatedtAt)
+                createdAt = datetime.datetime.fromtimestamp(os.path.getctime("./excel/"+name))
+                createdAt = createdAt.strftime('%B %d, %Y ')
+                response.append([count+1,name.split('.')[0],createdAt,updatedtAt]) 
                 count +=1
             return render_template("Reports.html",data = response)
     except Exception as ex:
@@ -244,7 +249,7 @@ def mau(user,permissions,role):
 
 @app.route('/generatecsv/<socketId>',methods = ['POST'])
 @token_required
-def generateCsv(user,permissions,socketId):
+def generateCsv(user,permissions,socketId,role):
     try:
         route = request.endpoint
         if(checkPermission(route,permissions) == False):
@@ -394,7 +399,12 @@ def FinanceReport(user,permissions,role):
         response = []
         count = 0
         for name in fileName:
-            response.append([count+1,name.split('.')[0]]) 
+            updatedtAt = datetime.datetime.fromtimestamp(os.path.getmtime("./excel/"+name))
+            updatedtAt = updatedtAt.strftime('%B %d, %Y ')
+            print(updatedtAt)
+            createdAt = datetime.datetime.fromtimestamp(os.path.getctime("./excel/"+name))
+            createdAt = createdAt.strftime('%B %d, %Y ')
+            response.append([count+1,name.split('.')[0],updatedtAt,createdAt]) 
             count +=1
         flag = False
         if(role == 'admin'):

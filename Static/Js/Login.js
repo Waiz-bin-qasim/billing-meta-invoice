@@ -41,11 +41,10 @@ loginForm.addEventListener("submit", async function (event) {
       console.log(data.roleName);
       localStorage.setItem("token", data.token);
       console.log(data.token);
+      document.cookie = `token=${data.token}`;
       if (data.roleName === "admin") {
-        document.cookie = `token=${data.token}`;
         return (window.location.href = "/downloadcsv");
       } else if (data.roleName === "finance") {
-        document.cookie = `token=${data.token}`;
         return (window.location.href = "/finance/reports");
       }
     } else {
@@ -54,6 +53,6 @@ loginForm.addEventListener("submit", async function (event) {
   } catch (err) {
     setLoading(false);
     console.log(err);
-    errorContainer.textContent = err.message;
+    errorContainer.textContent = "Incorrect Credentials";
   }
 });
