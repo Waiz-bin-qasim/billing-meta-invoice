@@ -220,7 +220,7 @@ def planSubscription(sheet,index,company_data):
 
         cell = sheet.cell(row=rowMax+addIndexRow, column=3)
         if company_data[index][18] != 0:
-            cell.value = f"{int(company_data[index][17])}     Agent Seats @${float(company_data[index][18] / company_data[index][17])} per agent/month"
+            cell.value = f"{int(company_data[index][17])}     Agent Seats @${round((company_data[index][18] / company_data[index][17]),1)} per agent/month"
         else:
             cell.value = f"{int(company_data[index][17])}     Agent Seats"
 
@@ -372,7 +372,7 @@ def set_subscription(sheet,index,company_data):
             if company_data[index][18] == 0:
                 cell.value = f"{int(company_data[index][17])}     Agent Seats"
             else:
-                cell.value = f"{int(company_data[index][17])}     Agent Seats @${float(company_data[index][18] / company_data[index][17])} per agent/month"
+                cell.value = f"{int(company_data[index][17])}     Agent Seats @${round((company_data[index][18] / company_data[index][17]),1)} per agent/month"
 
             if (company_data[index][18] != 0):
                 cell = sheet.cell(row=rowMax+addIndexRow, column=6)
