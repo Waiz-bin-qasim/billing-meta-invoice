@@ -2,6 +2,7 @@
 <!-- Created By CodingNepal -->
 <html lang="en" dir="ltr">
   <head>
+    <script src="{{url_for('static',filename='Js/Logout.js')}}"></script>
     <meta charset="utf-8" />
     <title>Billing | Mau</title>
     <link rel="icon" href="{{ url_for('static', filename='img/waiz.png') }}" />
@@ -56,6 +57,13 @@
         <li>
           <a href="/mau/upload"
             ><i class="fas fa-file-invoice-dollar"></i>Billing MAUs</a
+          >
+        </li>
+        <li class="logout">
+          <a
+            onclick="handleLogout()"
+            style="color: white; cursor: pointer !important"
+            ><i class="fas fa-sign-out-alt"></i>Logout</a
           >
         </li>
       </ul>

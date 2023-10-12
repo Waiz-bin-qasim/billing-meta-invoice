@@ -7,7 +7,7 @@ cipher_suite = Fernet(key)
 
 plaintext = input("Enter Password:")
 
-cipher_text = cipher_suite.encrypt(plaintext.encode())
+cipher_text = cipher_suite.encrypt(plaintext.encode('utf-8'))
 print(cipher_text)
 
 

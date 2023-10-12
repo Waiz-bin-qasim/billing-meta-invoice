@@ -67,7 +67,8 @@ def token_required(f):
                 kwargs['user'] = user
                 kwargs['permissions'] = permissions
                 kwargs['role'] = role
-
+            else:
+                return redirect(url_for("login"),code=307)
         except jwt.ExpiredSignatureError:
             return jsonify({'message': 'Token has expired'}), 401
         except jwt.InvalidTokenError:
