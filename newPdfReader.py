@@ -15,7 +15,7 @@ def readPdf(pdfFile):
 
         for num in range(2,numPages + 1):
         
-            dataframe = tabula.read_pdf(pdfFile, pages=num, area=[56.993,15.606,751.613,610.011])
+            dataframe = tabula.read_pdf(pdfFile, pages=num, area=[64.643,14.076,714.893,601.596])
             table = dataframe[0]
             table.to_csv(tempFile, index=False)
 

@@ -36,9 +36,9 @@ import shutil
 # import computations
 
 #initialising the server
-IMG = os.path.join('Static', 'Img')
+IMG = os.path.join('static', 'Img')
 
-app = Flask(__name__)
+app = Flask(__name__,template_folder='templates')
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')  
 app.config['ENCRYPT_KEY'] = os.environ.get('ENCRYPT_KEY')
 socketio = SocketIO(app)
@@ -127,7 +127,7 @@ def upload(user,permissions,role):
                 if parserChoice == '0':
                     # old pdf reader
                     invoice_number, invoice_month, invoice_year = oldGetVariables(fileName)
-                    file_path = f'./metaInvoiceFiles/{invoice_month}{invoice_year}'
+                    file_path = f'./metaInvoiceFiles/{invoice_month}{invoice_year}.pdf'
                     shutil.copy(fileName, file_path)
 
                 elif parserChoice == '1':
@@ -171,7 +171,7 @@ def login():
             else:
                return jsonify({"message":"Incorrect Credentials"}),401
         else:
-            return render_template('Login.html')
+            return render_template('login.html')
             
     except (NameError, TypeError) as error:
      print(error)
@@ -286,7 +286,7 @@ def getcsv(user,permissions,role):
         param1 = request.args.get('param1')
         param2 = request.args.get('param2')
         if param1 and param2:
-            file_path = "./excel/"+param1+param2+".xlsx"
+            file_path = "excel/"+param1+param2+".xlsx"
             return send_file(file_path, as_attachment=True, download_name=f'{param1+param2}.xlsx'),200
         else:
             raise Exception("Please provide both param1 and param2 as query parameters.")
@@ -309,7 +309,7 @@ def getpdf(user,permissions,role):
         param1 = request.args.get('param1')
         param2 = request.args.get('param2')
         if param1 and param2: 
-            file_path = "./metaInvoiceFiles/"+param1+param2+".pdf"
+            file_path = "metaInvoiceFiles/"+param1+param2+".pdf"
             return send_file(file_path, as_attachment=True, download_name=f'{param1 + param2}.pdf'),200
         else: 
             raise Exception("Please provide both param1 and param2")
@@ -331,7 +331,7 @@ def getmau(user,permissions,role):
         param1 = request.args.get('param1')
         param2 = request.args.get('param2')
         if param1 and param2: 
-            file_path = "./billingMAUFiles/"+param1+param2+".xlsx"
+            file_path = "billingMAUFiles/"+param1+param2+".xlsx"
             return send_file(file_path, as_attachment=True, download_name=f'{param1 + param2}.xlsx'),200
         else: 
             raise Exception("Please provide both param1 and param2")
@@ -377,7 +377,7 @@ def financeUpload(user,permissions,role):
             param1 = request.args.get('param1')
             param2 = request.args.get('param2')
             if param1 and param2: 
-                file_path = "./financeReportFiles/"+param1+param2+".xlsx"
+                file_path = "financeReportFiles/"+param1+param2+".xlsx"
                 return send_file(file_path, as_attachment=True, download_name=f'{param1 + param2}.xlsx'),200
             else: 
                 raise Exception("Please provide both param1 and param2")
@@ -417,4 +417,4 @@ def FinanceReport(user,permissions,role):
 
 #server starting
 if __name__ == '__main__':
-    app.run(debug=True,port=8090)
+    app.run(host='0.0.0.0',port=8090)

@@ -1,6 +1,6 @@
 const MetaInvoicemodal = document.getElementById("MetaInvoice");
 const formSubmit = document.querySelector("form");
-const span = document.querySelector(".close");
+const span = document.getElementsByClassName("close")[0];
 const uploadReport = document.querySelector("#uploadReport");
 const reportForm = document.getElementById("Report");
 // Alerts
@@ -37,10 +37,6 @@ $("#example").DataTable({
     },
   ],
 });
-// Get the modal
-span.onclick = function () {
-  MetaInvoicemodal.style.display = "none";
-};
 
 span.onclick = function () {
   uploadReport.style.display = "none";
@@ -50,7 +46,8 @@ span.onclick = function () {
 window.onclick = function (event) {
   if (event.target == uploadReport) {
     uploadReport.style.display = "none";
-  } else if (event.target == MetaInvoicemodal) {
+  }
+  if (event.target == MetaInvoicemodal) {
     MetaInvoicemodal.style.display = "none";
   }
 };

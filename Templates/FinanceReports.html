@@ -2,7 +2,7 @@
 <!-- Created By CodingNepal -->
 <html lang="en" dir="ltr">
   <head>
-    <script src="{{url_for('static',filename='Js/Logout.js')}}"></script>
+    <script src="{{url_for('static',filename='js/Logout.js')}}"></script>
     <meta charset="utf-8" />
     <title>Meta Billing | Finance Reports</title>
     <link rel="icon" href="{{ url_for('static', filename='img/waiz.png') }}" />
@@ -71,7 +71,7 @@
         </li>
         <li>
           <a
-            style="pointer-events: none !important; opacity: 0.55 !important"
+            style="pointer-events: none !important; opacity: 0.7 !important"
             href=""
             ><i class="fas fa-file-invoice-dollar"></i>Reports
             <i class="fas fa-lock fa-sm"></i>
@@ -80,7 +80,7 @@
         <li>
           <a
             href=""
-            style="pointer-events: none !important; opacity: 0.55 !important"
+            style="pointer-events: none !important; opacity: 0.7 !important"
             ><i class="fas fa-file-invoice"></i>Meta Invoices
             <i class="fas fa-lock fa-sm"></i
           ></a>
@@ -88,17 +88,17 @@
         <li>
           <a
             href=""
-            style="pointer-events: none !important; opacity: 0.55 !important"
+            style="pointer-events: none !important; opacity: 0.7 !important"
             ><i class="fas fa-file-invoice-dollar"></i>Billing MAUs
             <i class="fas fa-lock fa-sm"></i
           ></a>
         </li>
         {% endif %}
-        <li class="logout">
+        <li>
           <a
-            class="nonDisabled"
+            class="Logout nonDisabled"
             onclick="handleLogout()"
-            style="color: white; cursor: pointer !important"
+            style="cursor: pointer; !important"
             ><i class="fas fa-sign-out-alt"></i>Logout</a
           >
         </li>

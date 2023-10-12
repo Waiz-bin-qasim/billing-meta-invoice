@@ -3,8 +3,8 @@
 <html lang="en" dir="ltr">
 
 <head>
-  <script src="{{url_for('static',filename='Js/Logout.js')}}"></script>
   <meta charset="utf-8" />
+  <script src="{{url_for('static',filename='js/Logout.js')}}"></script>
   <link rel="icon" href="{{ url_for('static', filename='img/waiz.png') }}">
   <title>Billing | Meta Invoice</title>
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
@@ -41,8 +41,11 @@
           ><i class="fas fa-file-invoice-dollar"></i>Billing MAUs</a
         >
       </li>
-      <li class="logout">
-        <a onclick="handleLogout()" style="color: white;cursor: pointer !important;"
+      <li>
+        <a
+          class="Logout"
+          onclick="handleLogout()"
+          style="cursor: pointer; !important"
           ><i class="fas fa-sign-out-alt"></i>Logout</a
         >
       </li>
@@ -66,7 +69,7 @@
                 <img id="show-uploaded-image" src="{{url_for('static',filename='Img/508-icon.png')}}"
                   accept="application/pdf" />
                 <p class="para-text">
-                  Drag and Drop or click here <br />to upload image
+                  Upload any Invoice from Desktop
                 </p>
                 <span class="span-text">Upload any Invoice from Desktop</span>
               </div>
@@ -129,8 +132,8 @@
     integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
-  <script src="{{url_for('static',filename='Js/LoadingBarSockets.js')}}"></script>
-  <script src="{{url_for('static',filename='Js/MetaInvoice.js')}}"></script>
+  <script src="{{url_for('static',filename='js/LoadingBarSockets.js')}}"></script>
+  <script src="{{url_for('static',filename='js/MetaInvoice.js')}}"></script>
 </body>
 
 </html>

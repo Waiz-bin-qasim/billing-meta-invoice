@@ -2,7 +2,7 @@
 <!-- Created By CodingNepal -->
 <html lang="en" dir="ltr">
   <head>
-    <script src="{{url_for('static',filename='Js/Logout.js')}}"></script>
+    <script src="{{url_for('static',filename='js/Logout.js')}}"></script>
     <meta charset="utf-8" />
     <title>Meta Billing | Reports</title>
     <link rel="icon" href="{{ url_for('static', filename='img/waiz.png') }}" />
@@ -60,8 +60,11 @@
             ><i class="fas fa-file-invoice-dollar"></i>Billing MAUs</a
           >
         </li>
-        <li class="logout">
-          <a onclick="handleLogout()" style="color: white;cursor: pointer !important"
+        <li>
+          <a
+            class="Logout"
+            onclick="handleLogout()"
+            style="cursor: pointer; !important"
             ><i class="fas fa-sign-out-alt"></i>Logout</a
           >
         </li>
@@ -123,7 +126,7 @@
               method="post"
               enctype="multipart/form-data"
             >
-              <label id="drop-area"></>
+              <label id="drop-area">
                 <input
                   type="file"
                   accept="file/pdf"
@@ -137,9 +140,7 @@
                     id="show-uploaded-image"
                     src="{{url_for('static',filename='Img/508-icon.png')}}"
                   />
-                  <p class="para-text">
-                    Drag and Drop or click here <br />to upload Report
-                  </p>
+                  <p class="para-text">Upload any Invoice from Desktop</p>
                   <span class="span-text">Upload any Report from Desktop</span>
                 </div>
               </label>
@@ -216,7 +217,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
-    <script src="{{url_for('static',filename='Js/LoadingBarSockets.js')}}"></script>
-    <script src="{{url_for('static',filename='Js/Reports.js')}}"></script>
+    <script src="{{url_for('static',filename='js/LoadingBarSockets.js')}}"></script>
+    <script src="{{url_for('static',filename='js/Reports.js')}}"></script>
   </body>
 </html>

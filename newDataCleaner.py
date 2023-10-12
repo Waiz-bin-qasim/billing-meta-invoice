@@ -74,6 +74,9 @@ def dataCleaning (outputFile):
                         f2.writelines(newLine.translate({ord('"'): None}))
                         newLine = ""
                         continue
+                    # title at the end of page 
+                    elif conCatLine == True: 
+                        continue
                     else:
                         newLine = ""
                         continue

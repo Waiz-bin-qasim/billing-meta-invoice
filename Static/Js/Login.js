@@ -56,36 +56,3 @@ loginForm.addEventListener("submit", async function (event) {
     errorContainer.textContent = "Incorrect Credentials";
   }
 });
-
-window.onload((e) => {
-  history.pushState(
-    "/",
-    "/",
-    "/",
-    "/",
-    "/",
-    "/",
-    "/",
-    "/",
-    "/",
-    "/",
-    window.location.href
-  );
-  window.addEventListener("popstate", function () {
-    history.pushState(
-      "/",
-      "/",
-      "/",
-      "/",
-      "/",
-      "/",
-      "/",
-      "/",
-      "/",
-      "/",
-      "/",
-      "/",
-      window.location.href
-    );
-  });
-});
