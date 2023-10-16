@@ -10,6 +10,10 @@ const span = document.getElementsByClassName("close")[0];
 const successAlert = () => {
   MetaInvoicemodal.style.display = "none";
   Swal.fire("Successful", "Billing MAU uploaded", "success").then((e) => {
+    loading.style.display = "block";
+    loading.style.backgroundColor = "#f0f8fe";
+    sideBar.style.display = "none";
+    section.style.display = "none";
     window.location.href = "/mau/upload";
   });
 };
@@ -62,12 +66,12 @@ const loadFile = function (event) {
       event.target.files[0].type ===
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
   ) {
-    image.src = "/static/Img/download.png";
+    image.src = "/static/img/download.png";
     document.querySelector(".para-text").innerHTML =
       "File has been Uploaded <br/> Select The Parser";
     document.querySelector(".span-text").innerText = event.target.files[0].name;
   } else {
-    image.src = "/static/Img/508-icon.png";
+    image.src = "/static/img/508-icon.png";
     event.target.files[0] = null;
     document.querySelector(".span-text").innerText = "";
     errorALert("Incorrect File Type");
