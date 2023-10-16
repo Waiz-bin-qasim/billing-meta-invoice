@@ -10,6 +10,10 @@ let parserChoice;
 const successAlert = () => {
   MetaInvoicemodal.style.display = "none";
   Swal.fire("Successful", "Meta Invoice Uploaded", "success").then((e) => {
+    loading.style.display = "block";
+    loading.style.backgroundColor = "#f0f8fe";
+    sideBar.style.display = "none";
+    section.style.display = "none";
     window.location.href = "/upload";
   });
 };
