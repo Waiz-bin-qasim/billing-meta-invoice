@@ -63,12 +63,12 @@ const loadFile = function (event) {
     event.target.files[0] &&
     event.target.files[0].type === "application/pdf"
   ) {
-    image.src = "/static/Img/pdf-icon.webp";
+    image.src = "/static/img/pdf-icon.webp";
     document.querySelector(".para-text").innerHTML =
       "File has been Uploaded <br/> Select The Parser";
     document.querySelector(".span-text").innerText = event.target.files[0].name;
   } else {
-    image.src = "/static/Img/508-icon.png";
+    image.src = "/static/img/508-icon.png";
     event.target.files[0] = null;
     errorAlert("Incorrect File Type");
   }
