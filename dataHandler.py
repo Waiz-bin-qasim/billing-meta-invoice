@@ -154,7 +154,7 @@ def computing_totals(data_table,pdf_file,sql_values,parserChoice,username):
 
 
 sql_query = "INSERT INTO billing_meta_invoice (ORG_ID, INVOICE_NUMBER, ORG_NAME, WABA_ID, USER_INITIATED_COUNT,USER_INITIATED_TOTAL,BUSINESS_INITIATED_COUNT,BUSINESS_INITIATED_TOTAL,AUTHENTICATION_COUNT,AUTHENTICATION_TOTAL,SERVICE_COUNT,SERVICE_TOTAL,MARKETING_COUNT,MARKETING_TOTAL,UTILITY_COUNT,UTILITY_TOTAL,CREATED_ON,CREATED_BY,UPDATED_ON,UPDATED_BY,INV_URL,INV_MONTH,INV_YEAR) VALUES (%s,%s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-print("code is running")
+
 
 def run(sql_values,parserChoice,user,socketio):
     

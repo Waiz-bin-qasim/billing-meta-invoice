@@ -18,8 +18,8 @@ from Helper.csvHelpers import generateCheck
 from flask_socketio import SocketIO
 from Sockets.sockets import showBar
 from Sockets.sockets import updateProgress
-
-
+from Helper.signup import addUser,displayUsers,displayRoles
+from Helper.dashboard import displayTotalClients,displayTotalInvoices,displayTotalUSD,displayTotalPKR,displayWhatsappAmount
 
 
 # month and year from MAU Billing
@@ -41,7 +41,7 @@ IMG = os.path.join('static', 'Img')
 app = Flask(__name__,template_folder='templates')
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')  
 app.config['ENCRYPT_KEY'] = os.environ.get('ENCRYPT_KEY')
-socketio = SocketIO(app)
+# socketio = SocketIO(app)
 app.config['sideBarImage'] = IMG
 
 def token_required(f):
@@ -100,16 +100,8 @@ def upload(user,permissions,role):
             file = request.files['file']
             if file.filename == '':
                 raise Exception('No file selected')
-            
-
-
-
             fileName = 'transaction.pdf'
             file.save(fileName)
-            
-
-
-
             sql_values = []
             print(user[0])
             updateProgress(socketio,"ascsac",35)
@@ -119,10 +111,7 @@ def upload(user,permissions,role):
                 updateProgress(socketio,"ascsac",90)
                 if response['message'] == 'failed':
                     return jsonify(response),400
-                
-
-
-
+    
                 # place after parsing is confirmed
                 if parserChoice == '0':
                     # old pdf reader
@@ -136,24 +125,20 @@ def upload(user,permissions,role):
                     file_path = f'./metaInvoiceFiles/{invoice_month}{invoice_year}'
                     shutil.copy(fileName, file_path)
 
-
-
-
                 return jsonify(response),200
             else:
                 updateProgress(socketio,"ascsac",90)
                 return jsonify({'message': 'Meta Invoice Already Exists'}), 400
         else:
             data = getAllBilling()
-            fileName = os.path.join(app.config['sideBarImage'],'dc-new-logo.png')
-            return render_template('MetaInvoice.html',data=data,image_src= fileName)
+            return jsonify(data)
     except Exception as ex:
         print(f'Error during file upload: {ex}')
         return jsonify({'message': 'An error occurred during file upload.'}), 400
 
 
 #for making token
-@app.route('/',methods = ['POST',"GET"])
+@app.route('/',methods = ['POST'])
 def login():
     
     try: 
@@ -166,12 +151,9 @@ def login():
             print(authPassword)
             token,roleName = loginCheck(authUsername,(authPassword))
             if token != 0:
-                # return redirect(url_for('upload'),code=307)
                 return jsonify({'token' : token,"roleName":roleName})
             else:
-               return jsonify({"message":"Incorrect Credentials"}),401
-        else:
-            return render_template('login.html')
+               return jsonify({"message":"Incorrect Credentials or Account not Active"}),401
             
     except (NameError, TypeError) as error:
      print(error)
@@ -195,7 +177,7 @@ def downloadcsv(user,permissions,role):
                 createdAt = createdAt.strftime('%B %d, %Y ')
                 response.append([count+1,name.split('.')[0],createdAt,updatedtAt]) 
                 count +=1
-            return render_template("Reports.html",data = response)
+            return jsonify(response)
     except Exception as ex:
         print(f"Error during file download: {ex}")
         return jsonify({'Error Ocurred' : ex}), 500  
@@ -215,8 +197,6 @@ def mau(user,permissions,role):
             if file.filename == '':
                 raise Exception('No file selected')
             
-
-
             fileName = 'MAU.xlsx'
             file.save(fileName)
 
@@ -224,9 +204,6 @@ def mau(user,permissions,role):
             month, year = getCredentials()
             file_path = f'./billingMAUFiles/{month}{year}.xlsx'
             shutil.copy(fileName, file_path)
-
-
-
 
             updateProgress(socketio,"a",30)
             if (checkMauLogs() == True):
@@ -240,8 +217,7 @@ def mau(user,permissions,role):
             
          else:
              data = getAllMau()
-             print(data)
-             return render_template("Billing.html",data=data)
+             return jsonify(data)
     except Exception as ex:
      print(ex)
      print(f'Error during upload: {ex}')
@@ -268,7 +244,6 @@ def generateCsv(user,permissions,socketId,role):
                 return jsonify("File was Generated")
             else:
                 updateProgress(socketio,socketId,40)
-                print(response)
                 return jsonify(response),400
         else:
             return jsonify({"message":"Please provide both param1 and param2 as query parameters."}),400
@@ -388,6 +363,131 @@ def financeUpload(user,permissions,role):
      return jsonify({'Error Occured' : ex}), 400
     
 
+
+
+@app.route('/displayrole',methods = ['GET'])
+@token_required
+def displayRole(user,permissions,role):
+    try:
+        route = request.endpoint
+        if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400
+        data = displayRoles()
+        return jsonify(data)
+    except Exception as ex:
+        return jsonify({'message':'error during displaying roles'}),400
+
+@app.route('/displayusd',methods = ['GET'])
+@token_required
+def displayUSD(user,permissions,role):
+    try:
+        route = request.endpoint
+        if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400
+        month = request.args.get('month')
+        year = request.args.get('year')
+        data = displayTotalUSD(month,year)
+        return jsonify(data)
+    except Exception as ex:
+        return jsonify({'message':'error during displaying usd amount'}),400
+
+@app.route('/displaypkr',methods = ['GET'])
+@token_required
+def displayPKR(user,permissions,role):
+    try:
+        route = request.endpoint
+        if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400
+        month = request.args.get('month')
+        year = request.args.get('year')
+        data = displayTotalPKR(month,year)
+        return jsonify(data)
+    except Exception as ex:
+        return jsonify({'message':'error during displaying pkr amount'}),400
+
+@app.route('/displaywhatsapp',methods = ['GET'])
+@token_required
+def displayWhatsapp(user,permissions,role):
+    try:
+        route = request.endpoint
+        if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400
+        month = request.args.get('month')
+        year = request.args.get('year')
+        data = displayWhatsappAmount(month,year)
+        return jsonify(data)
+    except Exception as ex:
+        return jsonify({'message':'error during displaying usd amount'}),400
+
+@app.route('/displaytotal',methods = ['GET'])
+@token_required
+def displayTotal(user,permissions,role):
+    try:
+        route = request.endpoint
+        if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400
+        month = request.args.get('month')
+        year = request.args.get('year')
+        usdEarned = displayTotalUSD(month,year)
+        usdWhatsapp = displayWhatsappAmount
+        data = usdEarned+usdWhatsapp
+        return jsonify(data)
+    except Exception as ex:
+        return jsonify({'message':'error during displaying usd amount'}),400
+
+
+@app.route('/displayclients',methods = ['GET'])
+@token_required
+def displayClients(user,permissions,role):
+    try:
+        route = request.endpoint
+        if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400
+        month = request.args.get('month')
+        year = request.args.get('year')
+        data = displayTotalClients(month,year)
+        return jsonify(data)
+    except Exception as ex:
+        print(ex)
+        return jsonify({'message':'error during displaying clients'}),400
+
+@app.route('/displayinvoice',methods = ['GET'])
+@token_required
+def displayInvoice(user,permissions,role):
+    try:
+        route = request.endpoint
+        if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400
+        data = displayTotalInvoices()
+        return jsonify(data)
+    except Exception as ex:
+        return jsonify({'message':'error during displaying invoices'}),400
+
+@app.route('/adduser',methods = ['POST','GET'])
+@token_required
+def addUserData(user,permissions,role):
+    try:
+        route = request.endpoint
+        if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400
+        if request.method == "POST":
+            userData = request.form
+            userFirstName = userData["firstName"]
+            userLastName = userData["lastName"]
+            userEmail = userData["email"]
+            userPassword = userData["password"]
+            userRoleId = userData["roleId"]
+            response = addUser(userFirstName,userLastName,userEmail,userPassword,userRoleId)
+            return jsonify(response)
+        else:
+            data = displayUsers()
+            return jsonify(data)
+            
+    except Exception as ex:
+        return jsonify({'error in adding user': ex}),400    
+    
+    
+
 @app.route('/finance/reports',methods = ['get'])
 @token_required
 def FinanceReport(user,permissions,role):
@@ -410,11 +510,11 @@ def FinanceReport(user,permissions,role):
         flag = False
         if(role == 'admin'):
             flag = True
-        return render_template("FinanceReports.html",data = response,option = flag)
+        return jsonify(response)
     except Exception as ex:
         print(f"Error during file download: {ex}")
         return jsonify({'Error Ocurred' : ex}), 500  
 
 #server starting
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=8090)
+    app.run(host='0.0.0.0',port=8090,debug=True)
