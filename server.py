@@ -19,9 +19,10 @@ from flask_socketio import SocketIO
 from Sockets.sockets import showBar
 from Sockets.sockets import updateProgress
 from Helper.signup import addUser,displayUsers,displayRoles
-from Helper.dashboard import displayTotalClients,displayTotalInvoices,displayTotalUSD,displayTotalPKR,displayWhatsappAmount
-
-
+from Helper.dashboard import displayTotalClients,displayTotalInvoices,displayTotalUSD,displayTotalPKR,displayWhatsappAmount,displayBarChart
+from flask_mail import Mail, Message
+import secrets
+from Helper.forgetPassword import confirmEmail,checkToken,setPassword
 # month and year from MAU Billing
 from Helper.MAU import getCredentials
 # month and year from PDF Files
@@ -41,9 +42,20 @@ IMG = os.path.join('static', 'Img')
 app = Flask(__name__,template_folder='templates')
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')  
 app.config['ENCRYPT_KEY'] = os.environ.get('ENCRYPT_KEY')
+# app.config['MAIL_SERVER'] = os.environ.get('MAIL_sERVER')
+# app.config['MAIL_PORT'] = os.environ.get('MAIL_PORT')
+# app.config['MAIL_USE_TLS'] = os.environ.get('MAIL_USE_TLS')
+# app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+# app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587  # Use the appropriate port for your email server
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = 'haziq.ahmed@eocean.com.pk'
+app.config['MAIL_PASSWORD'] = 'mklv gqna kyou wuwx'
 # socketio = SocketIO(app)
 app.config['sideBarImage'] = IMG
-
+mail = Mail(app)
 def token_required(f):
     
     @wraps(f)
@@ -429,12 +441,100 @@ def displayTotal(user,permissions,role):
         month = request.args.get('month')
         year = request.args.get('year')
         usdEarned = displayTotalUSD(month,year)
-        usdWhatsapp = displayWhatsappAmount
-        data = usdEarned+usdWhatsapp
+        usdWhatsapp = displayWhatsappAmount(month,year)
+        # usdEarned = usdEarned.replace(',', '').strip()
+        usdWhatsapp = float(usdWhatsapp.replace(',', '').strip())
+        data = usdEarned + usdWhatsapp
         return jsonify(data)
     except Exception as ex:
-        return jsonify({'message':'error during displaying usd amount'}),400
+        print(ex)
+        return jsonify({'error':'error during total'}),400
 
+# app.route('/reset', methods=['POST'])
+# @token_required
+# def resetPassword(user,permissions,role):
+#     try:
+#         print("hi")
+#         route = request.endpoint
+#         if(checkPermission(route,permissions) == False):
+#             return jsonify({'message': 'Permission Not Given'}), 400
+#         email = request.form['email']
+#         token = confirmEmail(email)
+#         msg = Message('Password Reset', sender='haziq.ahmed@eocean.com.pk', recipients=[email])
+#         msg.body = f'Click the following link to reset your password:'
+#         mail.send(msg)
+#         return jsonify({'token':token})
+#     except Exception as ex:
+#          return jsonify({'Error Ocurred' : ex}), 500
+
+@app.route('/forgetpassword',methods = ['POST'])
+def forgetPassword():
+    try:
+        email = request.form['email']
+        email = [email]
+        token = confirmEmail(email)
+        
+        print(type(email))
+        print(token)
+        msg = Message('Password Reset', sender='haziq.ahmed@eocean.com.pk', recipients=email)
+        msg.body = f'Code to reset your password: {token}'
+        mail.send(msg)
+        return jsonify({'message':'success'})
+    except Exception as ex:
+        print(ex)
+        return jsonify({'message':'error during forget password'}),400
+
+
+@app.route('/resetpassword',methods = ['POST'])
+def resetPassword():
+    try:
+    
+        email = request.form['email']
+        newPassword = request.form['newPassword']
+        confirmPassword = request.form['confirmPassword']
+        if(newPassword == confirmPassword):
+            setPassword(email,newPassword)
+        else:
+            return jsonify({'message': 'passwords does not match'}),400
+        
+        return jsonify({'message':'success'}),200
+    except Exception as ex:
+        print(ex)
+        return jsonify({'message':'error during forget password'}),400
+    
+@app.route('/changepassword',methods = ['POST'])
+def changePassword(user,permissions,role):
+    try:
+        route = request.endpoint
+        if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400
+        email = request.form['email']
+        oldPassword = request.form['oldPassword']
+        newPassword = request.form['newPassword']
+        confirmPassword = request.form['confirmPassword']
+        if(newPassword == confirmPassword):
+            changePassword(email,newPassword)
+        else:
+            return jsonify({'message': 'passwords does not match'}),400
+        
+        return jsonify({'message':'success'}),200
+    except Exception as ex:
+        print(ex)
+        return jsonify({'message':'error during forget password'}),400
+
+@app.route('/entertoken',methods = ['POST'])
+def enterToken():
+    try:
+        email = request.form['email']
+        token = request.form['token']
+        result = checkToken(email,token)
+        if(result):
+            return jsonify({'message':'success'})
+        else:
+            return jsonify({'message':'failed'}),400
+    except Exception as ex:
+        print(ex)
+        return jsonify({'message':'token incorrect'}),400
 
 @app.route('/displayclients',methods = ['GET'])
 @token_required
@@ -462,6 +562,18 @@ def displayInvoice(user,permissions,role):
         return jsonify(data)
     except Exception as ex:
         return jsonify({'message':'error during displaying invoices'}),400
+    
+@app.route('/displaychart',methods = ['GET'])
+@token_required
+def displayChart(user,permissions,role):
+    try:
+        route = request.endpoint
+        if(checkPermission(route,permissions) == False):
+            return jsonify({'message': 'Permission Not Given'}), 400
+        data = displayBarChart()
+        return jsonify(data)
+    except Exception as ex:
+        return jsonify({'message':'error during displaying Bar Chart Data'}),400
 
 @app.route('/adduser',methods = ['POST','GET'])
 @token_required
@@ -514,6 +626,8 @@ def FinanceReport(user,permissions,role):
     except Exception as ex:
         print(f"Error during file download: {ex}")
         return jsonify({'Error Ocurred' : ex}), 500  
+
+
 
 #server starting
 if __name__ == '__main__':

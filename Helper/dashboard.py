@@ -116,3 +116,33 @@ def displayWhatsappAmount(month,year):
 
     except Exception as ex:
         print(f"Error while reading PDF: {ex}")
+
+
+def displayBarChart():
+    try:
+        mauQuery = 'select distinct inv_month,inv_year from mau'
+        metaQuery = 'select distinct inv_month,inv_year from billing_meta_invoice'
+        cursor,connection = establish_connection()
+        cursor.execute(mauQuery)
+        resultMau = cursor.fetchall()
+        cursor.execute(metaQuery)
+        resultMeta = cursor.fetchall()
+        mau_set = {(row[0], row[1]) for row in resultMau}
+        meta_set = {(row[0], row[1]) for row in resultMeta}
+
+        totalResult = []
+        common_values = mau_set.intersection(meta_set)
+        for item in common_values:
+            inv_month = item[0]  
+            inv_year = item[1]
+            record = []
+            record.append(inv_month)
+            record.append(inv_year)
+            record.append(displayWhatsappAmount(inv_month,inv_year))
+            record.append(displayTotalUSD(inv_month,inv_year))
+            totalResult.append(record)
+        return totalResult
+    except Exception as ex:
+        print(ex)
+    
+    
