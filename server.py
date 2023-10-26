@@ -18,7 +18,7 @@ from Helper.csvHelpers import generateCheck
 from flask_socketio import SocketIO
 from Sockets.sockets import showBar
 from Sockets.sockets import updateProgress
-from Helper.signup import addUser,displayUsers,displayRoles
+from Helper.signup import addUser,displayUsers,displayRoles,delUser,updateUser
 from Helper.dashboard import displayTotalClients,displayTotalInvoices,displayTotalUSD,displayTotalPKR,displayWhatsappAmount,displayBarChart
 from flask_mail import Mail, Message
 import secrets
@@ -450,22 +450,7 @@ def displayTotal(user,permissions,role):
         print(ex)
         return jsonify({'error':'error during total'}),400
 
-# app.route('/reset', methods=['POST'])
-# @token_required
-# def resetPassword(user,permissions,role):
-#     try:
-#         print("hi")
-#         route = request.endpoint
-#         if(checkPermission(route,permissions) == False):
-#             return jsonify({'message': 'Permission Not Given'}), 400
-#         email = request.form['email']
-#         token = confirmEmail(email)
-#         msg = Message('Password Reset', sender='haziq.ahmed@eocean.com.pk', recipients=[email])
-#         msg.body = f'Click the following link to reset your password:'
-#         mail.send(msg)
-#         return jsonify({'token':token})
-#     except Exception as ex:
-#          return jsonify({'Error Ocurred' : ex}), 500
+
 
 @app.route('/forgetpassword',methods = ['POST'])
 def forgetPassword():
@@ -493,7 +478,9 @@ def resetPassword():
         newPassword = request.form['newPassword']
         confirmPassword = request.form['confirmPassword']
         if(newPassword == confirmPassword):
-            setPassword(email,newPassword)
+            response = setPassword(email,newPassword)
+            if(response == 0):
+                return jsonify({'message':'failed'}),400
         else:
             return jsonify({'message': 'passwords does not match'}),400
         
@@ -503,21 +490,23 @@ def resetPassword():
         return jsonify({'message':'error during forget password'}),400
     
 @app.route('/changepassword',methods = ['POST'])
+@token_required
 def changePassword(user,permissions,role):
     try:
         route = request.endpoint
         if(checkPermission(route,permissions) == False):
             return jsonify({'message': 'Permission Not Given'}), 400
         email = request.form['email']
-        oldPassword = request.form['oldPassword']
         newPassword = request.form['newPassword']
         confirmPassword = request.form['confirmPassword']
         if(newPassword == confirmPassword):
-            changePassword(email,newPassword)
+            response = setPassword(email,newPassword)
+            if(response == 1):
+                return jsonify({'message' : 'success'})
+            return jsonify({'message':'failed'}),400
         else:
             return jsonify({'message': 'passwords does not match'}),400
         
-        return jsonify({'message':'success'}),200
     except Exception as ex:
         print(ex)
         return jsonify({'message':'error during forget password'}),400
@@ -575,7 +564,7 @@ def displayChart(user,permissions,role):
     except Exception as ex:
         return jsonify({'message':'error during displaying Bar Chart Data'}),400
 
-@app.route('/adduser',methods = ['POST','GET'])
+@app.route('/adduser',methods = ['POST','GET','DELETE','PATCH'])
 @token_required
 def addUserData(user,permissions,role):
     try:
@@ -591,12 +580,27 @@ def addUserData(user,permissions,role):
             userRoleId = userData["roleId"]
             response = addUser(userFirstName,userLastName,userEmail,userPassword,userRoleId)
             return jsonify(response)
+        elif request.method == "DELETE":
+            user = request.args.get('user')
+            response = delUser(user)
+            return response
+        elif request.method == 'PATCH':
+            username = request.form['username']
+            columns = request.form.getlist('columns[]')  
+            values = request.form.getlist('values[]') 
+            # columns = request.args.get['username']
+            # values = request.args.get['values']
+            if len(columns) != len(values):
+                return jsonify({'error': 'Number of columns and values must match'}),400
+            updateUser(username,columns,values)
+            return jsonify({'message': 'Update successful'})
         else:
             data = displayUsers()
             return jsonify(data)
             
     except Exception as ex:
-        return jsonify({'error in adding user': ex}),400    
+        print(ex)
+        return jsonify({'error in user module': str(ex)}),400    
     
     
 

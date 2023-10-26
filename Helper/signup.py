@@ -42,3 +42,36 @@ def addUser(firstName, lastName, email, password,roleId):
         'message': 'error during inserting new user'
       }
     
+def delUser(user):
+    try:
+        cursor,connection = establish_connection()
+        queryDelete = "Delete from login_credentials where username = %s"
+        user = [user]
+        cursor.execute(queryDelete,(user))
+        connection.commit()
+        return{
+            'message':'user deleted'
+        }
+    except Exception as ex:
+        print(ex)
+        return{
+            'message' : 'error during user deletion'
+        }
+        
+def updateUser(username,columns,values):
+    try:
+        sql = "UPDATE login_credentials SET "
+        updates = []
+        cursor,connection = establish_connection()
+        for column, value in zip(columns, values):
+            updates.append(f"{column} = %s")
+
+        sql += ", ".join(updates)
+        sql += " WHERE username = %s"  
+        print(sql)
+        values.append(username)
+        cursor.execute(sql, values)
+        connection.commit()
+        return
+    except Exception as ex:
+        print(ex)

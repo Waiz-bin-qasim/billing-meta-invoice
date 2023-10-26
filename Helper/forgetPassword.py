@@ -1,5 +1,5 @@
 from Config.dbConfig import establish_connection, close_connection
-from Helper.loginHelpers import passwordEncrypt
+from Helper.loginHelpers import passwordEncrypt,passwordDecrypt
 import secrets
 def confirmEmail(email):
     try:
@@ -43,6 +43,23 @@ def setPassword(email,newPassword):
         cursor,connection = establish_connection()
         cursor.execute(queryPassword,(encryptedPassword,email))
         connection.commit()
-        return
+        return 1
     except Exception as ex:
         print(ex)
+        
+# def checkOldPass(email,oldPassword,newPassword):
+#     try:
+        
+#         checkPass = 'select password from login_credentials where username = %s '
+#         cursor,connection = establish_connection()
+#         email = [email]
+#         cursor.execute(checkPass,(email))
+#         result = cursor.fetchone()
+#         print(result)
+#         decryptedPassword = passwordDecrypt(result[0])
+#         if oldPassword == decryptedPassword:
+#             setPassword(email,newPassword)
+#             return 1
+#         return 0
+#     except Exception as ex:
+#         print(ex)
