@@ -156,14 +156,12 @@ def login():
     try: 
         
         if request.method == "POST":
-            auth = request.form
-            print(auth)
-            authUsername = [auth['username']]
-            authPassword = [auth["password"]]
+            authUsername = [request.form['username']]
+            authPassword = [request.form["password"]]
             print(authPassword)
-            token,roleName = loginCheck(authUsername,(authPassword))
+            token,roleName = loginCheck(authUsername,authPassword)
             if token != 0:
-                return jsonify({'token' : token,"roleName":roleName})
+                return jsonify({'token' : token,"roleName":roleName}),200   
             else:
                return jsonify({"message":"Incorrect Credentials or Account not Active"}),401
             
@@ -389,66 +387,80 @@ def displayRole(user,permissions,role):
     except Exception as ex:
         return jsonify({'message':'error during displaying roles'}),400
 
-@app.route('/displayusd',methods = ['GET'])
+@app.route('/displaydashboard',methods = ['GET'])
 @token_required
-def displayUSD(user,permissions,role):
+def displayDashboard(user,permissions,role):
     try:
         route = request.endpoint
         if(checkPermission(route,permissions) == False):
             return jsonify({'message': 'Permission Not Given'}), 400
         month = request.args.get('month')
         year = request.args.get('year')
-        data = displayTotalUSD(month,year)
-        return jsonify(data)
-    except Exception as ex:
-        return jsonify({'message':'error during displaying usd amount'}),400
+        data1 = displayTotalUSD(month,year)
+        
+        data2 = displayTotalPKR(month,year)
+        
+        data3 = displayWhatsappAmount(month,year)
+        
+        data4 = displayWhatsappAmount(month,year)
+        
+        data5 = displayTotalClients(month,year)
+        
+        data6 = displayTotalInvoices()
+        
+        data7 = displayBarChart()
+        return jsonify(data1,data2,data3,data4,data5,data6,data7)
 
-@app.route('/displaypkr',methods = ['GET'])
-@token_required
-def displayPKR(user,permissions,role):
-    try:
-        route = request.endpoint
-        if(checkPermission(route,permissions) == False):
-            return jsonify({'message': 'Permission Not Given'}), 400
-        month = request.args.get('month')
-        year = request.args.get('year')
-        data = displayTotalPKR(month,year)
-        return jsonify(data)
+        
     except Exception as ex:
-        return jsonify({'message':'error during displaying pkr amount'}),400
+        return jsonify({'message':'error during displaying dashboard'}),400
 
-@app.route('/displaywhatsapp',methods = ['GET'])
-@token_required
-def displayWhatsapp(user,permissions,role):
-    try:
-        route = request.endpoint
-        if(checkPermission(route,permissions) == False):
-            return jsonify({'message': 'Permission Not Given'}), 400
-        month = request.args.get('month')
-        year = request.args.get('year')
-        data = displayWhatsappAmount(month,year)
-        return jsonify(data)
-    except Exception as ex:
-        return jsonify({'message':'error during displaying usd amount'}),400
+# @app.route('/displaypkr',methods = ['GET'])
+# @token_required
+# def displayPKR(user,permissions,role):
+#     try:
+#         route = request.endpoint
+#         if(checkPermission(route,permissions) == False):
+#             return jsonify({'message': 'Permission Not Given'}), 400
+#         month = request.args.get('month')
+#         year = request.args.get('year')
+#         data = displayTotalPKR(month,year)
+#         return jsonify(data)
+#     except Exception as ex:
+#         return jsonify({'message':'error during displaying pkr amount'}),400
 
-@app.route('/displaytotal',methods = ['GET'])
-@token_required
-def displayTotal(user,permissions,role):
-    try:
-        route = request.endpoint
-        if(checkPermission(route,permissions) == False):
-            return jsonify({'message': 'Permission Not Given'}), 400
-        month = request.args.get('month')
-        year = request.args.get('year')
-        usdEarned = displayTotalUSD(month,year)
-        usdWhatsapp = displayWhatsappAmount(month,year)
-        # usdEarned = usdEarned.replace(',', '').strip()
-        usdWhatsapp = float(usdWhatsapp.replace(',', '').strip())
-        data = usdEarned + usdWhatsapp
-        return jsonify(data)
-    except Exception as ex:
-        print(ex)
-        return jsonify({'error':'error during total'}),400
+# @app.route('/displaywhatsapp',methods = ['GET'])
+# @token_required
+# def displayWhatsapp(user,permissions,role):
+#     try:
+#         route = request.endpoint
+#         if(checkPermission(route,permissions) == False):
+#             return jsonify({'message': 'Permission Not Given'}), 400
+#         month = request.args.get('month')
+#         year = request.args.get('year')
+#         data = displayWhatsappAmount(month,year)
+#         return jsonify(data)
+#     except Exception as ex:
+#         return jsonify({'message':'error during displaying usd amount'}),400
+
+# @app.route('/displaytotal',methods = ['GET'])
+# @token_required
+# def displayTotal(user,permissions,role):
+#     try:
+#         route = request.endpoint
+#         if(checkPermission(route,permissions) == False):
+#             return jsonify({'message': 'Permission Not Given'}), 400
+#         month = request.args.get('month')
+#         year = request.args.get('year')
+#         usdEarned = displayTotalUSD(month,year)
+#         usdWhatsapp = displayWhatsappAmount(month,year)
+#         # usdEarned = usdEarned.replace(',', '').strip()
+#         usdWhatsapp = float(usdWhatsapp.replace(',', '').strip())
+#         data = usdEarned + usdWhatsapp
+#         return jsonify(data)
+#     except Exception as ex:
+#         print(ex)
+#         return jsonify({'error':'error during total'}),400
 
 
 
@@ -525,44 +537,44 @@ def enterToken():
         print(ex)
         return jsonify({'message':'token incorrect'}),400
 
-@app.route('/displayclients',methods = ['GET'])
-@token_required
-def displayClients(user,permissions,role):
-    try:
-        route = request.endpoint
-        if(checkPermission(route,permissions) == False):
-            return jsonify({'message': 'Permission Not Given'}), 400
-        month = request.args.get('month')
-        year = request.args.get('year')
-        data = displayTotalClients(month,year)
-        return jsonify(data)
-    except Exception as ex:
-        print(ex)
-        return jsonify({'message':'error during displaying clients'}),400
+# @app.route('/displayclients',methods = ['GET'])
+# @token_required
+# def displayClients(user,permissions,role):
+#     try:
+#         route = request.endpoint
+#         if(checkPermission(route,permissions) == False):
+#             return jsonify({'message': 'Permission Not Given'}), 400
+#         month = request.args.get('month')
+#         year = request.args.get('year')
+#         data = displayTotalClients(month,year)
+#         return jsonify(data)
+#     except Exception as ex:
+#         print(ex)
+#         return jsonify({'message':'error during displaying clients'}),400
 
-@app.route('/displayinvoice',methods = ['GET'])
-@token_required
-def displayInvoice(user,permissions,role):
-    try:
-        route = request.endpoint
-        if(checkPermission(route,permissions) == False):
-            return jsonify({'message': 'Permission Not Given'}), 400
-        data = displayTotalInvoices()
-        return jsonify(data)
-    except Exception as ex:
-        return jsonify({'message':'error during displaying invoices'}),400
+# @app.route('/displayinvoice',methods = ['GET'])
+# @token_required
+# def displayInvoice(user,permissions,role):
+#     try:
+#         route = request.endpoint
+#         if(checkPermission(route,permissions) == False):
+#             return jsonify({'message': 'Permission Not Given'}), 400
+#         data = displayTotalInvoices()
+#         return jsonify(data)
+#     except Exception as ex:
+#         return jsonify({'message':'error during displaying invoices'}),400
     
-@app.route('/displaychart',methods = ['GET'])
-@token_required
-def displayChart(user,permissions,role):
-    try:
-        route = request.endpoint
-        if(checkPermission(route,permissions) == False):
-            return jsonify({'message': 'Permission Not Given'}), 400
-        data = displayBarChart()
-        return jsonify(data)
-    except Exception as ex:
-        return jsonify({'message':'error during displaying Bar Chart Data'}),400
+# @app.route('/displaychart',methods = ['GET'])
+# @token_required
+# def displayChart(user,permissions,role):
+#     try:
+#         route = request.endpoint
+#         if(checkPermission(route,permissions) == False):
+#             return jsonify({'message': 'Permission Not Given'}), 400
+#         data = displayBarChart()
+#         return jsonify(data)
+#     except Exception as ex:
+#         return jsonify({'message':'error during displaying Bar Chart Data'}),400
 
 @app.route('/adduser',methods = ['POST','GET','DELETE','PATCH'])
 @token_required
