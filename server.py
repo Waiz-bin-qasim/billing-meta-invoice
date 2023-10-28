@@ -30,6 +30,7 @@ from oldPdfReader import getVariables as oldGetVariables
 from newPdfReader import getVariables as newGetVariables
 # for copying files
 import shutil
+from flask_cors import CORS
 
 
 
@@ -40,6 +41,7 @@ import shutil
 IMG = os.path.join('static', 'Img')
 
 app = Flask(__name__,template_folder='templates')
+CORS(app)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')  
 app.config['ENCRYPT_KEY'] = os.environ.get('ENCRYPT_KEY')
 # app.config['MAIL_SERVER'] = os.environ.get('MAIL_sERVER')
@@ -647,4 +649,4 @@ def FinanceReport(user,permissions,role):
 
 #server starting
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=8090,debug=True)
+    app.run(host='127.0.0.1',port=8090,debug=True)
