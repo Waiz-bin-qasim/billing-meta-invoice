@@ -138,7 +138,9 @@ def displayBarChart():
             record = []
             record.append(inv_month)
             record.append(inv_year)
-            record.append(displayWhatsappAmount(inv_month,inv_year))
+            amount = displayWhatsappAmount(inv_month,inv_year)
+            amount = float(amount.replace(',', '').strip())
+            record.append(amount)
             record.append(displayTotalUSD(inv_month,inv_year))
             totalResult.append(record)
         return totalResult

@@ -64,10 +64,12 @@ def token_required(f):
     def decorated(*args, **kwargs):
         
         try:
-            if 'token' in request.cookies:
-                token = request.cookies['token']
+            
+            
+            if 'token' in request.headers:
+                token = request.headers['token']
                 data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"]) 
-                
+                print(token)
                 # Extract the 'user' value from the decoded token
                 print(data)
                 user = data.get('user')
@@ -161,9 +163,9 @@ def login():
             authUsername = [request.form['username']]
             authPassword = [request.form["password"]]
             print(authPassword)
-            token,roleName = loginCheck(authUsername,authPassword)
+            token,roleName,user = loginCheck(authUsername,authPassword)
             if token != 0:
-                return jsonify({'token' : token,"roleName":roleName}),200   
+                return jsonify({'token' : token,"roleName":roleName,"user":user}),200   
             else:
                return jsonify({"message":"Incorrect Credentials or Account not Active"}),401
             
@@ -404,7 +406,8 @@ def displayDashboard(user,permissions,role):
         
         data3 = displayWhatsappAmount(month,year)
         
-        data4 = displayWhatsappAmount(month,year)
+        data3=float(data3.replace(',', '').strip())
+        data4 = data1 + data3
         
         data5 = displayTotalClients(month,year)
         
@@ -487,18 +490,24 @@ def forgetPassword():
 @app.route('/resetpassword',methods = ['POST'])
 def resetPassword():
     try:
-    
         email = request.form['email']
+        token = request.form['token']
         newPassword = request.form['newPassword']
         confirmPassword = request.form['confirmPassword']
-        if(newPassword == confirmPassword):
-            response = setPassword(email,newPassword)
-            if(response == 0):
-                return jsonify({'message':'failed'}),400
-        else:
-            return jsonify({'message': 'passwords does not match'}),400
+        result = checkToken(email,token)
+        if(result):
+            if(newPassword == confirmPassword):
+                response = setPassword(email,newPassword)
+                if(response == 0):
+                    return jsonify({'message':'failed'}),400
+            else:
+                return jsonify({'message': 'passwords does not match'}),400
         
-        return jsonify({'message':'success'}),200
+            return jsonify({'message':'success'}),200
+        else:
+            return jsonify({'message':'failed'}),400
+        
+    
     except Exception as ex:
         print(ex)
         return jsonify({'message':'error during forget password'}),400
