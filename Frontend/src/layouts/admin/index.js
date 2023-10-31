@@ -167,7 +167,7 @@ export default function Dashboard(props) {
               >
                 <Switch>
                   {getRoutes(routes)}
-                  <Redirect from="/" to="/admin/default" />
+                  <Redirect from="/" to="/auth" />
                 </Switch>
               </Box>
             ) : null}

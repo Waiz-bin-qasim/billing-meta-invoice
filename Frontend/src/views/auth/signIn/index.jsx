@@ -21,7 +21,7 @@
 
 */
 
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 // Chakra imports
 import {
@@ -47,6 +47,10 @@ import illustration from "assets/img/auth/Eocean.png";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
+import { login } from "api/login";
+
+
+
 
 function SignIn() {
   // Chakra color mode
@@ -65,10 +69,24 @@ function SignIn() {
     { bg: "secondaryGray.300" },
     { bg: "whiteAlpha.200" }
   );
+  const [loading,setLoading] = useState(false)
   const [show, setShow] = React.useState(false);
-  const handleClick = () => setShow(!show);
-  useState
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
+  const handleLogin = () => {
+    (async()=>{
+      try {
+        setLoading(true);
+        const res = await login(username,password)        
+        
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+  };
+
+  
 
   return (
     <DefaultAuth illustrationBackground={illustration} image={illustration}>
@@ -147,10 +165,12 @@ function SignIn() {
               fontSize='sm'
               ms={{ base: "0px", md: "0px" }}
               type='email'
-              placeholder='mail@simmmple.com'
+              placeholder='mail@eocean.com.pk'
               mb='24px'
               fontWeight='500'
               size='lg'
+              value={username}
+              onChange={e => setUsername(e.target.value)}
             />
             <FormLabel
               ms='4px'
@@ -169,13 +189,15 @@ function SignIn() {
                 size='lg'
                 type={show ? "text" : "password"}
                 variant='auth'
+                value={password}
+                onChange={e => setPassword(e.target.value)}
               />
               <InputRightElement display='flex' alignItems='center' mt='4px'>
                 <Icon
                   color={textColorSecondary}
                   _hover={{ cursor: "pointer" }}
                   as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                  onClick={handleClick}
+                  // onClick={handleClick}
                 />
               </InputRightElement>
             </InputGroup>
@@ -205,13 +227,16 @@ function SignIn() {
                 </Text>
               </NavLink>
             </Flex>
-            <Button
+            <Button onClick={handleLogin}
               fontSize='sm'
               variant='brand'
               fontWeight='500'
               w='100%'
               h='50'
-              mb='24px'>
+              mb='24px'
+              isLoading = {loading}
+              loadingText="Signing In"
+              >
               Sign In
             </Button>
           </FormControl>

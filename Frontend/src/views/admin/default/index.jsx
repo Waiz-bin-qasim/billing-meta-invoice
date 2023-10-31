@@ -37,13 +37,17 @@ import Usa from "assets/img/dashboards/usa.png";
 import MiniCalendar from "components/calendar/MiniCalendar";
 import MiniStatistics from "components/card/MiniStatistics";
 import IconBox from "components/icons/IconBox";
-import React from "react";
+import React, { useState } from "react";
 import {
   MdAddTask,
   MdAttachMoney,
   MdBarChart,
   MdFileCopy,
+  MdOutlineCalendarMonth
 } from "react-icons/md";
+import { FaRupeeSign,FaMeta } from "react-icons/fa6";
+import { ImUsers } from "react-icons/im";
+
 import CheckTable from "views/admin/default/components/CheckTable";
 import ComplexTable from "views/admin/default/components/ComplexTable";
 import DailyTraffic from "views/admin/default/components/DailyTraffic";
@@ -57,11 +61,31 @@ import {
 } from "views/admin/default/variables/columnsData";
 import tableDataCheck from "views/admin/default/variables/tableDataCheck.json";
 import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
+import { useEffect } from "react";
+import { getDashboard } from "api/dashboard";
+
 
 export default function UserReports() {
   // Chakra Color Mode
+  const [data,setData] = useState([])
+  const [loading,setLoading] = useState(false)
+  const [error,setError] = useState(false)
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
+  useEffect(async()=>{
+    try {
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      setLoading(true)
+      const month = months[new Date().getMonth()-1]
+      const year = new Date().getFullYear()
+      console.log(month,year)
+      let res = await getDashboard(month,year)
+      setData(res)
+      setLoading(false)
+    } catch (error) {
+      setError(error)
+    }
+  },[])
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid
@@ -75,60 +99,12 @@ export default function UserReports() {
               h='56px'
               bg={boxBg}
               icon={
-                <Icon w='32px' h='32px' as={MdBarChart} color={brandColor} />
-              }
-            />
-          }
-          name='Earnings'
-          value='$350.4'
-        />
-        <MiniStatistics
-          startContent={
-            <IconBox
-              w='56px'
-              h='56px'
-              bg={boxBg}
-              icon={
                 <Icon w='32px' h='32px' as={MdAttachMoney} color={brandColor} />
               }
             />
           }
-          name='Spend this month'
-          value='$642.39'
-        />
-        <MiniStatistics growth='+23%' name='Sales' value='$574.34' />
-        <MiniStatistics
-          endContent={
-            <Flex me='-16px' mt='10px'>
-              <FormLabel htmlFor='balance'>
-                <Avatar src={Usa} />
-              </FormLabel>
-              <Select
-                id='balance'
-                variant='mini'
-                mt='5px'
-                me='0px'
-                defaultValue='usd'>
-                <option value='usd'>USD</option>
-                <option value='eur'>EUR</option>
-                <option value='gba'>GBA</option>
-              </Select>
-            </Flex>
-          }
-          name='Your balance'
-          value='$1,000'
-        />
-        <MiniStatistics
-          startContent={
-            <IconBox
-              w='56px'
-              h='56px'
-              bg='linear-gradient(90deg, #4481EB 0%, #04BEFE 100%)'
-              icon={<Icon w='28px' h='28px' as={MdAddTask} color='white' />}
-            />
-          }
-          name='New Tasks'
-          value='154'
+          name='Earnings($)'
+          value={`$ ${data[0]}`}
         />
         <MiniStatistics
           startContent={
@@ -137,18 +113,69 @@ export default function UserReports() {
               h='56px'
               bg={boxBg}
               icon={
-                <Icon w='32px' h='32px' as={MdFileCopy} color={brandColor} />
+                <Icon w='32px' h='32px' as={FaRupeeSign} color={brandColor} />
               }
             />
           }
-          name='Total Projects'
-          value='2935'
+          name='Earnings(PKR)'
+          value={`PKR ${data[1]}`}
+        />
+        <MiniStatistics 
+        startContent={
+          <IconBox
+            w='56px'
+            h='56px'
+            bg={boxBg}
+            icon={
+              <Icon w='32px' h='32px' as={FaMeta} color={brandColor} />
+            }
+          />
+        } name='Amount Billed By Meta' value={`$ ${data[2]}`} />
+        <MiniStatistics
+          startContent={
+            <IconBox
+              w='56px'
+              h='56px'
+              bg={boxBg}
+              icon={
+                <Icon w='32px' h='32px' as={MdBarChart} color={brandColor} />
+              }
+            />
+          }
+          name='Total Revenue'
+          value={`$ ${data[3]}`}
+        />
+        <MiniStatistics
+          startContent={
+            <IconBox
+              w='56px'
+              h='56px'
+              bg={boxBg}
+              icon={<Icon w='28px' h='28px' as={ImUsers} color={brandColor} />}
+            />
+          }
+          name='Total Clients'
+          value= {data[4]}
+        />
+        <MiniStatistics
+          startContent={
+            <IconBox
+              w='56px'
+              h='56px'
+              bg={boxBg}
+              icon={
+                <Icon w='32px' h='32px' as={MdOutlineCalendarMonth} color={brandColor} />
+              }
+            />
+          }
+          name='Data Available'
+          value={`Last ${data[5]} Months`}
         />
       </SimpleGrid>
 
       <SimpleGrid >
         {/* <TotalSpent /> */}
-        <WeeklyRevenue />
+        {!loading &&<WeeklyRevenue data = {data[6]} />}
       </SimpleGrid>
       {/* <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
         <CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} />
