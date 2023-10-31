@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" href="{{ url_for('static', filename='img/waiz.png') }}" />
+    <title>Login</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='css/login.css')}}"
+    />
+  </head>
+  <body>
+    <div class="loading-modal">
+      <div class="loader"></div>
+      <h3>Loading...</h3>
+    </div>
+    <img
+      src="{{url_for('static',filename='img/EoceanLogos.png')}}"
+      alt="hello world"
+      style="max-width: 420px; width: 100%"
+    />
+    <div class="container">
+      <div class="login form">
+        <header>Login</header>
+        <form id="login-form" action="POST">
+          <input id="email" type="text" placeholder="Enter your email" />
+          <input
+            id="password"
+            type="password"
+            placeholder="Enter your password"
+          />
+          <button type="submit" class="btn" value="Login">Login</button>
+        </form>
+        <div id="error-container"></div>
+      </div>
+    </div>
+    <script src="{{url_for('static',filename='js/Login.js')}}"></script>
+  </body>
+</html>
