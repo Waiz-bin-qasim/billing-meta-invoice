@@ -10,7 +10,7 @@ export const barChartDataDailyTraffic = [
 export const barChartOptionsDailyTraffic = {
   chart: {
     toolbar: {
-      show: false,
+      show: true,
     },
   },
   tooltip: {
@@ -28,7 +28,7 @@ export const barChartOptionsDailyTraffic = {
   },
   xaxis: {
     categories: ["00", "04", "08", "12", "14", "16", "18"],
-    show: false,
+    show: true,
     labels: {
       show: true,
       style: {
@@ -108,14 +108,10 @@ export const barChartOptionsDailyTraffic = {
 export const barChartDataConsumption = [
   {
     name: "PRODUCT A",
-    data: [400, 370, 330, 390, 320, 350, 360, 320, 380],
+    data: [350, 370, 330, 390, 320, 350, 360, 320, 380],
   },
   {
     name: "PRODUCT B",
-    data: [400, 370, 330, 390, 320, 350, 360, 320, 380],
-  },
-  {
-    name: "PRODUCT C",
     data: [400, 370, 330, 390, 320, 350, 360, 320, 380],
   },
 ];
@@ -124,7 +120,7 @@ export const barChartOptionsConsumption = {
   chart: {
     stacked: true,
     toolbar: {
-      show: false,
+      show: true,
     },
   },
   tooltip: {
@@ -141,7 +137,7 @@ export const barChartOptionsConsumption = {
     theme: "dark",
   },
   xaxis: {
-    categories: ["17", "18", "19", "20", "21", "22", "23", "24", "25"],
+    categories: [],
     show: false,
     labels: {
       show: true,
@@ -152,14 +148,14 @@ export const barChartOptionsConsumption = {
       },
     },
     axisBorder: {
-      show: false,
+      show: true,
     },
     axisTicks: {
-      show: false,
+      show: true,
     },
   },
   yaxis: {
-    show: false,
+    show: true,
     color: "black",
     labels: {
       show: false,

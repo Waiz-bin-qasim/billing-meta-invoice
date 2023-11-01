@@ -1,66 +1,72 @@
-/*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___   
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
- | |_| | | | | |_) || |  / / | | |  \| | | | | || | 
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-                                                                                                                                                                                                                                                                                                                                       
-=========================================================
-* Horizon UI - v1.1.0
-=========================================================
-
-* Product Page: https://www.horizon-ui.com/
-* Copyright 2023 Horizon UI (https://www.horizon-ui.com/)
-
-* Designed and Coded by Simmmple
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-// Chakra imports
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, Button, SimpleGrid } from "@chakra-ui/react";
 import DevelopmentTable from "views/admin/dataTables/components/DevelopmentTable";
-import CheckTable from "views/admin/dataTables/components/CheckTable";
-import ColumnsTable from "views/admin/dataTables/components/ColumnsTable";
-import ComplexTable from "views/admin/dataTables/components/ComplexTable";
-import {
-  columnsDataDevelopment,
-  columnsDataCheck,
-  columnsDataColumns,
-  columnsDataComplex,
-} from "views/admin/dataTables/variables/columnsData";
+import { columnsDataDevelopment } from "views/admin/dataTables/variables/columnsData";
 import tableDataDevelopment from "views/admin/dataTables/variables/tableDataDevelopment.json";
-import tableDataCheck from "views/admin/dataTables/variables/tableDataCheck.json";
-import tableDataColumns from "views/admin/dataTables/variables/tableDataColumns.json";
-import tableDataComplex from "views/admin/dataTables/variables/tableDataComplex.json";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { LoadingSpinner } from "components/loading/loadingSpinner";
+import { metaInvoiceGet } from "api/metaInvoice";
+import { useToast } from "@chakra-ui/toast";
 
-export default function Settings() {
+export default function Settings(metaData) {
   // Chakra Color Mode
+  const [loading, setLoading] = useState(false);
+  const [tableData, setTableData] = useState([]);
+  const toast = useToast();
+  useEffect(async () => {
+    let response;
+    try {
+      setLoading(true);
+      response = await metaInvoiceGet();
+      let data = [];
+      for (let each of response) {
+        let obj = {};
+        obj.name = each[0] + each[1];
+        obj["created by"] = each[1];
+        obj["created on"] = each[2];
+        obj.actions = "";
+        data.push(obj);
+      }
+      setTableData(data);
+      setLoading(false);
+      console.log(tableData);
+    } catch (error) {
+      console.log("error");
+      console.log(error);
+    }
+  }, []);
+
   return (
-    <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      <SimpleGrid
-        mb='20px'
-        columns={{ sm: 1}}
-        spacing={{ base: "20px", xl: "20px" }}>
-        <DevelopmentTable
-          columnsData={columnsDataDevelopment}
-          tableData={tableDataDevelopment}
-          tableName ={"Meta Invoices"}
-        />
-        {/* <CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} />
-        <ColumnsTable
-          columnsData={columnsDataColumns}
-          tableData={tableDataColumns}
-        />
-        <ComplexTable
-          columnsData={columnsDataComplex}
-          tableData={tableDataComplex}
-        /> */}
-      </SimpleGrid>
-    </Box>
+    <>
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+          <SimpleGrid
+            mb="20px"
+            columns={{ sm: 1 }}
+            spacing={{ base: "20px", xl: "20px" }}
+          >
+            <DevelopmentTable
+              columnsData={columnsDataDevelopment}
+              tableData={tableData}
+              tableName={"Meta Invoices"}
+            />
+          </SimpleGrid>
+          <Button
+            onClick={() =>
+              toast({
+                title: "Account created.",
+                description: "We've created your account for you.",
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+              })
+            }
+          >
+            waiz
+          </Button>
+        </Box>
+      )}
+    </>
   );
 }

@@ -25,7 +25,7 @@ import Menu from "components/menu/MainMenu";
 import { MdCheckCircle, MdCancel, MdOutlineError } from "react-icons/md";
 import Modal from "../../users/components/modal.jsx";
 // import { getUsers } from "api/users.js";
-import { loadingSpinner } from "../../../../components/loading/loadingSpinner";
+import { loadingSpinner } from "components/loading/loadingSpinner";
 import DeleteModal from "../../../../components/alert/deleteAlert.jsx";
 import { IoPersonAdd } from "react-icons/io5";
 
@@ -81,12 +81,14 @@ export default function ColumnsTable(props) {
     { bg: "whiteAlpha.100" }
   );
 
-  // useEffect(async () => {
-  //   setLoading(true);
-  //   let response = await getUsers();
-  //   setLoading(false);
-  //   console.log(response);
-  // }, []);
+  useEffect(async () => {
+    setLoading(true);
+    // let response = await getUsers();
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+    // console.log(response);
+  }, []);
 
   return (
     <>

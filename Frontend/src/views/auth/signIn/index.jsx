@@ -38,6 +38,7 @@ import {
   InputRightElement,
   Text,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 // Custom components
 import { HSeparator } from "components/separator/Separator";
@@ -73,19 +74,39 @@ function SignIn() {
   const [show, setShow] = React.useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(false)
+  const toast = useToast()
+  const toastId = 'Error-toast'
 
+  const showToast = (msg) =>{
+    console.log('waiz');
+    if(toast.isActive(toastId)){
+      console.log('waiz');
+      toast({
+        toastId,
+        title: `${msg} `,
+        status: error,
+        // isClosable: true,
+      })
+    }
+  }
   const handleLogin = () => {
     (async()=>{
       try {
         setLoading(true);
         const res = await login(username,password)        
-        
+        setLoading(false);
       } catch (error) {
+        setError(true)
+        showToast(error.message)
         console.log(error)
+        setLoading(false);
       }
     })()
   };
-
+  const handleClick = (e)=>{
+    setShow(!show)
+  }
   
 
   return (
@@ -197,7 +218,7 @@ function SignIn() {
                   color={textColorSecondary}
                   _hover={{ cursor: "pointer" }}
                   as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                  // onClick={handleClick}
+                  onClick={handleClick}
                 />
               </InputRightElement>
             </InputGroup>

@@ -22,9 +22,14 @@ export default function Dashboard(props) {
   // states and functions
   const [fixed] = useState(false);
   const [toggleSidebar, setToggleSidebar] = useState(false);
+
   // functions for changing the states from components
   const getRoute = () => {
     return window.location.pathname !== "/admin/full-screen-maps";
+  };
+  const getToken = () => {
+    const token = localStorage.getItem("token");
+    return token || false;
   };
   const getActiveRoute = (routes) => {
     let activeRoute = "Default Brand Text";
@@ -167,7 +172,11 @@ export default function Dashboard(props) {
               >
                 <Switch>
                   {getRoutes(routes)}
-                  <Redirect from="/" to="/auth" />
+                  {getToken() ? (
+                    <Redirect from="/" to="/admin/default" />
+                  ) : (
+                    <Redirect from="/" to="/auth" />
+                  )}
                 </Switch>
               </Box>
             ) : null}

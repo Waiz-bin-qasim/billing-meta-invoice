@@ -23,27 +23,27 @@ import forgotPassword from "views/auth/forgot-password";
 
 const routes = [
   {
-    name: "Main Dashboard",
+    name: "Dashboard",
     layout: "/admin",
     path: "/default",
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     component: MainDashboard,
   },
-  {
-    name: "NFT Marketplace",
-    layout: "/admin",
-    path: "/nft-marketplace",
-    icon: (
-      <Icon
-        as={MdOutlineShoppingCart}
-        width="20px"
-        height="20px"
-        color="inherit"
-      />
-    ),
-    component: NFTMarketplace,
-    secondary: true,
-  },
+  // {
+  //   name: "NFT Marketplace",
+  //   layout: "/admin",
+  //   path: "/nft-marketplace",
+  //   icon: (
+  //     <Icon
+  //       as={MdOutlineShoppingCart}
+  //       width="20px"
+  //       height="20px"
+  //       color="inherit"
+  //     />
+  //   ),
+  //   component: NFTMarketplace,
+  //   secondary: true,
+  // },
   {
     name: "Data Tables",
     layout: "/admin",
@@ -52,7 +52,7 @@ const routes = [
     component: DataTables,
   },
   {
-    name: "Mau",
+    name: "Monthly Active Users",
     layout: "/admin",
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/Mau",
@@ -65,13 +65,13 @@ const routes = [
     path: "/metaInvoice",
     component: DataTables,
   },
-  {
-    name: "Profile",
-    layout: "/admin",
-    path: "/profile",
-    icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
-    component: Profile,
-  },
+  // {
+  //   name: "Profile",
+  //   layout: "/admin",
+  //   path: "/profile",
+  //   icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
+  //   component: Profile,
+  // },
   {
     name: "Users",
     layout: "/admin",
@@ -93,13 +93,13 @@ const routes = [
     icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
     component: forgotPassword,
   },
-  {
-    name: "RTL Admin",
-    layout: "/rtl",
-    path: "/rtl-default",
-    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
-    component: RTL,
-  },
+  // {
+  //   name: "RTL Admin",
+  //   layout: "/rtl",
+  //   path: "/rtl-default",
+  //   icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
+  //   component: RTL,
+  // },
 ];
 
 export default routes;

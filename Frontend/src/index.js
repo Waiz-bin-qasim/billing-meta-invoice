@@ -9,16 +9,29 @@ import { ChakraProvider } from "@chakra-ui/react";
 import theme from "theme/theme";
 import { ThemeEditorProvider } from "@hypertheme-editor/chakra-ui";
 
+const getToken = () => {
+  const token = localStorage.getItem("token");
+  return token || false;
+};
+
 ReactDOM.render(
   <ChakraProvider theme={theme}>
     <React.StrictMode>
       <ThemeEditorProvider>
         <HashRouter>
           <Switch>
-            <Route path={`/auth`} component={AuthLayout} />
-            <Route path={`/admin`} component={AdminLayout} />
-            <Route path={`/rtl`} component={RtlLayout} />
-            <Redirect from="/" to="/admin" />
+            {getToken() ? (
+              <>
+                <Route path={`/admin`} component={AdminLayout} />
+                <Route path={`/rtl`} component={RtlLayout} />
+                <Redirect from="/" to="/admin" />
+              </>
+            ) : (
+              <>
+                <Route path={`/auth`} component={AuthLayout} />
+                <Redirect from="/" to="/auth/sign-in" />
+              </>
+            )}
           </Switch>
         </HashRouter>
       </ThemeEditorProvider>
