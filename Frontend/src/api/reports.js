@@ -1,9 +1,9 @@
 import { config, getToken } from "./config";
 
-export const metaInvoiceGet = async () => {
+export const reportsGet = async () => {
   let data;
   try {
-    const response = await fetch(config.url + "upload", {
+    const response = await fetch(config.url + "generatescv", {
       method: "GET",
       headers: {
         token: getToken,
@@ -18,7 +18,7 @@ export const metaInvoiceGet = async () => {
   return data;
 };
 
-export const metaInvoicePOST = async (parserChoice, file) => {
+export const reportsPOST = async (parserChoice, file) => {
   const formData = new FormData();
   formData.append("parserChoice", parserChoice);
   formData.append("file", file);
@@ -42,7 +42,7 @@ export const metaInvoicePOST = async (parserChoice, file) => {
   return data;
 };
 
-export const metaInvoiceDownload = async (value) => {
+export const reportsDownload = async (value) => {
   let data;
   try {
     console.log(value);

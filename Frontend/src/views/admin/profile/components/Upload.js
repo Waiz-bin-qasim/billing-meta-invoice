@@ -9,6 +9,9 @@ import {
   Input,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { MAUPOST } from "api/MAU";
+import { financeReportsPOST } from "api/financeReports";
+import { metaInvoicePOST } from "api/metaInvoice";
 // Custom components
 import Card from "components/card/Card.js";
 import IconBox from "components/icons/IconBox";
@@ -21,11 +24,23 @@ import Dropzone from "views/admin/profile/components/Dropzone";
 export default function Upload(props) {
   const { used, total, ...rest } = props;
   const [image, setImage] = useState();
+  const [loading, setLoading] = useState(false);
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
   const brandColor = useColorModeValue("brand.500", "white");
   const textColorSecondary = "gray.400";
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
+  const handleImageUpload = async () => {
+    try {
+      setLoading(true);
+      // await metaInvoicePOST("1", image.image);
+      // await MAUPOST(image.image);
+      await financeReportsPOST(image.image);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Card {...rest} mb="20px" align="center" p="20px">
       <Flex h="100%" direction={{ base: "column", "2xl": "row" }}>
@@ -79,57 +94,13 @@ export default function Upload(props) {
               mt={{ base: "20px", "2xl": "auto" }}
               variant="brand"
               fontWeight="500"
+              isLoading={loading}
+              onClick={handleImageUpload}
             >
               Upload Now
             </Button>
           </Flex>
         </Flex>
-        {/* <VStack spacing={4} align="center">
-          <label htmlFor="image-input">
-            <IconBox
-              w="116px"
-              h="116px"
-              bg={boxBg}
-              borderRadius="50%" // Set borderRadius to 50% for a circular shape
-              border="2px solid darkblue"
-              icon={
-                // selectedImage ? (
-                //   <img
-                //     src={URL.createObjectURL(selectedImage)}
-                //     alt="Selected"
-                //     width="52px"
-                //     height="52px"
-                //     style={{ objectFit: "cover" }}
-                //   />
-                // ) : (
-                <Icon
-                  w="52px"
-                  h="52px"
-                  as={MdOutlineAddPhotoAlternate}
-                  color="darkblue"
-                />
-                // )
-              }
-            />
-          </label>
-          <Input
-            type="file"
-            accept="image/*"
-            // onChange={handleImageChange}
-            display="none"
-            id="image-input"
-          />
-          <label htmlFor="image-input">
-            <Button
-              as="span"
-              bg="blue.600"
-              color="white"
-              _hover={{ backgroundColor: "blue.400", color: "white" }}
-            >
-              Choose Image
-            </Button>
-          </label>
-        </VStack> */}
       </Flex>
     </Card>
   );

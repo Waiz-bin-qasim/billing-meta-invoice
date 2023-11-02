@@ -151,10 +151,10 @@ export default function ColumnsTable(props) {
             ))}
           </Thead>
           <Tbody {...getTableBodyProps()}>
-            {page.map((row, index) => {
+            {page.map((row, index1) => {
               prepareRow(row);
               return (
-                <Tr {...row.getRowProps()} key={index}>
+                <Tr {...row.getRowProps()} key={index1}>
                   {row.cells.map((cell, index) => {
                     let data = "";
                     if (cell.column.Header === "NAME") {
@@ -207,6 +207,8 @@ export default function ColumnsTable(props) {
                         </Text>
                       );
                     } else if (cell.column.Header === "ACTIONS") {
+                      console.log(row.values);
+                      console.log(index);
                       data = (
                         <Flex align="center">
                           <Flex onClick={onOpen}>
@@ -234,6 +236,8 @@ export default function ColumnsTable(props) {
                               isOpen={isOpen2}
                               onClose={onClose2}
                               data={row.values}
+                              key={index}
+                              i={index}
                             />
                           </Flex>
                         </Flex>

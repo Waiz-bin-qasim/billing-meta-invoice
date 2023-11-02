@@ -6,6 +6,9 @@ import React, { useEffect, useState } from "react";
 import { LoadingSpinner } from "components/loading/loadingSpinner";
 import { metaInvoiceGet } from "api/metaInvoice";
 import { useToast } from "@chakra-ui/toast";
+import { MAUGet } from "api/MAU";
+import { reportsGet } from "api/reports";
+import { financeReportsGet } from "api/financeReports";
 
 export default function Settings(metaData) {
   // Chakra Color Mode
@@ -16,7 +19,11 @@ export default function Settings(metaData) {
     let response;
     try {
       setLoading(true);
-      response = await metaInvoiceGet();
+      // response = await metaInvoiceGet();
+      response = await MAUGet();
+      // response = await reportsGet();
+      // response = await financeReportsGet()
+
       let data = [];
       for (let each of response) {
         let obj = {};
@@ -37,36 +44,33 @@ export default function Settings(metaData) {
 
   return (
     <>
-      {loading ? (
-        <LoadingSpinner />
-      ) : (
         <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
           <SimpleGrid
             mb="20px"
             columns={{ sm: 1 }}
             spacing={{ base: "20px", xl: "20px" }}
           >
-            <DevelopmentTable
+            {loading?<LoadingSpinner/>:<DevelopmentTable
               columnsData={columnsDataDevelopment}
               tableData={tableData}
               tableName={"Meta Invoices"}
-            />
+            />}
           </SimpleGrid>
           <Button
-            onClick={() =>
+            onClick={() => {
+              console.log("waiz");
               toast({
                 title: "Account created.",
                 description: "We've created your account for you.",
                 status: "success",
                 duration: 9000,
                 isClosable: true,
-              })
-            }
+              });
+            }}
           >
             waiz
           </Button>
         </Box>
-      )}
     </>
   );
 }

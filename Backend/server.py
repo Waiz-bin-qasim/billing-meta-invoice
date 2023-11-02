@@ -64,10 +64,8 @@ def token_required(f):
     def decorated(*args, **kwargs):
         
         try:
-            
-            
-            if 'token' in request.headers:
-                token = request.headers['token']
+            if 'token' in request.headers or 'token' in request.args:
+                token = request.headers['token'] or request.args.get('token')
                 data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"]) 
                 print(token)
                 # Extract the 'user' value from the decoded token
@@ -109,7 +107,7 @@ def upload(user,permissions,role):
         if(checkPermission(route,permissions) == False):
             return jsonify({'message': 'Permission Not Given'}), 400 
         if request.method == "POST":
-            updateProgress(socketio,"ascsac",20)
+            # updateProgress(socketio,"ascsac",20)
             data = request.form
             parserChoice = data.get('parserChoice')
             print(parserChoice)
@@ -120,11 +118,11 @@ def upload(user,permissions,role):
             file.save(fileName)
             sql_values = []
             print(user[0])
-            updateProgress(socketio,"ascsac",35)
+            # updateProgress(socketio,"ascsac",35)
             if(checkBillingLogs(parserChoice) == True):
-                updateProgress(socketio,"ascsac",50)
-                response = dataHandler.run(sql_values,parserChoice,user,socketio)
-                updateProgress(socketio,"ascsac",90)
+                # updateProgress(socketio,"ascsac",50)
+                response = dataHandler.run(sql_values,parserChoice,user)
+                # updateProgress(socketio,"ascsac",90)
                 if response['message'] == 'failed':
                     return jsonify(response),400
     
@@ -143,7 +141,7 @@ def upload(user,permissions,role):
 
                 return jsonify(response),200
             else:
-                updateProgress(socketio,"ascsac",90)
+                # updateProgress(socketio,"ascsac",90)
                 return jsonify({'message': 'Meta Invoice Already Exists'}), 400
         else:
             data = getAllBilling()
@@ -204,7 +202,7 @@ def mau(user,permissions,role):
          if(checkPermission(route,permissions) == False):
             return jsonify({'message': 'Permission Not Given'}), 400
          if request.method == "POST":
-            updateProgress(socketio,"a",20)
+            # updateProgress(socketio,"a",20)
             print(user[0])
             data = request.form
             file = request.files['file']
@@ -219,14 +217,14 @@ def mau(user,permissions,role):
             file_path = f'./billingMAUFiles/{month}{year}.xlsx'
             shutil.copy(fileName, file_path)
 
-            updateProgress(socketio,"a",30)
+            # updateProgress(socketio,"a",30)
             if (checkMauLogs() == True):
-                updateProgress(socketio,"a",40)
-                response = parseMAUFile(user,socketio)
-                updateProgress(socketio,"a",80)
+                # updateProgress(socketio,"a",40)
+                response = parseMAUFile(user)
+                # updateProgress(socketio,"a",80)
                 return jsonify(response)
             else:
-                updateProgress(socketio,"a",80)
+                # updateProgress(socketio,"a",80)
                 return jsonify({'error': 'Bad Request'}), 400
             
          else:
@@ -248,16 +246,16 @@ def generateCsv(user,permissions,socketId,role):
         param1 = request.args.get('param1')
         param2 = request.args.get('param2')
         if param1 and param2:
-            updateProgress(socketio,socketId,20)
+            # updateProgress(socketio,socketId,20)
             response = generateCheck(param1,param2)
             if(response == True):
-                updateProgress(socketio,socketId,40)
+                # updateProgress(socketio,socketId,40)
                 file_path = getCsv.run(param1, param2,socketio,socketId)
                 g.file_path = file_path
-                updateProgress(socketio,socketId,100)
+                # updateProgress(socketio,socketId,100)
                 return jsonify("File was Generated")
             else:
-                updateProgress(socketio,socketId,40)
+                # updateProgress(socketio,socketId,40)
                 return jsonify(response),400
         else:
             return jsonify({"message":"Please provide both param1 and param2 as query parameters."}),400

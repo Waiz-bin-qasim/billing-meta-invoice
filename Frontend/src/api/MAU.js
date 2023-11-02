@@ -1,9 +1,9 @@
 import { config, getToken } from "./config";
 
-export const metaInvoiceGet = async () => {
+export const MAUGet = async () => {
   let data;
   try {
-    const response = await fetch(config.url + "upload", {
+    const response = await fetch(config.url + "mau/upload", {
       method: "GET",
       headers: {
         token: getToken,
@@ -18,14 +18,13 @@ export const metaInvoiceGet = async () => {
   return data;
 };
 
-export const metaInvoicePOST = async (parserChoice, file) => {
+export const MAUPOST = async (file) => {
   const formData = new FormData();
-  formData.append("parserChoice", parserChoice);
   formData.append("file", file);
   let data;
   try {
     console.log(config.url);
-    const response = await fetch(config.url + `/upload`, {
+    const response = await fetch(config.url + `/mau/upload`, {
       method: "POST",
       headers: {
         token: getToken,
@@ -42,7 +41,7 @@ export const metaInvoicePOST = async (parserChoice, file) => {
   return data;
 };
 
-export const metaInvoiceDownload = async (value) => {
+export const MAUDownload = async (value) => {
   let data;
   try {
     console.log(value);

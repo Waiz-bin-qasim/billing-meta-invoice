@@ -1,9 +1,9 @@
 import { config, getToken } from "./config";
 
-export const metaInvoiceGet = async () => {
+export const financeReportsGet = async () => {
   let data;
   try {
-    const response = await fetch(config.url + "upload", {
+    const response = await fetch(config.url + "finance/reports", {
       method: "GET",
       headers: {
         token: getToken,
@@ -18,19 +18,17 @@ export const metaInvoiceGet = async () => {
   return data;
 };
 
-export const metaInvoicePOST = async (parserChoice, file) => {
+export const financeReportsPOST = async (file) => {
   const formData = new FormData();
-  formData.append("parserChoice", parserChoice);
   formData.append("file", file);
   let data;
   try {
     console.log(config.url);
-    const response = await fetch(config.url + `/upload`, {
+    const response = await fetch(config.url + `finance/upload`, {
       method: "POST",
       headers: {
         token: getToken,
       },
-
       body: formData,
     });
     data = await response.json();
@@ -42,7 +40,7 @@ export const metaInvoicePOST = async (parserChoice, file) => {
   return data;
 };
 
-export const metaInvoiceDownload = async (value) => {
+export const financeReportsDownload = async (value) => {
   let data;
   try {
     console.log(value);
@@ -68,15 +66,11 @@ export const metaInvoiceDownload = async (value) => {
     });
     const blob = await data.blob();
     const url = window.URL.createObjectURL(new Blob([blob]));
-
     const link = document.createElement("a");
     link.href = url;
     link.download = value + ".pdf";
-
     document.body.appendChild(link);
-
     link.click();
-
     link.parentNode.removeChild(link);
     link.click();
   } catch (error) {

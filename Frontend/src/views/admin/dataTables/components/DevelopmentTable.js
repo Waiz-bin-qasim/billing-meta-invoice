@@ -30,6 +30,7 @@ import { DeleteIcon, DownloadIcon, EditIcons } from "@chakra-ui/icons";
 import { MdCloudUpload } from "react-icons/md";
 import UploadMenu from "components/menu/UploadMenu";
 import DeleteModal from "components/alert/deleteAlert";
+import { metaInvoiceDownload } from "api/metaInvoice";
 
 export default function DevelopmentTable(props) {
   const { columnsData, tableData, tableName } = props;
@@ -76,8 +77,13 @@ export default function DevelopmentTable(props) {
     onClose: onClose2,
   } = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const handleDownload = (filename) => {
-    console.log(filename);
+  const handleDownload = async (filename) => {
+    try {
+      console.log(filename);
+      await metaInvoiceDownload(filename);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Card
@@ -179,7 +185,7 @@ export default function DevelopmentTable(props) {
                             color={iconColor}
                             value={cell.values}
                             data={cell}
-                            onClick={() => handleDownload(row.values)}
+                            onClick={() => handleDownload(row.values.name)}
                           />
                         </Flex>
                         <Flex onClick={onOpen}>

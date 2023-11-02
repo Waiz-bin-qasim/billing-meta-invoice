@@ -21,6 +21,7 @@ import { ImUsers } from "react-icons/im";
 import WeeklyRevenue from "views/admin/default/components/WeeklyRevenue";
 import { useEffect } from "react";
 import { getDashboard } from "api/dashboard";
+import { LoadingSpinner } from "components/loading/loadingSpinner";
 
 export default function UserReports() {
   // Chakra Color Mode
@@ -58,7 +59,7 @@ export default function UserReports() {
   }, []);
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      {!loading && (
+      {loading ?<LoadingSpinner/>: (
         <>
           <SimpleGrid
             columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}

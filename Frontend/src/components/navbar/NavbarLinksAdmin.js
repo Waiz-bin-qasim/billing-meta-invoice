@@ -25,6 +25,7 @@ import { MdNotificationsNone, MdInfoOutline } from "react-icons/md";
 import { FaEthereum } from "react-icons/fa";
 import routes from "routes.js";
 import { ThemeEditor } from "./ThemeEditor";
+// import { Route, Navigate } from "react-router-dom";
 export default function HeaderLinks(props) {
   const { secondary } = props;
   // Chakra Color Mode
@@ -119,7 +120,7 @@ export default function HeaderLinks(props) {
               fontWeight="700"
               color={textColor}
             >
-              👋&nbsp; Hey, Adela
+              👋&nbsp; Hi ,{localStorage.getItem("user")}
             </Text>
           </Flex>
           <Flex flexDirection="column" p="10px">
@@ -138,7 +139,15 @@ export default function HeaderLinks(props) {
               borderRadius="8px"
               px="14px"
             >
-              <Text fontSize="sm">Log out</Text>
+              <Text
+                fontSize="sm"
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.href = "/";
+                }}
+              >
+                Log out
+              </Text>
             </MenuItem>
           </Flex>
         </MenuList>

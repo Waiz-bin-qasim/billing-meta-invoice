@@ -18,6 +18,7 @@ export const login = async (username, password) => {
       expires.toUTCString();
       localStorage.setItem("token", data.token);
       localStorage.setItem("roleName", data.roleName);
+      localStorage.setItem("user", data.user);
       document.cookie = `token=${data.token}; expires=${expires}; path=/; `;
       return (window.location.href = "/admin/default");
     } else {
