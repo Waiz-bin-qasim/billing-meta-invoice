@@ -51,12 +51,12 @@ export default function InitialFocus({ isOpen, onClose,modalTitle,initialValues,
       [name]: value,
     })
     );
-    if (modalTitle == 'Update User'){
-      const [columns,setColumns] = (['email']);
-      const [values,setValues] = ([initialValues]);
-      setColumns(name);
-      setValues(value);
-    }
+    // if (modalTitle == 'Update User'){
+    //   const [columns,setColumns] = (['email']);
+    //   const [values,setValues] = ([initialValues]);
+    //   setColumns(name);
+    //   setValues(value);
+    // }
   };
   const [show, setShow] = useState(false)
   const handleClick  = () => {
@@ -73,7 +73,7 @@ export default function InitialFocus({ isOpen, onClose,modalTitle,initialValues,
           // const res = await updateUser(formData.firstName,formData.lastName,formData.email,formData.password,formData.roleId)        
           setLoading(false)
           onClose(true)
-          console.log(columns);
+          // console.log(columns);
           console.log();
         }
       } catch (error) {

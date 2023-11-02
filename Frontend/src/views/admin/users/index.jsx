@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import ComplexTable from "views/admin/users/components/UsersTable";
 import { columnsDataComplex } from "views/admin/dataTables/variables/columnsData";
 import tableDataComplex from "views/admin/dataTables/variables/tableDataComplex.json";
