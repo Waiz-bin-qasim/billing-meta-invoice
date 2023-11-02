@@ -9,13 +9,13 @@ import {
     Button
   } from '@chakra-ui/react'
 
-export default function DeleteAlert({ isOpen, onClose,data,i }) {
+export default function DeleteAlert({ isOpen, onClose,data,count}) {
   
     // const { isOpen, onOpen, onClose } = useDisclosure()
     // const cancelRef = React.useRef()
-  const handleUserDelete =()=>{
-    console.log(data);
-    console.log(i);
+  const handleUserDelete =(e)=>{
+    console.log(e.target.value);
+    // console.log(count);
   }
     return (
       <>
@@ -38,7 +38,7 @@ export default function DeleteAlert({ isOpen, onClose,data,i }) {
               <Button  onClick={onClose}>
                 No
               </Button>
-              <Button colorScheme='red' ml={3} onClick={handleUserDelete}>
+              <Button colorScheme='red' ml={3} onClick={handleUserDelete} value={data}>
                 Yes
               </Button>
             </AlertDialogFooter>

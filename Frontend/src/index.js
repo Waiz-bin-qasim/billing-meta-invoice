@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "assets/css/App.css";
-import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
 import AuthLayout from "layouts/auth";
 import AdminLayout from "layouts/admin";
 import RtlLayout from "layouts/rtl";
@@ -18,7 +18,7 @@ ReactDOM.render(
   <ChakraProvider theme={theme}>
     <React.StrictMode>
       <ThemeEditorProvider>
-        <HashRouter>
+        <BrowserRouter>
           <Switch>
             {getToken() ? (
               <>
@@ -33,7 +33,7 @@ ReactDOM.render(
               </>
             )}
           </Switch>
-        </HashRouter>
+        </BrowserRouter>
       </ThemeEditorProvider>
     </React.StrictMode>
   </ChakraProvider>,

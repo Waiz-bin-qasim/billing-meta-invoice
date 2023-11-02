@@ -10,7 +10,7 @@ import { MAUGet } from "api/MAU";
 import { reportsGet } from "api/reports";
 import { financeReportsGet } from "api/financeReports";
 
-export default function Settings(metaData) {
+export default function Settings({metaData}) {
   // Chakra Color Mode
   const [loading, setLoading] = useState(false);
   const [tableData, setTableData] = useState([]);
@@ -19,10 +19,15 @@ export default function Settings(metaData) {
     let response;
     try {
       setLoading(true);
-      // response = await metaInvoiceGet();
-      response = await MAUGet();
-      // response = await reportsGet();
-      // response = await financeReportsGet()
+      if(metaData === 'Meta Invoice'){
+        response = await metaInvoiceGet();
+      }else if(metaData === 'Monthly Active Users'){
+        response = await MAUGet();
+      }else if(metaData === 'Reports'){
+        response = await reportsGet();
+      }else if(metaData === 'Finance Reports'){
+        response = await financeReportsGet()
+      }
 
       let data = [];
       for (let each of response) {
@@ -35,7 +40,6 @@ export default function Settings(metaData) {
       }
       setTableData(data);
       setLoading(false);
-      console.log(tableData);
     } catch (error) {
       console.log("error");
       console.log(error);
@@ -53,10 +57,10 @@ export default function Settings(metaData) {
             {loading?<LoadingSpinner/>:<DevelopmentTable
               columnsData={columnsDataDevelopment}
               tableData={tableData}
-              tableName={"Meta Invoices"}
+              tableName={metaData}
             />}
           </SimpleGrid>
-          <Button
+          {/* <Button
             onClick={() => {
               console.log("waiz");
               toast({
@@ -69,7 +73,7 @@ export default function Settings(metaData) {
             }}
           >
             waiz
-          </Button>
+          </Button> */}
         </Box>
     </>
   );
