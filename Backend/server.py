@@ -601,8 +601,9 @@ def addUserData(user,permissions,role):
             userEmail = userData["email"]
             userPassword = userData["password"]
             userRoleId = userData["roleId"]
-            response = addUser(userFirstName,userLastName,userEmail,userPassword,userRoleId)
-            return jsonify(response)
+            response,code = addUser(userFirstName,userLastName,userEmail,userPassword,userRoleId)
+        
+            return jsonify(response),code
         elif request.method == "DELETE":
             user = request.args.get('user')
             response = delUser(user)

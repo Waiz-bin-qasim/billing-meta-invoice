@@ -23,6 +23,6 @@ def loginCheck(param1,param2):
                 response.set_cookie('token', token, max_age=3600, httponly=True)
                 print(response.headers['Set-Cookie'])
                 return token,record[0],record[3]
-        return 0,0
+        return 0,0,0
     except Exception as ex:
         raise Exception(ex)

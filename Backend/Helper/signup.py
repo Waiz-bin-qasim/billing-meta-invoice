@@ -34,13 +34,14 @@ def addUser(firstName, lastName, email, password,roleId):
         cursor.execute(queryAddUser,(email,encryptedPassword,firstName,lastName,roleId))
         connection.commit()
         return  {
-        'message': 'user added'
-        }
+        'message': 'user added',
+        },200
     except Exception as ex:
         print(ex)
         return  {
-        'message': 'error during inserting new user'
-      }
+        'message': str(ex),
+        
+      },400
     
 def delUser(user):
     try:

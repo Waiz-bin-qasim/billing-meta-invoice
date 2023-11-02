@@ -9,12 +9,12 @@ import {
     Button
   } from '@chakra-ui/react'
 
-export default function DeleteAlert({ isOpen, onClose,data }) {
+export default function DeleteAlert({ isOpen, onClose,data,forPage }) {
   
     // const { isOpen, onOpen, onClose } = useDisclosure()
     // const cancelRef = React.useRef()
   const handleUserDelete =()=>{
-    console.log(data);
+    
   }
     return (
       <>
