@@ -33,7 +33,7 @@ import DeleteModal from "components/alert/deleteAlert";
 import { metaInvoiceDownload } from "api/metaInvoice";
 
 export default function DevelopmentTable(props) {
-  const { columnsData, tableData, tableName } = props;
+  const { columnsData, tableData, tableName, metaData } = props;
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
   const tableInstance = useTable(
@@ -116,7 +116,7 @@ export default function DevelopmentTable(props) {
         >
           Upload
         </Button>
-        <UploadMenu isOpen={isOpen2} onClose={onClose2} />
+        <UploadMenu isOpen={isOpen2} onClose={onClose2} metaData={metaData} />
       </Flex>
       <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
         <Thead>

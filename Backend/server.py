@@ -31,6 +31,8 @@ from newPdfReader import getVariables as newGetVariables
 # for copying files
 import shutil
 from flask_cors import CORS
+from databaseDeletion import DeleteBillingMAU 
+from databaseDeletion import DeleteInvoices
 
 
 
@@ -652,6 +654,140 @@ def FinanceReport(user,permissions,role):
     except Exception as ex:
         print(f"Error during file download: {ex}")
         return jsonify({'Error Ocurred' : ex}), 500  
+
+
+@app.route('/finance', methods = ['delete'])
+@token_required
+def DeleteFinace(user,permissions,role):
+
+    try:
+        route = request.endpoint
+
+        param1 = request.args.get('param1')
+        param2 = request.args.get('param2')
+
+        if param1 and param2: 
+
+            file_path = "financeReportFiles/"+param1+param2+".xlsx"
+
+            #deleting from server
+            if os.path.exists(file_path):
+
+                os.remove(file_path)
+                print(f"File '{file_path}' has been deleted")
+                return jsonify({'message': 'File deleted successfully'}),200
+            else:
+                print(f"File '{file_path}' does not exist")
+                raise Exception(f"File '{file_path}' does not exist")
+                
+        else: 
+            raise Exception("Please provide both param1 and param2")
+
+    except Exception as ex: 
+        print(ex)
+        return jsonify({'Error Ocurred' : str(ex)}), 500  
+    
+
+@app.route('/reports', methods = ['delete'])
+@token_required
+def DeleteReports(user,permissions,role):
+
+    try:
+        route = request.endpoint
+
+        param1 = request.args.get('param1')
+        param2 = request.args.get('param2')
+
+        if param1 and param2: 
+
+            file_path = "excel/"+param1+param2+".xlsx"
+
+            #deleting from server
+            if os.path.exists(file_path):
+
+                os.remove(file_path)
+                print(f"File '{file_path}' has been deleted")
+                return jsonify({'message': 'File deleted successfully'}),200
+            else:
+                print(f"File '{file_path}' does not exist")
+                raise Exception(f"File '{file_path}' does not exist")
+                
+        else: 
+            raise Exception("Please provide both param1 and param2")
+
+    except Exception as ex: 
+        print(ex)
+        return jsonify({'Error Ocurred' : str(ex)}), 500  
+
+
+@app.route('/meta', methods = ['delete'])
+@token_required
+def DeleteMetaInvoices(user,permissions,role):
+    
+    try:
+        route = request.endpoint
+
+        param1 = request.args.get('param1')
+        param2 = request.args.get('param2')
+
+        if param1 and param2: 
+
+            file_path = "metaInvoiceFiles/"+param1+param2+".pdf"
+
+            #deleting from server
+            if os.path.exists(file_path):
+
+                #deleting from Database
+                DeleteInvoices(param1,param1)
+
+                os.remove(file_path)
+                print(f"File '{file_path}' has been deleted")
+                return jsonify({'message': 'File deleted successfully'}),200
+            else:
+                print(f"File '{file_path}' does not exist")
+                raise Exception(f"File '{file_path}' does not exist")
+                   
+        else: 
+            raise Exception("Please provide both param1 and param2")
+
+    except Exception as ex: 
+        print(ex)
+        return jsonify({'Error Ocurred' : str(ex)}), 500  
+
+
+@app.route('/mau', methods = ['delete'])
+@token_required
+def DeleteMau(user,permissions,role):
+
+    try:
+        route = request.endpoint
+
+        param1 = request.args.get('param1')
+        param2 = request.args.get('param2')
+
+        if param1 and param2: 
+
+            file_path = "billingMAUFiles/"+param1+param2+".xlsx"
+
+            #deleting from server
+            if os.path.exists(file_path):
+
+                #deleting from Database
+                DeleteBillingMAU(param1,param1)
+
+                os.remove(file_path)
+                print(f"File '{file_path}' has been deleted")
+                return jsonify({'message': 'File deleted successfully'}),200
+            else:
+                print(f"File '{file_path}' does not exist")
+                raise Exception(f"File '{file_path}' does not exist")
+                
+        else: 
+            raise Exception("Please provide both param1 and param2")
+
+    except Exception as ex: 
+        print(ex)
+        return jsonify({'Error Ocurred' : str(ex)}), 500
 
 
 

@@ -38,6 +38,7 @@ export default function InitialFocus({ isOpen, onClose,modalTitle,initialValues,
       setLoading(true)
       let res = await getRole()
       setOptions(res)
+      console.log(options)
       setLoading(false)
     } catch (error) {
       setError(error)
@@ -67,14 +68,14 @@ export default function InitialFocus({ isOpen, onClose,modalTitle,initialValues,
         setLoading(false)
         onClose(true)
         }
-        // else{
-        //   setLoading(true);
-        //   // const res = await updateUser(formData.firstName,formData.lastName,formData.email,formData.password,formData.roleId)        
-        //   setLoading(false)
-        //   onClose(true)
-        //   // console.log(columns);
-        //   console.log();
-        // }
+        else{
+          setLoading(true);
+          // const res = await updateUser(formData.firstName,formData.lastName,formData.email,formData.password,formData.roleId)        
+          setLoading(false)
+          onClose(true)
+          // console.log(columns);
+          console.log();
+        }
       } catch (error) {
         console.log(error)
       }
@@ -83,7 +84,7 @@ export default function InitialFocus({ isOpen, onClose,modalTitle,initialValues,
   const handleUserEdit =()=>{
     setLoading(true)
   }
- 
+  console.log(formData);
   return (
   
     <>

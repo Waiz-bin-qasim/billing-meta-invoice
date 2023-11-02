@@ -106,9 +106,11 @@ export default function Dashboard(props) {
         return (
           <Route
             path={prop.layout + prop.path}
-            component={prop.component}
+            // component={`<${prop.component}/>`}
             key={key}
-          />
+          >
+            {<prop.component metaData={prop.name} />}
+          </Route>
         );
       }
       if (prop.collapse) {

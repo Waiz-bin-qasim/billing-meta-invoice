@@ -3,7 +3,7 @@ import { config, getToken } from "./config";
 export const reportsGet = async () => {
   let data;
   try {
-    const response = await fetch(config.url + "generatescv", {
+    const response = await fetch(config.url + "downloadcsv", {
       method: "GET",
       headers: {
         token: getToken,
