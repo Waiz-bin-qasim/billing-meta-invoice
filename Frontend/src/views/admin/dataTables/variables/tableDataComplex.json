@@ -10,21 +10,18 @@
     "name":"Marketplace",
     "status": "Inactive",
     "email": "waizbinqasim0@gmail.com",
-    "progress": 25.5,  
     "role":"Admin"
   },
   {
     "name":"Marketplace",
     "status": "Inactive",
     "email": "waizbinqasim0@gmail.com",
-    "progress": 90  ,
     "role":"Admin"
   },
   {
     "name":"Marketplace",
     "status": "Active",
     "email": "waizbinqasim0@gmail.com",
-    "progress": 50.5,  
     "role":"Admin"
   }
 ]

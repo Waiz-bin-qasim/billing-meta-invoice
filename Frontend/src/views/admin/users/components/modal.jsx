@@ -1,3 +1,4 @@
+import { useToast } from '@chakra-ui/react'
 import {
   Modal,
   ModalOverlay,
@@ -14,33 +15,80 @@ import {
   InputGroup,
   Select,
 } from "@chakra-ui/react";
-import react,{ useState } from "react";
+import { userPOST } from "api/user";
+import { getRole } from "api/user";
+import react,{ useEffect, useState } from "react";
 
 export default function InitialFocus({ isOpen, onClose,modalTitle,initialValues, }) {
+  // const toast = useToast();
   const [loading, setLoading] = useState(false)
+  const [error,setError] = useState([]);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
-    role: '', 
+    roleId: '', 
     ...initialValues,
   });
+  const [options,setOptions] = useState([]);
+  useEffect(async()=>{
+    try {
+      
+      setLoading(true)
+      let res = await getRole()
+      setOptions(res)
+      console.log(options)
+      setLoading(false)
+    } catch (error) {
+      setError(error)
+    }
+  },[])
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
-    }));
+    })
+    );
+    if (modalTitle == 'Update User'){
+      const [columns,setColumns] = (['email']);
+      const [values,setValues] = ([initialValues]);
+      setColumns(name);
+      setValues(value);
+    }
   };
   const [show, setShow] = useState(false)
-  const handleClick = () => setShow(!show)
+  const handleClick  = () => {
+    (async()=>{
+      try {
+        if(modalTitle == "Add User"){
+        setLoading(true);
+        const res = await userPOST(formData.firstName,formData.lastName,formData.email,formData.password,formData.roleId)        
+        setLoading(false)
+        onClose(true)
+        }
+        else{
+          setLoading(true);
+          // const res = await updateUser(formData.firstName,formData.lastName,formData.email,formData.password,formData.roleId)        
+          setLoading(false)
+          onClose(true)
+          console.log(columns);
+          console.log();
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+  };
   const handleUserEdit =()=>{
     setLoading(true)
   }
+  console.log(formData);
   return (
+  
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={(val)=>{onClose(val);setFormData({})}}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{modalTitle}</ModalHeader>
@@ -59,7 +107,7 @@ export default function InitialFocus({ isOpen, onClose,modalTitle,initialValues,
               <FormLabel>Email</FormLabel>
               <Input onChange={handleChange} placeholder="jhonDeo@example.com" value={formData.email} name="email"/>
             </FormControl>
-            <FormControl mt={4}>
+            {modalTitle === 'Add User'?<FormControl mt={4}>
               <FormLabel>Password</FormLabel>
               <InputGroup size='md'>
                 <Input 
@@ -71,23 +119,25 @@ export default function InitialFocus({ isOpen, onClose,modalTitle,initialValues,
                   name="password"
                 />
                 <InputRightElement width='4.5rem'>
-                  <Button h='1.75rem' size='sm' onClick={handleClick}>
+                  <Button h='1.75rem' size='sm' onClick={()=>setShow(!show)}>
                     {show ? 'Hide' : 'Show'}
                   </Button>
                 </InputRightElement>
               </InputGroup>
-            </FormControl>
+            </FormControl>:<></>}
             <FormControl mt={4}>
               <FormLabel>Role </FormLabel>
-                <Select placeholder='Select Role' value={formData.role} onChange={handleChange} name="role">
-                  <option value='option1' >Option 1</option>
-                  <option value='option2'>Option 2</option>
-                  <option value='option3'>Option 3</option>
+                <Select placeholder='Select Role' value={formData.role} onChange={handleChange} name="roleId">
+                {options.map(option => (
+                <option key={option[0]} value={option[0]}>{option[1]}</option>
+                ))}
+        
+
                 </Select>
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button isLoading={loading} colorScheme="brand" mr={3} onClick={handleUserEdit} loadingText="Updating" >
+            <Button onClick ={handleClick} isLoading={loading} colorScheme="brand" mr={3}  loadingText="Updating" >
               Save
             </Button>
             <Button colorScheme="gray" mr={-3} onClick={onClose}>

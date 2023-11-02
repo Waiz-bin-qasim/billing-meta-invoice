@@ -130,6 +130,7 @@ export default function ColumnsTable(props) {
                   isOpen={isOpen3}
                   onClose={onClose3}
                   modalTitle={"Add User"}
+                  initialValues={{}}
                 />
               </Button>
             </Flex>
@@ -246,7 +247,7 @@ export default function ColumnsTable(props) {
                                   isOpen={isOpen}
                                   onClose={onClose}
                                   modalTitle={"Update User"}
-                                  initialValues={{}}
+                                  initialValues={row.values}
                                 />
                               </Flex>
                               <Flex onClick={onOpen2}>
@@ -260,6 +261,7 @@ export default function ColumnsTable(props) {
                                   isOpen={isOpen2}
                                   onClose={onClose2}
                                   data={row.values}
+                                  forPage={'users'}
                                 />
                               </Flex>
                             </Flex>
