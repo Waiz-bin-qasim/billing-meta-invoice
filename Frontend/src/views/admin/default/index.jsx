@@ -28,8 +28,13 @@ export default function UserReports() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [earnings, setEarnings] = useState([]);
+  const [earnPkr, setEarnPkr] = useState([]);
+  const [meta, setMeta] = useState([]);
+  const [total, setTotal] = useState([]);
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
+  
   useEffect(async () => {
     try {
       const months = [
@@ -52,8 +57,13 @@ export default function UserReports() {
       console.log(month, year);
       let res = await getDashboard(month, year);
       setData(res);
+      
+      setEarnings(data[0].toLocaleString('en-US'))
+      setEarnPkr(data[1].toLocaleString('en-US'))
+      setMeta(data[2].toLocaleString('en-US'))
+      setTotal(data[3].toLocaleString('en-US'))
       setLoading(false);
-    } catch (error) {
+    }catch (error) {
       setError(error);
     }
   }, []);
@@ -83,7 +93,7 @@ export default function UserReports() {
                 />
               }
               name="Earnings($)"
-              value={`$ ${data[0]}`}
+              value={`$ ${earnings}`}
             />
             <MiniStatistics
               startContent={
@@ -102,7 +112,7 @@ export default function UserReports() {
                 />
               }
               name="Earnings(PKR)"
-              value={`PKR ${data[1]}`}
+              value={`PKR ${earnPkr}`}
             />
             <MiniStatistics
               startContent={
@@ -116,7 +126,7 @@ export default function UserReports() {
                 />
               }
               name="Amount Billed By Meta"
-              value={`$ ${data[2]}`}
+              value={`$ ${meta}`}
             />
             <MiniStatistics
               startContent={
@@ -135,7 +145,7 @@ export default function UserReports() {
                 />
               }
               name="Total Revenue"
-              value={`$ ${data[3]}`}
+              value={`$ ${total}`}
             />
             <MiniStatistics
               startContent={

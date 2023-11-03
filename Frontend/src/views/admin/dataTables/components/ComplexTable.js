@@ -45,6 +45,11 @@ export default function ColumnsTable(props) {
   const { columnsData, tableData } = props;
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
+  const [userToDelete, setUserToDelete] = useState(null);
+  const handleDeleteClick = (user) => {
+    setUserToDelete(user.email); // Set the user data for deletion
+    onOpen2(); // Open the delete modal
+  };
   const tableInstance = useTable(
     {
       columns,
@@ -84,9 +89,9 @@ export default function ColumnsTable(props) {
   useEffect(async () => {
     setLoading(true);
     // let response = await getUsers();
-    setTimeout(() => {
+    // setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    // }, 2000);
     // console.log(response);
   }, []);
 
@@ -172,6 +177,7 @@ export default function ColumnsTable(props) {
                     <Tr {...row.getRowProps()} key={index}>
                       {row.cells.map((cell, index) => {
                         let data = "";
+                        let count = 0;
                         if (cell.column.Header === "NAME") {
                           data = (
                             <Text
@@ -236,7 +242,7 @@ export default function ColumnsTable(props) {
                         } else if (cell.column.Header === "ACTIONS") {
                           data = (
                             <Flex align="center">
-                              <Flex onClick={onOpen}>
+                              <Flex onClick={handleDeleteClick(row)}>
                                 <EditIcon
                                   me="16px"
                                   h="18px"
@@ -250,7 +256,7 @@ export default function ColumnsTable(props) {
                                   initialValues={row.values}
                                 />
                               </Flex>
-                              <Flex onClick={onOpen2}>
+                              <Flex onClick={handleDeleteClick('sca')}>
                                 <DeleteIcon
                                   me="16px"
                                   h="18px"
@@ -260,12 +266,13 @@ export default function ColumnsTable(props) {
                                 <DeleteModal
                                   isOpen={isOpen2}
                                   onClose={onClose2}
-                                  data={row.values}
+                                  data={userToDelete}
                                   forPage={'users'}
                                 />
                               </Flex>
                             </Flex>
                           );
+                          count++;
                         }
                         return (
                           <Td
