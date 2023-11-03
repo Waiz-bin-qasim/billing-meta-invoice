@@ -22,7 +22,7 @@ import { MdUpload } from "react-icons/md";
 import Dropzone from "views/admin/profile/components/Dropzone";
 
 export default function Upload(props) {
-  const { used, total, ...rest } = props;
+  const { used, total, tablename, ...rest } = props;
   const [image, setImage] = useState();
   const [loading, setLoading] = useState(false);
   // Chakra Color Mode
@@ -30,15 +30,24 @@ export default function Upload(props) {
   const brandColor = useColorModeValue("brand.500", "white");
   const textColorSecondary = "gray.400";
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
+
   const handleImageUpload = async () => {
+    let response;
     try {
-      setLoading(true);
-      // await metaInvoicePOST("1", image.image);
-      // await MAUPOST(image.image);
-      await financeReportsPOST(image.image);
-      setLoading(false);
+      if (image) {
+        setLoading(true);
+        if (tablename === "Meta Invoice") {
+          response = await metaInvoicePOST("1", image.image);
+        } else if (tablename === "Monthly Active Users") {
+          response = await MAUPOST(image.image);
+        } else if (tablename === "Finance Reports") {
+          response = financeReportsPOST(image.image);
+        }
+        setLoading(false);
+      }
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
   return (
@@ -57,9 +66,11 @@ export default function Upload(props) {
                   Upload Files
                 </Text>
               </Flex>
-              <Text fontSize="sm" fontWeight="500" color="secondaryGray.500">
-                PNG, JPG and GIF files are allowed
-              </Text>
+              <Text
+                fontSize="sm"
+                fontWeight="500"
+                color="secondaryGray.500"
+              ></Text>
             </Box>
           }
           image={image}
@@ -73,7 +84,7 @@ export default function Upload(props) {
             fontSize="2xl"
             mt={{ base: "20px", "2xl": "50px" }}
           >
-            Complete your profile
+            Upload {tablename}
           </Text>
           <Text
             color={textColorSecondary}

@@ -235,7 +235,7 @@ export default function ColumnsTable(props) {
                               isOpen={isOpen2}
                               onClose={onClose2}
                               data={index1}
-                              // index={count}
+                              tableName={'Users'}
                             />
                           </Flex>
                         </Flex>

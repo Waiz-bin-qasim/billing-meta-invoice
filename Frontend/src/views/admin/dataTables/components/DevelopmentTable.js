@@ -31,6 +31,8 @@ import { MdCloudUpload } from "react-icons/md";
 import UploadMenu from "components/menu/UploadMenu";
 import DeleteModal from "components/alert/deleteAlert";
 import { metaInvoiceDownload } from "api/metaInvoice";
+import { RiAiGenerate } from "react-icons/ri";
+import GenerateModal from "views/admin/dataTables/components/generateModal";
 
 export default function DevelopmentTable(props) {
   const { columnsData, tableData, tableName, metaData } = props;
@@ -76,6 +78,11 @@ export default function DevelopmentTable(props) {
     onOpen: onOpen2,
     onClose: onClose2,
   } = useDisclosure();
+  const {
+    isOpen: isOpen3,
+    onOpen: onOpen3,
+    onClose: onClose3,
+  } = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleDownload = async (filename) => {
     try {
@@ -103,20 +110,45 @@ export default function DevelopmentTable(props) {
         </Text>
         {/* <SearchBar mb={"unset"} me="10px" borderRadius="30px" /> */}
         {/* <Menu /> */}
-        <Button
-          leftIcon={<Icon as={MdCloudUpload} h="16px" w="16px" me="8px" />}
-          onClick={onOpen2}
-          variant="outline"
-          color={textColor}
-          bg={bgButton}
-          _hover={bgHover}
-          _focus={bgFocus}
-          _active={bgFocus}
-          // color={textColor}
-        >
-          Upload
-        </Button>
-        <UploadMenu isOpen={isOpen2} onClose={onClose2} metaData={metaData} />
+        {tableName === "Reports" ? (
+          <>
+            <Button
+              leftIcon={<Icon as={RiAiGenerate} h="16px" w="16px" me="8px" />}
+              onClick={onOpen3}
+              variant="outline"
+              color={textColor}
+              bg={bgButton}
+              _hover={bgHover}
+              _focus={bgFocus}
+              _active={bgFocus}
+              // color={textColor}
+            >
+              Generate
+            </Button>
+            <GenerateModal isOpen={isOpen3} onClose={onClose3} />
+          </>
+        ) : (
+          <>
+            <Button
+              leftIcon={<Icon as={MdCloudUpload} h="16px" w="16px" me="8px" />}
+              onClick={onOpen2}
+              variant="outline"
+              color={textColor}
+              bg={bgButton}
+              _hover={bgHover}
+              _focus={bgFocus}
+              _active={bgFocus}
+              // color={textColor}
+            >
+              Upload
+            </Button>
+            <UploadMenu
+              isOpen={isOpen2}
+              onClose={onClose2}
+              tablename={tableName}
+            />
+          </>
+        )}
       </Flex>
       <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
         <Thead>
@@ -194,11 +226,13 @@ export default function DevelopmentTable(props) {
                             h="18px"
                             w="19px"
                             color={deleteColor}
+                            tableName={tableName}
                           />
                           <DeleteModal
                             isOpen={isOpen}
                             onClose={onClose}
                             data={row.values}
+                            tableName={tableName}
                           />
                         </Flex>
                       </Flex>

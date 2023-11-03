@@ -85,3 +85,65 @@ export const reportsDownload = async (value) => {
   }
   return data;
 };
+export const reportsDelete = async (filename) => {
+  let data;
+  try {
+    const response = await fetch(config.url + "finance/reports", {
+      method: "GET",
+      headers: {
+        token: getToken,
+      },
+    });
+    data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+  return data;
+};
+
+export const generateReport = async (val) => {
+  let response;
+  try {
+    console.log(val);
+    const [year, month] = parseDate(val);
+    const url = config.url + `/generatecsv?param1=${month}&&param2=${year}`;
+    const fetchOptions = {
+      method: "POST",
+      headers: {
+        token: getToken,
+      },
+    };
+    response = await fetch(url, fetchOptions);
+    console.log(response);
+    if (response.ok) {
+      return response.json;
+    }
+    throw "an error occured";
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+const parseDate = (val) => {
+  var monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  let [year, month] = val.split("-");
+  month = monthNames[parseInt(month - 1)];
+  console.log(month);
+  return [year, month];
+};

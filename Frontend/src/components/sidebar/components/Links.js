@@ -2,7 +2,15 @@
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 // chakra imports
-import { Box, Flex, HStack, Text, useColorModeValue } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  HStack,
+  Icon,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { BsLockFill } from "react-icons/bs";
 
 export function SidebarLinks(props) {
   //   Chakra color mode
@@ -20,9 +28,11 @@ export function SidebarLinks(props) {
 
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
-    console.log(routeName);
-    console.log(location.pathname.includes(routeName));
-    return location.pathname.includes(routeName);
+    if (routeName) {
+      console.log(routeName);
+      console.log(location.pathname.includes(routeName));
+      return location.pathname.includes(routeName);
+    }
   };
 
   // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
@@ -106,6 +116,62 @@ export function SidebarLinks(props) {
               </Box>
             )}
           </NavLink>
+        );
+      } else if (route.layout === "/finance") {
+        return (
+          <Box>
+            <HStack
+              spacing={activeRoute(route.path.toLowerCase()) ? "22px" : "26px"}
+              py="5px"
+              ps="10px"
+            >
+              <Flex w="100%" alignItems="center" justifyContent="center">
+                <Box
+                  color={
+                    activeRoute(route.path.toLowerCase())
+                      ? activeIcon
+                      : textColor
+                  }
+                  me="18px"
+                >
+                  {route.icon}
+                </Box>
+                <Text
+                  me="auto"
+                  color={
+                    activeRoute(route.path.toLowerCase())
+                      ? activeColor
+                      : textColor
+                  }
+                  fontWeight={
+                    activeRoute(route.path.toLowerCase()) ? "bold" : "normal"
+                  }
+                >
+                  {route.name}
+                </Text>
+                {!route.path ? (
+                  <Icon
+                    as={BsLockFill}
+                    width="20px"
+                    height="20px"
+                    color="inherit"
+                  />
+                ) : (
+                  <></>
+                )}
+              </Flex>
+              <Box
+                h="36px"
+                w="4px"
+                bg={
+                  activeRoute(route.path.toLowerCase())
+                    ? brandColor
+                    : "transparent"
+                }
+                borderRadius="5px"
+              />
+            </HStack>
+          </Box>
         );
       }
     });

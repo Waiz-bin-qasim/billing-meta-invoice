@@ -238,9 +238,9 @@ def mau(user,permissions,role):
      return jsonify({'Error Ocurred' : ex}), 400
 
 
-@app.route('/generatecsv/<socketId>',methods = ['POST'])
+@app.route('/generatecsv/',methods = ['POST'])
 @token_required
-def generateCsv(user,permissions,socketId,role):
+def generateCsv(user,permissions,role):
     try:
         route = request.endpoint
         if(checkPermission(route,permissions) == False):

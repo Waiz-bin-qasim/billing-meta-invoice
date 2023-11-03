@@ -85,3 +85,21 @@ export const metaInvoiceDownload = async (value) => {
   }
   return data;
 };
+
+export const metaINvoiceDelete = async () => {
+  let data;
+  try {
+    const response = await fetch(config.url + "finance/reports", {
+      method: "GET",
+      headers: {
+        token: getToken,
+      },
+    });
+    data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+  return data;
+};
