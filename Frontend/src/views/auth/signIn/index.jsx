@@ -26,6 +26,7 @@ import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { login } from "api/login";
+import {toast}  from "react-toastify";
 
 
 
@@ -52,34 +53,35 @@ function SignIn() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false)
-  const toast = useToast()
-  const toastId = 'Error-toast'
+  // const toast = useToast()
+  // const toastId = 'Error-toast'
 
-  const showToast = (msg) =>{
-    console.log('waiz');
-    if(toast.isActive(toastId)){
-      console.log('waiz');
-      toast({
-        toastId,
-        title: `${msg} `,
-        status: error,
-        // isClosable: true,
-      })
-    }
-  }
+  // const showToast = (msg) =>{
+  //   console.log('waiz');
+  //   if(toast.isActive(toastId)){
+  //     console.log('waiz');
+  //     toast({
+  //       toastId,
+  //       title: `${msg} `,
+  //       status: error,
+  //       // isClosable: true,
+  //     })
+  //   }
+  // }
   const handleLogin = () => {
-    (async()=>{
-      try {
-        setLoading(true);
-        const res = await login(username,password)        
-        setLoading(false);
-      } catch (error) {
-        setError(true)
-        showToast(error.message)
-        console.log(error)
-        setLoading(false);
-      }
-    })()
+    // (async()=>{
+    //   try {
+    //     setLoading(true);
+    //     const res = await login(username,password)        
+    //     setLoading(false);
+    //   } catch (error) {
+    //     setError(true)
+    //     showToast(error.message)
+    //     console.log(error)
+    //     setLoading(false);
+    //   }
+    // })()
+    toast("Wow so easy !");
   };
   const handleClick = (e)=>{
     setShow(!show)

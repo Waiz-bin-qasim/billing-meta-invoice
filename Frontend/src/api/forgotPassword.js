@@ -45,16 +45,16 @@ export const resetPassword = async(email,token,newPassword,confirmPassword) =>{
 }
 
 
-const email = 'ahaziq526@gmail.com';
-const token = '955a496e7f7d892be4bbf46df869'
-const newPassword = 'ahmed123';
-const confirmPassword = 'ahmed123';
-resetPassword(email,token,newPassword,confirmPassword)
-  .then((response) => {
-    // Handle the response from the function
-    console.log('Password reset request response:', response);
-  })
-  .catch((error) => {
-    // Handle any errors that occurred during the request
-    console.error('Error:', error);
-  });
+// const email = 'ahaziq526@gmail.com';
+// const token = '955a496e7f7d892be4bbf46df869'
+// const newPassword = 'ahmed123';
+// const confirmPassword = 'ahmed123';
+// resetPassword(email,token,newPassword,confirmPassword)
+//   .then((response) => {
+//     // Handle the response from the function
+//     console.log('Password reset request response:', response);
+//   })
+//   .catch((error) => {
+//     // Handle any errors that occurred during the request
+//     console.error('Error:', error);
+//   });

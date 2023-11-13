@@ -17,8 +17,9 @@ import {
 } from "@chakra-ui/react";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
+import { resetPassword } from "api/forgotPassword";
 
-export default function ResetPassword() {
+export default function ResetPassword({username}) {
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
   const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
@@ -46,14 +47,14 @@ export default function ResetPassword() {
   const handleResetPassword = async () => {
     let res;
     try {
-      setLoading(true);
-      // res = await haziq function
-      // if(res.ok){
-      //   setStepOnePassed(true)
-      // }
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
+      setLoading(true)
+      const res = await resetPassword(username,token,password,password);
+      console.log(res);
+      setLoading(false);
+      if(res.message == "success"){
+        console.log("abc")
+       window.location.href = '/';
+      }
     } catch (error) {}
   };
 
@@ -113,7 +114,7 @@ export default function ResetPassword() {
             variant="auth"
             fontSize="sm"
             ms={{ base: "0px", md: "0px" }}
-            type="email"
+            type="text"
             placeholder="Token From Email"
             mb="24px"
             fontWeight="500"

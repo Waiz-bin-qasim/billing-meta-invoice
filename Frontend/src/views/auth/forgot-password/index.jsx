@@ -5,10 +5,11 @@ import EmailVerify from 'views/auth/forgot-password/components/emailVerification
 import ResetPassword from 'views/auth/forgot-password/components/resetPassword'
 
 function ForgotPassword() {
-  const [stepOnePassed, setStepOnePassed] = useState(false)
+  const [stepOnePassed, setStepOnePassed] = useState(false);
+  const [username, setUsername] = useState('');
   return (
     <DefaultAuth illustrationBackground={illustration} image={illustration}>
-      {stepOnePassed?<ResetPassword/>:<EmailVerify setStepOnePassed={setStepOnePassed} />}
+      {stepOnePassed?<ResetPassword username ={username}/>:<EmailVerify setStepOnePassed={setStepOnePassed} username = {username} setUsername = {setUsername} />}
     </DefaultAuth>
   );
 }

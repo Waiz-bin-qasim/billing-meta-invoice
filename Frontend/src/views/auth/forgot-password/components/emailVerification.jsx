@@ -15,8 +15,9 @@ import {
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
+import { forgetPassword } from 'api/forgotPassword';
 
-export default function EmailVerification({setStepOnePassed}) {
+export default function EmailVerification({setStepOnePassed,username,setUsername}) {
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
   const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
@@ -32,18 +33,22 @@ export default function EmailVerification({setStepOnePassed}) {
     { bg: "secondaryGray.300" },
     { bg: "whiteAlpha.200" }
   );
-  const [username, setUsername] = useState('')
+  
   const [loading, setLoading] = useState(false)
 
   const handleEmailVerification =async()=>{
     let res;
     try {
       setLoading(true)
-      // res = await haziq function
-      // if(res.ok){
-      //   setStepOnePassed(true)
-      // }
-      setTimeout(()=>{setLoading(false);setStepOnePassed(true)},2000)
+      const res = await forgetPassword(username);
+      console.log(res);
+      setLoading(false);
+      if(res.message == "success"){
+        setStepOnePassed(true);
+        setUsername(username);
+        console.log("haziq");
+      }
+    
     } catch (error) {
       
     }

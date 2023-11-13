@@ -474,14 +474,16 @@ def forgetPassword():
     try:
         email = request.form['email']
         email = [email]
+        print(email)
         token = confirmEmail(email)
         
-        print(type(email))
-        print(token)
-        msg = Message('Password Reset', sender='haziq.ahmed@eocean.com.pk', recipients=email)
-        msg.body = f'Code to reset your password: {token}'
-        mail.send(msg)
-        return jsonify({'message':'success'})
+        if(token != 0):
+            msg = Message('Password Reset', sender='haziq.ahmed@eocean.com.pk', recipients=email)
+            msg.body = f'Code to reset your password: {token}'
+            mail.send(msg)
+            return jsonify({'message':'success'})
+        else:
+            return jsonify({'message':'incorrect email'}),400
     except Exception as ex:
         print(ex)
         return jsonify({'message':'error during forget password'}),400
@@ -494,6 +496,8 @@ def resetPassword():
         token = request.form['token']
         newPassword = request.form['newPassword']
         confirmPassword = request.form['confirmPassword']
+        print(email)
+        print(token)
         result = checkToken(email,token)
         if(result):
             if(newPassword == confirmPassword):
@@ -505,7 +509,7 @@ def resetPassword():
         
             return jsonify({'message':'success'}),200
         else:
-            return jsonify({'message':'failed'}),400
+            return jsonify({'message':'incorrect token'}),400
         
     
     except Exception as ex:
@@ -640,10 +644,10 @@ def FinanceReport(user,permissions,role):
         response = []
         count = 0
         for name in fileName:
-            updatedtAt = datetime.datetime.fromtimestamp(os.path.getmtime("./excel/"+name))
+            updatedtAt = datetime.datetime.fromtimestamp(os.path.getmtime("./financeReportFiles/"+name))
             updatedtAt = updatedtAt.strftime('%B %d, %Y ')
             print(updatedtAt)
-            createdAt = datetime.datetime.fromtimestamp(os.path.getctime("./excel/"+name))
+            createdAt = datetime.datetime.fromtimestamp(os.path.getctime("./financeReportFiles/"+name))
             createdAt = createdAt.strftime('%B %d, %Y ')
             response.append([count+1,name.split('.')[0],updatedtAt,createdAt]) 
             count +=1
