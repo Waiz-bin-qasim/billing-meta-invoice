@@ -184,12 +184,11 @@ def downloadcsv(user,permissions,role):
             response = []
             count = 0
             for name in fileName:
-                updatedtAt = datetime.datetime.fromtimestamp(os.path.getmtime("./excel/"+name))
-                updatedtAt = updatedtAt.strftime('%B %d, %Y ')
-                print(updatedtAt)
-                createdAt = datetime.datetime.fromtimestamp(os.path.getctime("./excel/"+name))
-                createdAt = "Haziq"
-                response.append([count+1,name.split('.')[0],createdAt,updatedtAt]) 
+                createdAt = datetime.datetime.fromtimestamp(os.path.getmtime("./excel/"+name))
+                createdAt = createdAt.strftime('%B %d, %Y ')
+
+                createdBy= user
+                response.append([count+1,name.split('.')[0],createdBy,createdAt]) 
                 count +=1
             return jsonify(response)
     except Exception as ex:
