@@ -18,7 +18,7 @@ def confirmEmail(email):
             connection.commit()
             return token
             
-        raise 'email not found'
+        return 0
     except Exception as ex:
         print(ex)
 
