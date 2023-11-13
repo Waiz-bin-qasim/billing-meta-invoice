@@ -14,7 +14,7 @@ import Sidebar from "components/sidebar/Sidebar.js";
 import { SidebarContext } from "contexts/SidebarContext";
 import React, { useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import routes from "routes.js";
+import routes from "routes/financeRoutes.js";
 
 // Custom Chakra theme
 export default function Dashboard(props) {
@@ -103,7 +103,7 @@ export default function Dashboard(props) {
   };
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/finance") {
+      if (prop.layout === "/finance" && prop.path) {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -168,7 +168,7 @@ export default function Dashboard(props) {
                 <Switch>
                   {getRoutes(routes)}
                   {getToken() ? (
-                    <Redirect from="/" to="/admin/default" />
+                    <Redirect from="/" to="/finance/finance-reports" />
                   ) : (
                     <Redirect from="/" to="/auth" />
                   )}

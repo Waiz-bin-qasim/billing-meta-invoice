@@ -58,10 +58,11 @@ export const MAUDownload = async (value) => {
     // data = await response.json();
     // console.log(data);
     // window.location.href = `${config.url}/getpdf?param1=${month}&&param2=${year}`;
-    data = await fetch("${config.url}/getpdf?param1=${month}&&param2=${year}", {
+    data = await fetch(`${config.url}/getmau?param1=${month}&&param2=${year}`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/pdf",
+        "Content-Type":
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         token: getToken,
       },
     });
@@ -70,7 +71,7 @@ export const MAUDownload = async (value) => {
 
     const link = document.createElement("a");
     link.href = url;
-    link.download = value + ".pdf";
+    link.download = value + ".xlsx";
 
     document.body.appendChild(link);
 
@@ -88,12 +89,17 @@ export const MAUDownload = async (value) => {
 export const MAUDelete = async (filename) => {
   let data;
   try {
-    const response = await fetch(config.url + "finance/reports", {
-      method: "GET",
-      headers: {
-        token: getToken,
-      },
-    });
+    const [month, year, _] = filename.split(/(\d+)/);
+    console.log(month, year);
+    const response = await fetch(
+      config.url + `mau?param1=${month}&&param2=${year}`,
+      {
+        method: "DELETE",
+        headers: {
+          token: getToken,
+        },
+      }
+    );
     data = await response.json();
     console.log(data);
   } catch (error) {

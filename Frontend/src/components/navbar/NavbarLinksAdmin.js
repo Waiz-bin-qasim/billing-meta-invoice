@@ -23,9 +23,16 @@ import React from "react";
 import navImage from "assets/img/layout/Navbar.png";
 import { MdNotificationsNone, MdInfoOutline } from "react-icons/md";
 import { FaEthereum } from "react-icons/fa";
-import routes from "routes.js";
+import adminRoutes from "routes/routes.js";
+import financeRoutes from "routes/financeRoutes.js";
 import { ThemeEditor } from "./ThemeEditor";
 // import { Route, Navigate } from "react-router-dom";
+let routes;
+if (localStorage.getItem("roleName") === "Admin") {
+  routes = adminRoutes;
+} else if (localStorage.getItem("roleName") === "Finance") {
+  routes = financeRoutes;
+}
 export default function HeaderLinks(props) {
   const { secondary } = props;
   // Chakra Color Mode

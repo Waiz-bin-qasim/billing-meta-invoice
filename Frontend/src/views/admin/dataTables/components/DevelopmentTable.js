@@ -16,10 +16,7 @@ import {
 } from "@chakra-ui/react";
 // Custom components
 import Card from "components/card/Card";
-import { SearchBar } from "components/navbar/searchBar/SearchBar";
-import { AndroidLogo, AppleLogo, WindowsLogo } from "components/icons/Icons";
-import Menu from "components/menu/MainMenu";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   useGlobalFilter,
   usePagination,
@@ -33,9 +30,13 @@ import DeleteModal from "components/alert/deleteAlert";
 import { metaInvoiceDownload } from "api/metaInvoice";
 import { RiAiGenerate } from "react-icons/ri";
 import GenerateModal from "views/admin/dataTables/components/generateModal";
+import { MAUDownload } from "api/MAU";
+import { reportsDownload } from "api/reports";
+import { financeReportsDownload } from "api/financeReports";
 
 export default function DevelopmentTable(props) {
   const { columnsData, tableData, tableName, metaData } = props;
+  const [selectedRow, setSelectedRow] = useState(false);
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
   const tableInstance = useTable(
@@ -51,7 +52,7 @@ export default function DevelopmentTable(props) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    page,
+    rows,
     prepareRow,
     initialState,
   } = tableInstance;
@@ -87,7 +88,16 @@ export default function DevelopmentTable(props) {
   const handleDownload = async (filename) => {
     try {
       console.log(filename);
-      await metaInvoiceDownload(filename);
+      let response;
+      if (tableName === "Meta Invoice") {
+        response = await metaInvoiceDownload(filename);
+      } else if (tableName === "Monthly Active Users") {
+        response = await MAUDownload(filename);
+      } else if (tableName === "Reports") {
+        response = await reportsDownload(filename);
+      } else if (tableName === "Finance Reports") {
+        response = await financeReportsDownload(filename);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -182,73 +192,69 @@ export default function DevelopmentTable(props) {
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {page.map((row, index) => {
+          {rows.map((row, index) => {
             prepareRow(row);
             return (
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index) => {
-                  let data = "";
-                  if (cell.column.Header === "NAME") {
-                    data = (
-                      <Text color={textColor} fontSize="sm" fontWeight="700">
-                        {cell.value}
-                      </Text>
-                    );
-                  } else if (cell.column.Header === "CREATED ON") {
-                    data = (
-                      <Text color={textColor} fontSize="sm" fontWeight="700">
-                        {cell.value}
-                      </Text>
-                    );
-                  } else if (cell.column.Header === "CREATED BY") {
-                    data = (
-                      <Text color={textColor} fontSize="sm" fontWeight="700">
-                        {cell.value}
-                      </Text>
+                  // let data = "";
+                  if (cell.column.Header !== "ACTIONS") {
+                    return (
+                      <Td
+                        {...cell.getCellProps()}
+                        key={index}
+                        fontSize={{ sm: "14px" }}
+                        minW={{ sm: "150px", md: "200px", lg: "auto" }}
+                        borderColor="transparent"
+                      >
+                        <Text color={textColor} fontSize="sm" fontWeight="700">
+                          {cell.value}
+                        </Text>
+                      </Td>
                     );
                   } else if (cell.column.Header === "ACTIONS") {
-                    data = (
-                      <Flex align="center">
-                        <Flex>
-                          <DownloadIcon
-                            me="16px"
-                            h="18px"
-                            w="19px"
-                            color={iconColor}
-                            value={cell.values}
-                            data={cell}
-                            onClick={() => handleDownload(row.values.name)}
-                          />
+                    return (
+                      <Td
+                        {...cell.getCellProps()}
+                        key={index}
+                        fontSize={{ sm: "14px" }}
+                        minW={{ sm: "150px", md: "200px", lg: "auto" }}
+                        borderColor="transparent"
+                      >
+                        <Flex align="center" value={row.values.name}>
+                          <Flex>
+                            <DownloadIcon
+                              me="16px"
+                              h="18px"
+                              w="19px"
+                              color={iconColor}
+                              value={cell.values}
+                              data={cell}
+                              onClick={() => handleDownload(row.values.name)}
+                            />
+                          </Flex>
+                          <Flex onClick={onOpen}>
+                            <DeleteIcon
+                              me="16px"
+                              h="18px"
+                              w="19px"
+                              color={deleteColor}
+                              tableName={tableName}
+                              onClick={() => {
+                                setSelectedRow(row.values.name);
+                              }}
+                            />
+                            <DeleteModal
+                              isOpen={isOpen}
+                              onClose={onClose}
+                              tableName={tableName}
+                              value={selectedRow}
+                            />
+                          </Flex>
                         </Flex>
-                        <Flex onClick={onOpen}>
-                          <DeleteIcon
-                            me="16px"
-                            h="18px"
-                            w="19px"
-                            color={deleteColor}
-                            tableName={tableName}
-                          />
-                          <DeleteModal
-                            isOpen={isOpen}
-                            onClose={onClose}
-                            data={row.values}
-                            tableName={tableName}
-                          />
-                        </Flex>
-                      </Flex>
+                      </Td>
                     );
                   }
-                  return (
-                    <Td
-                      {...cell.getCellProps()}
-                      key={index}
-                      fontSize={{ sm: "14px" }}
-                      minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                      borderColor="transparent"
-                    >
-                      {data}
-                    </Td>
-                  );
                 })}
               </Tr>
             );

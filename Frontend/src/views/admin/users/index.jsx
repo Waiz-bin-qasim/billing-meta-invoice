@@ -25,14 +25,14 @@ export default function Users() {
     const name = entry[1];
     const role = entry[2];
     const status = entry[3] === 0 ? "Inactive" : "Active";
-    const actions = entry[0] 
+    const actions = entry[0];
 
     return {
       name: name,
       status: status,
       email: email,
       role: role,
-      actions : actions
+      actions: actions,
     };
   });
   return (

@@ -15,8 +15,10 @@ export function SidebarBrand() {
   return (
     <Flex align="center" direction="column">
       <Flex align="center" direction="row">
-        <Image src={eocean} h="40px" w="40px" my="32px" />
-        <Text mx={"5px"}> Digital Billing</Text>
+        <Image src={eocean} h="50px" w="50px" my="32px" />
+        <Text mx={"5px"} fontWeight={"bold"}>
+          Digital Connect Billing
+        </Text>
         {/* <HorizonLogo h="26px" w="175px" my="32px" color={logoColor} /> */}
       </Flex>
       <HSeparator mb="20px" />

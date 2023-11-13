@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import routes from "authRoutes.js";
+import routes from "routes/authRoutes.js";
 
 // Chakra imports
 import { Box, useColorModeValue } from "@chakra-ui/react";

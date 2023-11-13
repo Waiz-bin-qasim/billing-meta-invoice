@@ -7,7 +7,7 @@ def createFileName(param1 , param2):
 	current_time = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 	file_name = f'excel_file_{current_time}.xlsx'
 	return "./excel/"+param1+param2+".xlsx"
-def run(param1 , param2,socketio,socketId):
+def run(param1 , param2):
 	
 	cursor, connection = establish_connection()
 	file_name = createFileName(param1,param2)
@@ -16,7 +16,6 @@ def run(param1 , param2,socketio,socketId):
 	cursor.execute(sql_query,(param1,param2))
 	result_list = cursor.fetchall()
 	close_connection(cursor, connection)
-	updateProgress(socketio,socketId,50)
 	estimatedUSD = 0
 	estimatedPKR = 0
 	print(result_list)
@@ -35,7 +34,5 @@ def run(param1 , param2,socketio,socketId):
 	estimatedUSD = round(estimatedUSD,2)
 	estimatedPKR = round(estimatedPKR,2)
 	print(result_list)
-	updateProgress(socketio,socketId,70)
 	excelDataHandler.data_handler(file_name,result_list,estimatedUSD,estimatedPKR)
-	updateProgress(socketio,socketId,90)
 	return file_name

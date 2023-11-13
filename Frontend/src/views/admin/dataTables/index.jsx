@@ -10,7 +10,7 @@ import { MAUGet } from "api/MAU";
 import { reportsGet } from "api/reports";
 import { financeReportsGet } from "api/financeReports";
 
-export default function Settings({metaData}) {
+export default function Settings({ metaData }) {
   // Chakra Color Mode
   const [loading, setLoading] = useState(false);
   const [tableData, setTableData] = useState([]);
@@ -19,23 +19,27 @@ export default function Settings({metaData}) {
     let response;
     try {
       setLoading(true);
-      if(metaData === 'Meta Invoice'){
+      if (metaData === "Meta Invoice") {
         response = await metaInvoiceGet();
-      }else if(metaData === 'Monthly Active Users'){
+      } else if (metaData === "Monthly Active Users") {
         response = await MAUGet();
-      }else if(metaData === 'Reports'){
+      } else if (metaData === "Reports") {
         response = await reportsGet();
-      }else if(metaData === 'Finance Reports'){
-        response = await financeReportsGet()
+      } else if (metaData === "Finance Reports") {
+        response = await financeReportsGet();
       }
 
       let data = [];
       for (let each of response) {
         let obj = {};
-        obj.name = each[0] + each[1];
+        if (metaData == "Meta Invoice" || metaData == "Monthly Active Users") {
+          obj.name = each[0] + each[1];
+        } else {
+          obj.name = each[1];
+        }
         obj["created by"] = each[1];
         obj["created on"] = each[2];
-        obj.actions = "";
+        obj.actions = each[1];
         data.push(obj);
       }
       setTableData(data);
@@ -48,19 +52,23 @@ export default function Settings({metaData}) {
 
   return (
     <>
-        <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-          <SimpleGrid
-            mb="20px"
-            columns={{ sm: 1 }}
-            spacing={{ base: "20px", xl: "20px" }}
-          >
-            {loading?<LoadingSpinner/>:<DevelopmentTable
+      <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+        <SimpleGrid
+          mb="20px"
+          columns={{ sm: 1 }}
+          spacing={{ base: "20px", xl: "20px" }}
+        >
+          {loading ? (
+            <LoadingSpinner />
+          ) : (
+            <DevelopmentTable
               columnsData={columnsDataDevelopment}
               tableData={tableData}
               tableName={metaData}
-            />}
-          </SimpleGrid>
-          {/* <Button
+            />
+          )}
+        </SimpleGrid>
+        {/* <Button
             onClick={() => {
               console.log("waiz");
               toast({
@@ -74,7 +82,7 @@ export default function Settings({metaData}) {
           >
             waiz
           </Button> */}
-        </Box>
+      </Box>
     </>
   );
 }

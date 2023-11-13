@@ -57,13 +57,13 @@ export default function UserReports() {
       console.log(month, year);
       let res = await getDashboard(month, year);
       setData(res);
-      
-      setEarnings(data[0].toLocaleString('en-US'))
-      setEarnPkr(data[1].toLocaleString('en-US'))
-      setMeta(data[2].toLocaleString('en-US'))
-      setTotal(data[3].toLocaleString('en-US'))
+      setEarnings(res[0].toLocaleString('en-US'))
+      setEarnPkr(res[1].toLocaleString('en-US'))
+      setMeta(res[2].toLocaleString('en-US'))
+      setTotal(res[3].toLocaleString('en-US'))
       setLoading(false);
     }catch (error) {
+      console.log(error);
       setError(error);
     }
   }, []);

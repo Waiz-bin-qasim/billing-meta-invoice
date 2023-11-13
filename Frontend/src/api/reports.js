@@ -59,10 +59,11 @@ export const reportsDownload = async (value) => {
     // data = await response.json();
     // console.log(data);
     // window.location.href = `${config.url}/getpdf?param1=${month}&&param2=${year}`;
-    data = await fetch("${config.url}/getpdf?param1=${month}&&param2=${year}", {
+    data = await fetch(`${config.url}/getcsv?param1=${month}&&param2=${year}`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/pdf",
+        "Content-Type":
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         token: getToken,
       },
     });
@@ -71,7 +72,7 @@ export const reportsDownload = async (value) => {
 
     const link = document.createElement("a");
     link.href = url;
-    link.download = value + ".pdf";
+    link.download = value + ".xlsx";
 
     document.body.appendChild(link);
 
@@ -88,12 +89,17 @@ export const reportsDownload = async (value) => {
 export const reportsDelete = async (filename) => {
   let data;
   try {
-    const response = await fetch(config.url + "finance/reports", {
-      method: "GET",
-      headers: {
-        token: getToken,
-      },
-    });
+    const [month, year, _] = filename.split(/(\d+)/);
+    console.log(month, year);
+    const response = await fetch(
+      config.url + `reports?param1=${month}&&param2=${year}`,
+      {
+        method: "DELETE",
+        headers: {
+          token: getToken,
+        },
+      }
+    );
     data = await response.json();
     console.log(data);
   } catch (error) {
@@ -108,7 +114,7 @@ export const generateReport = async (val) => {
   try {
     console.log(val);
     const [year, month] = parseDate(val);
-    const url = config.url + `/generatecsv?param1=${month}&&param2=${year}`;
+    const url = config.url + `generatecsv?param1=${month}&&param2=${year}`;
     const fetchOptions = {
       method: "POST",
       headers: {

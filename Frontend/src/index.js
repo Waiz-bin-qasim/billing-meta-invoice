@@ -14,24 +14,31 @@ const getToken = () => {
   const token = localStorage.getItem("token");
   return token || false;
 };
-const role = localStorage.getItem("role");
+const role = localStorage.getItem("roleName") || false;
+console.log(role);
 ReactDOM.render(
   <ChakraProvider theme={theme}>
     <React.StrictMode>
       <ThemeEditorProvider>
         <BrowserRouter>
           <Switch>
-            {getToken() ? (
-              <>
-                {" "}
-                <Route path={`/admin`} component={AdminLayout} />
-                <Redirect from="/" to="/admin" />
-              </>
-            ) : (
+            {!getToken() && (
               <>
                 {" "}
                 <Route path={`/auth`} component={AuthLayout} />
                 <Redirect from="/" to="/auth/sign-in" />
+              </>
+            )}
+            {getToken() && role === "Admin" && (
+              <>
+                <Route path={`/admin`} component={AdminLayout} />
+                <Redirect from="/" to="/admin" />
+              </>
+            )}
+            {getToken() && role === "Finance" && (
+              <>
+                <Route path={`/finance`} component={financeLayout} />
+                <Redirect from="/" to="/finance" />
               </>
             )}
           </Switch>

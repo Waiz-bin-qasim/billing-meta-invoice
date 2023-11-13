@@ -59,7 +59,7 @@ export const metaInvoiceDownload = async (value) => {
     // data = await response.json();
     // console.log(data);
     // window.location.href = `${config.url}/getpdf?param1=${month}&&param2=${year}`;
-    data = await fetch("${config.url}/getpdf?param1=${month}&&param2=${year}", {
+    data = await fetch(`${config.url}/getpdf?param1=${month}&&param2=${year}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/pdf",
@@ -86,15 +86,20 @@ export const metaInvoiceDownload = async (value) => {
   return data;
 };
 
-export const metaINvoiceDelete = async () => {
+export const metaINvoiceDelete = async (filename) => {
   let data;
   try {
-    const response = await fetch(config.url + "finance/reports", {
-      method: "GET",
-      headers: {
-        token: getToken,
-      },
-    });
+    const [month, year, _] = filename.split(/(\d+)/);
+    console.log(month, year);
+    const response = await fetch(
+      config.url + `meta?param1=${month}&&param2=${year}`,
+      {
+        method: "DELETE",
+        headers: {
+          token: getToken,
+        },
+      }
+    );
     data = await response.json();
     console.log(data);
   } catch (error) {

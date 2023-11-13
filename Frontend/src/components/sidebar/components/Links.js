@@ -120,57 +120,59 @@ export function SidebarLinks(props) {
       } else if (route.layout === "/finance") {
         return (
           <Box>
-            <HStack
-              spacing={activeRoute(route.path.toLowerCase()) ? "22px" : "26px"}
-              py="5px"
-              ps="10px"
-            >
-              <Flex w="100%" alignItems="center" justifyContent="center">
-                <Box
-                  color={
-                    activeRoute(route.path.toLowerCase())
-                      ? activeIcon
-                      : textColor
-                  }
-                  me="18px"
-                >
-                  {route.icon}
-                </Box>
-                <Text
-                  me="auto"
-                  color={
-                    activeRoute(route.path.toLowerCase())
-                      ? activeColor
-                      : textColor
-                  }
-                  fontWeight={
-                    activeRoute(route.path.toLowerCase()) ? "bold" : "normal"
-                  }
-                >
-                  {route.name}
-                </Text>
-                {!route.path ? (
-                  <Icon
-                    as={BsLockFill}
-                    width="20px"
-                    height="20px"
-                    color="inherit"
-                  />
-                ) : (
-                  <></>
-                )}
-              </Flex>
-              <Box
-                h="36px"
-                w="4px"
-                bg={
-                  activeRoute(route.path.toLowerCase())
-                    ? brandColor
-                    : "transparent"
+            {route.path ? (
+              <HStack
+                spacing={
+                  activeRoute(route.path.toLowerCase()) ? "22px" : "26px"
                 }
-                borderRadius="5px"
-              />
-            </HStack>
+                py="5px"
+                ps="10px"
+              >
+                <Flex w="100%" alignItems="center" justifyContent="center">
+                  <Box color={activeIcon} me="18px">
+                    {route.icon}
+                  </Box>
+                  <Text me="auto" color={activeColor} fontWeight={"bold"}>
+                    {route.name}
+                  </Text>
+                  {!route.path ? (
+                    <Icon
+                      as={BsLockFill}
+                      width="20px"
+                      height="20px"
+                      color="inherit"
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </Flex>
+                <Box h="36px" w="4px" bg={brandColor} borderRadius="5px" />
+              </HStack>
+            ) : (
+              <>
+                <HStack spacing={"26px"} py="5px" ps="10px">
+                  <Flex w="100%" alignItems="center" justifyContent="center">
+                    <Box color={textColor} me="18px">
+                      {route.icon}
+                    </Box>
+                    <Text me="auto" color={textColor} fontWeight={"normal"}>
+                      {route.name}{" "}
+                      {!route.path ? (
+                        <Icon
+                          as={BsLockFill}
+                          width="12px"
+                          height="15px"
+                          color="inherit"
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </Text>
+                  </Flex>
+                  <Box h="36px" w="4px" bg={"transparent"} borderRadius="5px" />
+                </HStack>
+              </>
+            )}
           </Box>
         );
       }

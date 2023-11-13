@@ -238,7 +238,7 @@ def mau(user,permissions,role):
      return jsonify({'Error Ocurred' : ex}), 400
 
 
-@app.route('/generatecsv/',methods = ['POST'])
+@app.route('/generatecsv',methods = ['POST'])
 @token_required
 def generateCsv(user,permissions,role):
     try:
@@ -252,7 +252,7 @@ def generateCsv(user,permissions,role):
             response = generateCheck(param1,param2)
             if(response == True):
                 # updateProgress(socketio,socketId,40)
-                file_path = getCsv.run(param1, param2,socketio,socketId)
+                file_path = getCsv.run(param1, param2)
                 g.file_path = file_path
                 # updateProgress(socketio,socketId,100)
                 return jsonify("File was Generated")
@@ -262,7 +262,7 @@ def generateCsv(user,permissions,role):
         else:
             return jsonify({"message":"Please provide both param1 and param2 as query parameters."}),400
     except Exception as e:
-        # print(f'Error during generating file: {e}')
+        print(f'Error during generating file: {e}')
         return jsonify({'Error Ocurred': e}), 400 
 
 @app.route('/getcsv', methods = ['GET'])
@@ -276,7 +276,7 @@ def getcsv(user,permissions,role):
         param2 = request.args.get('param2')
         if param1 and param2:
             file_path = "excel/"+param1+param2+".xlsx"
-            return send_file(file_path, as_attachment=True, download_name=f'{param1+param2}.xlsx'),200
+            return send_file(file_path, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" , download_name=f'{param1+param2}.xlsx'),200
         else:
             raise Exception("Please provide both param1 and param2 as query parameters.")
     except Exception as e:
@@ -299,7 +299,7 @@ def getpdf(user,permissions,role):
         param2 = request.args.get('param2')
         if param1 and param2: 
             file_path = "metaInvoiceFiles/"+param1+param2+".pdf"
-            return send_file(file_path, as_attachment=True, download_name=f'{param1 + param2}.pdf'),200
+            return send_file(file_path, mimetype='application/pdf', download_name=f'{param1 + param2}.pdf'),200
         else: 
             raise Exception("Please provide both param1 and param2")
         
@@ -321,7 +321,7 @@ def getmau(user,permissions,role):
         param2 = request.args.get('param2')
         if param1 and param2: 
             file_path = "billingMAUFiles/"+param1+param2+".xlsx"
-            return send_file(file_path, as_attachment=True, download_name=f'{param1 + param2}.xlsx'),200
+            return send_file(file_path,mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", download_name=f'{param1 + param2}.xlsx'),200
         else: 
             raise Exception("Please provide both param1 and param2")
         
@@ -367,7 +367,7 @@ def financeUpload(user,permissions,role):
             param2 = request.args.get('param2')
             if param1 and param2: 
                 file_path = "financeReportFiles/"+param1+param2+".xlsx"
-                return send_file(file_path, as_attachment=True, download_name=f'{param1 + param2}.xlsx'),200
+                return send_file(file_path, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", download_name=f'{param1 + param2}.xlsx'),200
             else: 
                 raise Exception("Please provide both param1 and param2")
     

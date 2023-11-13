@@ -29,6 +29,7 @@ import DeleteModal from "../../../../components/alert/deleteAlert.jsx";
 import { IoPersonAdd } from "react-icons/io5";
 
 export default function ColumnsTable(props) {
+  const [selectedRow, setSelectedRow] = useState(false);
   const [loading, setLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -216,12 +217,16 @@ export default function ColumnsTable(props) {
                               h="18px"
                               w="19px"
                               color={textColor}
+                              onClick={() => {
+                                setSelectedRow(row.values);
+                                console.log(selectedRow);
+                              }}
                             />
                             <Modal
                               isOpen={isOpen}
                               onClose={onClose}
                               modalTitle={"Update User"}
-                              initialValues={{}}
+                              initialValues={selectedRow}
                             />
                           </Flex>
                           <Flex onClick={onOpen2}>
@@ -230,12 +235,13 @@ export default function ColumnsTable(props) {
                               h="18px"
                               w="19px"
                               color={deleteColor}
+                              onClick={() => setSelectedRow(row.values.email)}
                             />
                             <DeleteModal
                               isOpen={isOpen2}
                               onClose={onClose2}
-                              data={index1}
-                              tableName={'Users'}
+                              value={selectedRow}
+                              tableName={"Users"}
                             />
                           </Flex>
                         </Flex>
