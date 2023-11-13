@@ -5,16 +5,29 @@ import tableDataDevelopment from "views/admin/dataTables/variables/tableDataDeve
 import React, { useEffect, useState } from "react";
 import { LoadingSpinner } from "components/loading/loadingSpinner";
 import { metaInvoiceGet } from "api/metaInvoice";
-import { useToast } from "@chakra-ui/toast";
 import { MAUGet } from "api/MAU";
 import { reportsGet } from "api/reports";
 import { financeReportsGet } from "api/financeReports";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Settings({ metaData }) {
   // Chakra Color Mode
   const [loading, setLoading] = useState(false);
   const [tableData, setTableData] = useState([]);
-  const toast = useToast();
+  const showToast = (msg) =>{
+  
+    toast.error(`${msg}`, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+      theme: "light",
+      });
+  }
   useEffect(async () => {
     let response;
     try {
@@ -28,7 +41,8 @@ export default function Settings({ metaData }) {
       } else if (metaData === "Finance Reports") {
         response = await financeReportsGet();
       }
-
+      console.log(response);
+      // if(response.status == 200){
       let data = [];
       for (let each of response) {
         let obj = {};
@@ -42,11 +56,17 @@ export default function Settings({ metaData }) {
         obj.actions = each[1];
         data.push(obj);
       }
+      
       setTableData(data);
       setLoading(false);
+    // }
+    
+      
     } catch (error) {
+      showToast(error.message)
       console.log("error");
       console.log(error);
+      setLoading(false);
     }
   }, []);
 
@@ -82,6 +102,18 @@ export default function Settings({ metaData }) {
           >
             waiz
           </Button> */}
+          <ToastContainer
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+          />
       </Box>
     </>
   );

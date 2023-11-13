@@ -17,6 +17,9 @@ import {
 // Custom components
 import Card from "components/card/Card";
 import React, { useMemo, useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import {
   useGlobalFilter,
   usePagination,
@@ -85,6 +88,32 @@ export default function DevelopmentTable(props) {
     onClose: onClose3,
   } = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const showToastError = (msg) =>{
+  
+    toast.error(`${msg}`, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+      theme: "light",
+      });
+  }
+  const showToastSuccess = (msg) =>{
+  
+    toast.success(`${msg}`, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+      theme: "light",
+      });
+  }
   const handleDownload = async (filename) => {
     try {
       console.log(filename);
@@ -98,8 +127,13 @@ export default function DevelopmentTable(props) {
       } else if (tableName === "Finance Reports") {
         response = await financeReportsDownload(filename);
       }
+      showToastSuccess("File Downloaded Successfully")
+     if(response.status==400){
+      throw{message:response.message};
+     }
     } catch (error) {
       console.log(error);
+     showToastError(error.message)
     }
   };
   return (
@@ -261,6 +295,18 @@ export default function DevelopmentTable(props) {
           })}
         </Tbody>
       </Table>
+      <ToastContainer
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+          />
     </Card>
   );
 }

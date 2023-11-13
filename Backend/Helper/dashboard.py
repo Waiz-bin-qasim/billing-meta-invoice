@@ -43,19 +43,20 @@ def displayTotalUSD(month,year):
         fileName = f'{month}{year}.xlsx'
         file_path = os.path.join(folder, fileName)
 
-
-        workbook = openpyxl.load_workbook(file_path)
-        worksheet = workbook['Sheet']
-
-
-        for row in worksheet.iter_rows(min_row=1, max_row=worksheet.max_row, min_col=1, max_col=6):
-            if row[0].value and 'estimated total' in str(row[0].value).lower():
-                # first estimated total is always dollars
-                return (row[5].value)
+        if os.path.exists(file_path):
+            workbook = openpyxl.load_workbook(file_path)
+            worksheet = workbook['Sheet']
 
 
-        workbook.close()
+            for row in worksheet.iter_rows(min_row=1, max_row=worksheet.max_row, min_col=1, max_col=6):
+                if row[0].value and 'estimated total' in str(row[0].value).lower():
+                    # first estimated total is always dollars
+                    return (row[5].value)
 
+
+            workbook.close()
+        else:
+            return 0;
     except Exception as ex: 
         print(ex)  
 
@@ -100,19 +101,19 @@ def displayWhatsappAmount(month,year):
         fileName = f'{month}{year}.pdf'
         file_path = os.path.join(folder, fileName)
 
-
-        with open(file_path, "rb") as file:
+        if os.path.exists(file_path):
+            with open(file_path, "rb") as file:
+                
+                pdf_reader = PyPDF2.PdfReader(file)
+                page = pdf_reader.pages[0]
             
-            pdf_reader = PyPDF2.PdfReader(file)
-            page = pdf_reader.pages[0]
-        
 
-            for line in page.extract_text().splitlines():
-                if ("Total due by" in line):
-                    invoiceTotal = line
-                    invoiceTotal = invoiceTotal.split('$')
-                    return invoiceTotal[1]
-        
+                for line in page.extract_text().splitlines():
+                    if ("Total due by" in line):
+                        invoiceTotal = line
+                        invoiceTotal = invoiceTotal.split('$')
+                        return invoiceTotal[1]
+            
 
     except Exception as ex:
         print(f"Error while reading PDF: {ex}")
@@ -120,8 +121,8 @@ def displayWhatsappAmount(month,year):
 
 def displayBarChart():
     try:
-        mauQuery = 'select distinct inv_month,inv_year from mau'
-        metaQuery = 'select distinct inv_month,inv_year from billing_meta_invoice'
+        mauQuery = 'select distinct inv_month,inv_year from mau_logs'
+        metaQuery = 'select distinct inv_month,inv_year from billing_logs'
         cursor,connection = establish_connection()
         cursor.execute(mauQuery)
         resultMau = cursor.fetchall()
