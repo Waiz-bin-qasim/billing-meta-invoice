@@ -42,9 +42,9 @@ const routes = [
     icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
   },
   {
-    name: "Monthly Active Users",
+    name: `Monthly Active Users`,
     layout: "/finance",
-    icon: <Icon as={ImUsers} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={ImUsers} width="18px" height="20px" color="inherit" />,
   },
   {
     name: "Meta Invoice",

@@ -37,8 +37,8 @@ export default function Settings({ metaData }) {
         } else {
           obj.name = each[1];
         }
-        obj["created by"] = each[1];
-        obj["created on"] = each[2];
+        obj["created by"] = each[2];
+        obj["created on"] = each[3];
         obj.actions = each[1];
         data.push(obj);
       }

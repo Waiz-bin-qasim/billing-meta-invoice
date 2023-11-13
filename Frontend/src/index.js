@@ -15,7 +15,6 @@ const getToken = () => {
   return token || false;
 };
 const role = localStorage.getItem("roleName") || false;
-console.log(role);
 ReactDOM.render(
   <ChakraProvider theme={theme}>
     <React.StrictMode>

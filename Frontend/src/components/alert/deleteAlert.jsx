@@ -34,6 +34,7 @@ export default function DeleteAlert({ isOpen, onClose, tableName, value }) {
         response = await deleteUser(value);
       }
       setLoading(false);
+      onClose(true);
     } catch (error) {}
   };
   return (

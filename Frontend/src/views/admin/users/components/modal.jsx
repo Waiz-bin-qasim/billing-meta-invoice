@@ -15,28 +15,25 @@ import {
   InputGroup,
   Select,
 } from "@chakra-ui/react";
+import { updateUser } from "api/user";
 import { userPOST } from "api/user";
 import { getRole } from "api/user";
 import react, { useEffect, useState } from "react";
 
-export default function InitialFocus({
-  isOpen,
-  onClose,
-  modalTitle,
-  initialValues,
-}) {
+export default function InitialFocus({ isOpen, onClose, modalTitle, value }) {
   // const toast = useToast();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState([]);
+  const [roleLoading, setRoleLoading] = useState(false);
   const [formData, setFormData] = useState(() => {
-    console.log(initialValues);
-    if (initialValues) {
+    console.log(value);
+    if (value) {
       return {
-        firstName: initialValues.name,
-        lastName: initialValues.name,
-        email: initialValues.email,
-        password: initialValues,
-        roleId: initialValues,
+        firstName: value.name.split(" ")[0],
+        lastName: value.name.split(" ")[1],
+        email: value.email,
+        password: value,
+        roleId: value,
       };
     }
     return {
@@ -50,10 +47,10 @@ export default function InitialFocus({
   const [options, setOptions] = useState([]);
   useEffect(async () => {
     try {
-      setLoading(true);
+      setRoleLoading(true);
       let res = await getRole();
       setOptions(res);
-      setLoading(false);
+      setRoleLoading(false);
     } catch (error) {
       setError(error);
     }
@@ -66,7 +63,7 @@ export default function InitialFocus({
     }));
     // if (modalTitle == 'Update User'){
     //   const [columns,setColumns] = (['email']);
-    //   const [values,setValues] = ([initialValues]);
+    //   const [values,setValues] = ([value]);
     //   setColumns(name);
     //   setValues(value);
     // }
@@ -88,13 +85,19 @@ export default function InitialFocus({
           onClose(true);
         } else {
           setLoading(true);
-          // const res = await updateUser(formData.firstName,formData.lastName,formData.email,formData.password,formData.roleId)
+          const res = await updateUser(
+            formData.email,
+            ["first_name", "last_name", "uesrname", "role_id"],
+            [formData.firstName, formData.lastName, formData.email, "ADM0"]
+          );
           setLoading(false);
           onClose(true);
         }
       } catch (error) {
         console.log(error);
       }
+      setLoading(false);
+      onClose(true);
     })();
   };
   const handleUserEdit = () => {
@@ -172,7 +175,7 @@ export default function InitialFocus({
               <FormLabel>Role </FormLabel>
               <Select
                 placeholder="Select Role"
-                value={formData.role}
+                value={formData.roleId}
                 onChange={handleChange}
                 name="roleId"
               >

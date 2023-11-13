@@ -40,8 +40,8 @@ export default function Footer() {
         {" "}
         &copy; {1900 + new Date().getYear()}
         <Text as="span" fontWeight="500" ms="4px">
-          Eocean . All Rights Reserved.
-          <Link
+          Digital Connect Billing . All Rights Reserved.
+          {/* <Link
             mx="3px"
             color={textColor}
             href="https://www.eocean.com"
@@ -49,7 +49,7 @@ export default function Footer() {
             fontWeight="700"
           >
             Simmmple!
-          </Link>
+          </Link> */}
         </Text>
       </Text>
       <List display="flex">
@@ -62,7 +62,7 @@ export default function Footer() {
           <Link
             fontWeight="500"
             color={textColor}
-            href="mailto:hello@simmmple.com"
+            href="mailto:sales@eocean.net"
           >
             Support
           </Link>
@@ -76,7 +76,7 @@ export default function Footer() {
           <Link
             fontWeight="500"
             color={textColor}
-            href="https://www.simmmple.com/licenses?ref=horizon-chakra-free"
+            href="https://eocean.net/privacy-policy/"
           >
             License
           </Link>
@@ -90,7 +90,7 @@ export default function Footer() {
           <Link
             fontWeight="500"
             color={textColor}
-            href="https://simmmple.com/terms-of-service?ref=horizon-chakra-free"
+            href="https://eocean.net/terms-and-conditions/"
           >
             Terms of Use
           </Link>
@@ -99,7 +99,7 @@ export default function Footer() {
           <Link
             fontWeight="500"
             color={textColor}
-            href="https://www.blog.simmmple.com/?ref=horizon-chakra-free"
+            href="https://eocean.net/company/blogs/"
           >
             Blog
           </Link>

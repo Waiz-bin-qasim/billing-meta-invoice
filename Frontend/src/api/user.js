@@ -56,7 +56,6 @@ export const userPOST = async (
       headers: {
         token: getToken,
       },
-
       body: formData,
     });
     data = await response.json();
@@ -89,24 +88,18 @@ export const deleteUser = async (user) => {
 export const updateUser = async (username, Columns, Values) => {
   let data;
   try {
-    const concatenatedColumns = Columns.map((value) => `columns=${value}`).join(
-      "&&"
-    );
-    const concatenatedValues = Values.map((value) => `columns=${value}`).join(
-      "&&"
-    );
-    const response = await fetch(
-      config.url +
-        "adduser?" +
-        `username=${username}` +
-        "&&" +
-        concatenatedColumns +
-        "&&" +
-        concatenatedValues,
-      {
-        method: "PATCH",
-      }
-    );
+    const formdata = new FormData();
+    formdata.append("username", username);
+    Columns.forEach((element) => {
+      formdata.append("columns[]", element);
+    });
+    Values.forEach((element) => {
+      formdata.append("values[]", element);
+    });
+    const response = await fetch(config.url + "adduser", {
+      method: "PATCH",
+      body: formdata,
+    });
     data = await response.json();
     console.log(data);
   } catch (error) {

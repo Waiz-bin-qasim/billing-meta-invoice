@@ -18,7 +18,6 @@ export default function AdminNavbar(props) {
 
   useEffect(() => {
     window.addEventListener("scroll", changeNavbar);
-    // console.log(props);
     return () => {
       window.removeEventListener("scroll", changeNavbar);
     };
@@ -105,7 +104,7 @@ export default function AdminNavbar(props) {
           <Breadcrumb>
             <BreadcrumbItem color={secondaryText} fontSize="sm" mb="5px">
               <BreadcrumbLink href="#" color={secondaryText}>
-                Pages
+                {localStorage.getItem("roleName")}
               </BreadcrumbLink>
             </BreadcrumbItem>
 

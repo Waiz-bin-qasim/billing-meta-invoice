@@ -21,7 +21,6 @@ import {
 } from "react-table";
 import { DeleteIcon, DownloadIcon, EditIcon } from "@chakra-ui/icons";
 import Card from "components/card/Card";
-import Menu from "components/menu/MainMenu";
 import { MdCheckCircle, MdCancel, MdOutlineError } from "react-icons/md";
 import Modal from "../../users/components/modal.jsx";
 // import { getUsers } from "api/users.js";
@@ -29,7 +28,8 @@ import DeleteModal from "../../../../components/alert/deleteAlert.jsx";
 import { IoPersonAdd } from "react-icons/io5";
 
 export default function ColumnsTable(props) {
-  const [selectedRow, setSelectedRow] = useState(false);
+  const [selectedRow, setSelectedRow] = useState();
+  const [selectedRow2, setSelectedRow2] = useState();
   const [loading, setLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -154,39 +154,104 @@ export default function ColumnsTable(props) {
           <Tbody {...getTableBodyProps()}>
             {page.map((row, index1) => {
               prepareRow(row);
-              let count = 0;
               return (
                 <Tr {...row.getRowProps()} key={index1}>
                   {row.cells.map((cell, index) => {
-                    let data = "";
-                    if (cell.column.Header === "NAME") {
-                      data = (
-                        <Text color={textColor} fontSize="sm" fontWeight="700">
-                          {cell.value}
-                        </Text>
+                    if (cell.column.Header === "STATUS") {
+                      return (
+                        <Td
+                          {...cell.getCellProps()}
+                          key={index}
+                          fontSize={{ sm: "14px" }}
+                          minW={{ sm: "150px", md: "200px", lg: "auto" }}
+                          borderColor="transparent"
+                        >
+                          <Flex align="center">
+                            <Icon
+                              w="24px"
+                              h="24px"
+                              me="5px"
+                              color={
+                                cell.value === "Active"
+                                  ? "green.500"
+                                  : cell.value === "Inactive"
+                                  ? "red.500"
+                                  : null
+                              }
+                              as={
+                                cell.value === "Active"
+                                  ? MdCheckCircle
+                                  : cell.value === "Inactive"
+                                  ? MdCancel
+                                  : null
+                              }
+                            />
+                            <Text
+                              color={textColor}
+                              fontSize="sm"
+                              fontWeight="700"
+                            >
+                              {cell.value}
+                            </Text>
+                          </Flex>
+                        </Td>
                       );
-                    } else if (cell.column.Header === "STATUS") {
-                      data = (
-                        <Flex align="center">
-                          <Icon
-                            w="24px"
-                            h="24px"
-                            me="5px"
-                            color={
-                              cell.value === "Active"
-                                ? "green.500"
-                                : cell.value === "Inactive"
-                                ? "red.500"
-                                : null
-                            }
-                            as={
-                              cell.value === "Active"
-                                ? MdCheckCircle
-                                : cell.value === "Inactive"
-                                ? MdCancel
-                                : null
-                            }
-                          />
+                    } else if (cell.column.Header === "ACTIONS") {
+                      return (
+                        <Td
+                          {...cell.getCellProps()}
+                          key={index}
+                          fontSize={{ sm: "14px" }}
+                          minW={{ sm: "150px", md: "200px", lg: "auto" }}
+                          borderColor="transparent"
+                        >
+                          <Flex align="center">
+                            <Flex onClick={onOpen}>
+                              <EditIcon
+                                me="16px"
+                                h="18px"
+                                w="19px"
+                                color={textColor}
+                                onClick={() => {
+                                  setSelectedRow(row.values);
+                                }}
+                              />
+                              <Modal
+                                isOpen={isOpen}
+                                onClose={onClose}
+                                modalTitle={"Update User"}
+                                value={selectedRow}
+                              />
+                            </Flex>
+                            <Flex onClick={onOpen2}>
+                              <DeleteIcon
+                                me="16px"
+                                h="18px"
+                                w="19px"
+                                color={deleteColor}
+                                onClick={() =>
+                                  setSelectedRow2(row.values.email)
+                                }
+                              />
+                              <DeleteModal
+                                isOpen={isOpen2}
+                                onClose={onClose2}
+                                value={selectedRow2}
+                                tableName={"Users"}
+                              />
+                            </Flex>
+                          </Flex>
+                        </Td>
+                      );
+                    } else {
+                      return (
+                        <Td
+                          {...cell.getCellProps()}
+                          key={index}
+                          fontSize={{ sm: "14px" }}
+                          minW={{ sm: "150px", md: "200px", lg: "auto" }}
+                          borderColor="transparent"
+                        >
                           <Text
                             color={textColor}
                             fontSize="sm"
@@ -194,70 +259,9 @@ export default function ColumnsTable(props) {
                           >
                             {cell.value}
                           </Text>
-                        </Flex>
-                      );
-                    } else if (cell.column.Header === "EMAIL") {
-                      data = (
-                        <Text color={textColor} fontSize="sm" fontWeight="700">
-                          {cell.value}
-                        </Text>
-                      );
-                    } else if (cell.column.Header === "ROLE") {
-                      data = (
-                        <Text color={textColor} fontSize="sm" fontWeight="700">
-                          {cell.value}
-                        </Text>
-                      );
-                    } else if (cell.column.Header === "ACTIONS") {
-                      data = (
-                        <Flex align="center">
-                          <Flex onClick={onOpen}>
-                            <EditIcon
-                              me="16px"
-                              h="18px"
-                              w="19px"
-                              color={textColor}
-                              onClick={() => {
-                                setSelectedRow(row.values);
-                                console.log(selectedRow);
-                              }}
-                            />
-                            <Modal
-                              isOpen={isOpen}
-                              onClose={onClose}
-                              modalTitle={"Update User"}
-                              initialValues={selectedRow}
-                            />
-                          </Flex>
-                          <Flex onClick={onOpen2}>
-                            <DeleteIcon
-                              me="16px"
-                              h="18px"
-                              w="19px"
-                              color={deleteColor}
-                              onClick={() => setSelectedRow(row.values.email)}
-                            />
-                            <DeleteModal
-                              isOpen={isOpen2}
-                              onClose={onClose2}
-                              value={selectedRow}
-                              tableName={"Users"}
-                            />
-                          </Flex>
-                        </Flex>
+                        </Td>
                       );
                     }
-                    return (
-                      <Td
-                        {...cell.getCellProps()}
-                        key={index}
-                        fontSize={{ sm: "14px" }}
-                        minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                        borderColor="transparent"
-                      >
-                        {data}
-                      </Td>
-                    );
                   })}
                 </Tr>
               );
