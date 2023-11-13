@@ -11,6 +11,8 @@ import {
 import MiniStatistics from "components/card/MiniStatistics";
 import IconBox from "components/icons/IconBox";
 import React, { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   MdAttachMoney,
   MdBarChart,
@@ -34,7 +36,19 @@ export default function UserReports() {
   const [total, setTotal] = useState([]);
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
+  const showToast = (msg) =>{
   
+    toast.error(`${msg}`, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+      theme: "light",
+      });
+  }
   useEffect(async () => {
     try {
       const months = [
@@ -64,6 +78,7 @@ export default function UserReports() {
       setLoading(false);
     }catch (error) {
       console.log(error);
+      showToast(error.message)
       setError(error);
     }
   }, []);
@@ -187,6 +202,18 @@ export default function UserReports() {
           </SimpleGrid>
         </>
       )}
+      <ToastContainer
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+          />
     </Box>
   );
 }

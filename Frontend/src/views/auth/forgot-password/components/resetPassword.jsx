@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   Box,
   Button,
@@ -43,7 +45,19 @@ export default function ResetPassword({username}) {
   const handleClick = (e)=>{
     setShow(!show)
   }
-
+  const showToast = (msg) =>{
+  
+    toast.error(`${msg}`, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+      theme: "light",
+      });
+  }
   const handleResetPassword = async () => {
     let res;
     try {
@@ -52,10 +66,14 @@ export default function ResetPassword({username}) {
       console.log(res);
       setLoading(false);
       if(res.message == "success"){
-        console.log("abc")
        window.location.href = '/';
       }
-    } catch (error) {}
+      else{
+      throw {message:res.message};
+      }
+    } catch (error) {
+      showToast(error.message);
+    }
   };
 
   return (
@@ -176,6 +194,18 @@ export default function ResetPassword({username}) {
             </Button>
           </Flex>
         </FormControl>
+        <ToastContainer
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+          />
       </Flex>
     </Flex>
   );

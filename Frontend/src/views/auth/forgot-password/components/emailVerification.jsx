@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   Box,
   Button,
@@ -35,7 +37,19 @@ export default function EmailVerification({setStepOnePassed,username,setUsername
   );
   
   const [loading, setLoading] = useState(false)
-
+  const showToast = (msg) =>{
+  
+    toast.error(`${msg}`, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+      theme: "light",
+      });
+  }
   const handleEmailVerification =async()=>{
     let res;
     try {
@@ -48,9 +62,11 @@ export default function EmailVerification({setStepOnePassed,username,setUsername
         setUsername(username);
         console.log("haziq");
       }
-    
+      else{
+      throw {message:res.message};
+      }
     } catch (error) {
-      
+      showToast(error.message);
     }
   }
 
@@ -140,6 +156,18 @@ export default function EmailVerification({setStepOnePassed,username,setUsername
             </Flex>
  
           </FormControl>
+          <ToastContainer
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+          />
         </Flex>
       </Flex>
   )

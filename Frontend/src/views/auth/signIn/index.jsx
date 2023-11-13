@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // Chakra imports
 import {
   Box,
@@ -26,7 +28,7 @@ import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { login } from "api/login";
-import {toast}  from "react-toastify";
+
 
 
 
@@ -56,32 +58,33 @@ function SignIn() {
   // const toast = useToast()
   // const toastId = 'Error-toast'
 
-  // const showToast = (msg) =>{
-  //   console.log('waiz');
-  //   if(toast.isActive(toastId)){
-  //     console.log('waiz');
-  //     toast({
-  //       toastId,
-  //       title: `${msg} `,
-  //       status: error,
-  //       // isClosable: true,
-  //     })
-  //   }
-  // }
+  const showToast = (msg) =>{
+  
+    toast.error(`${msg}`, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+      theme: "light",
+      });
+  }
   const handleLogin = () => {
-    // (async()=>{
-    //   try {
-    //     setLoading(true);
-    //     const res = await login(username,password)        
-    //     setLoading(false);
-    //   } catch (error) {
-    //     setError(true)
-    //     showToast(error.message)
-    //     console.log(error)
-    //     setLoading(false);
-    //   }
-    // })()
-    toast("Wow so easy !");
+    (async()=>{
+      try {
+        setLoading(true);
+        const res = await login(username,password)        
+        setLoading(false);
+      } catch (error) {
+        setError(true)
+        showToast(error.message)
+        console.log(error)
+        setLoading(false);
+      }
+    })()
+    
   };
   const handleClick = (e)=>{
     setShow(!show)
@@ -240,6 +243,18 @@ function SignIn() {
               Sign In
             </Button>
           </FormControl>
+          <ToastContainer
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+          />
           {/* <Flex
             flexDirection='column'
             justifyContent='center'

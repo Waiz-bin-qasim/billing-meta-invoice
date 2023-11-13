@@ -188,7 +188,7 @@ def downloadcsv(user,permissions,role):
                 updatedtAt = updatedtAt.strftime('%B %d, %Y ')
                 print(updatedtAt)
                 createdAt = datetime.datetime.fromtimestamp(os.path.getctime("./excel/"+name))
-                createdAt = createdAt.strftime('%B %d, %Y ')
+                createdAt = "Haziq"
                 response.append([count+1,name.split('.')[0],createdAt,updatedtAt]) 
                 count +=1
             return jsonify(response)
@@ -255,7 +255,7 @@ def generateCsv(user,permissions,role):
                 file_path = getCsv.run(param1, param2)
                 g.file_path = file_path
                 # updateProgress(socketio,socketId,100)
-                return jsonify("File was Generated")
+                return jsonify({"message":"File was Generated",'status' : 200})
             else:
                 # updateProgress(socketio,socketId,40)
                 return jsonify(response),400
@@ -263,7 +263,7 @@ def generateCsv(user,permissions,role):
             return jsonify({"message":"Please provide both param1 and param2 as query parameters."}),400
     except Exception as e:
         print(f'Error during generating file: {e}')
-        return jsonify({'Error Ocurred': e}), 400 
+        return jsonify({'message':str(e)}), 400 
 
 @app.route('/getcsv', methods = ['GET'])
 @token_required
@@ -304,8 +304,7 @@ def getpdf(user,permissions,role):
             raise Exception("Please provide both param1 and param2")
         
     except Exception as e:
-        print("Error occured: ", {e})
-        return jsonify({"Error Occured " : e}), 400        
+        return jsonify({"message" : str(e)}), 400        
 
 
 
@@ -768,7 +767,8 @@ def DeleteMau(user,permissions,role):
 
         param1 = request.args.get('param1')
         param2 = request.args.get('param2')
-
+        print(param1)
+        print(param2)
         if param1 and param2: 
 
             file_path = "billingMAUFiles/"+param1+param2+".xlsx"
@@ -777,11 +777,14 @@ def DeleteMau(user,permissions,role):
             if os.path.exists(file_path):
 
                 #deleting from Database
-                DeleteBillingMAU(param1,param1)
-
-                os.remove(file_path)
-                print(f"File '{file_path}' has been deleted")
-                return jsonify({'message': 'File deleted successfully'}),200
+                response = DeleteBillingMAU(param1,param1)
+                
+                if(response==1):
+                    os.remove(file_path)
+                    print(f"File '{file_path}' has been deleted")
+                    return jsonify({'message': 'File deleted successfully','status' : 200}),200
+                else:
+                    return jsonify({'message': 'Error Deleting The file','status' : 400}),200
             else:
                 print(f"File '{file_path}' does not exist")
                 raise Exception(f"File '{file_path}' does not exist")
@@ -791,7 +794,7 @@ def DeleteMau(user,permissions,role):
 
     except Exception as ex: 
         print(ex)
-        return jsonify({'Error Ocurred' : str(ex)}), 500
+        return jsonify({'message' : str(ex)}), 400
 
 
 
