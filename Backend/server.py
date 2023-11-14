@@ -126,7 +126,7 @@ def upload(user,permissions,role):
                 response = dataHandler.run(sql_values,parserChoice,user)
                 # updateProgress(socketio,"ascsac",90)
                 if response['message'] == 'failed':
-                    return jsonify(response),400
+                    raise Exception("File cannot be Uploaded")
     
                 # place after parsing is confirmed
                 if parserChoice == '0':
@@ -141,7 +141,7 @@ def upload(user,permissions,role):
                     file_path = f'./metaInvoiceFiles/{invoice_month}{invoice_year}'
                     shutil.copy(fileName, file_path)
 
-                return jsonify(response),200
+                return jsonify({'message': 'File Uploaded Successfully'}),200
             else:
                 # updateProgress(socketio,"ascsac",90)
                 return jsonify({'message': 'Meta Invoice Already Exists'}), 400
@@ -150,7 +150,7 @@ def upload(user,permissions,role):
             return jsonify(data)
     except Exception as ex:
         print(f'Error during file upload: {ex}')
-        return jsonify({'message': 'An error occurred during file upload.'}), 400
+        return jsonify({'message': str(ex)}), 400
 
 
 #for making token
@@ -226,7 +226,7 @@ def mau(user,permissions,role):
                 return jsonify(response)
             else:
                 # updateProgress(socketio,"a",80)
-                return jsonify({'error': 'Bad Request'}), 400
+                return jsonify({'message': 'Bad Request'}), 400
             
          else:
              data = getAllMau()
@@ -234,7 +234,7 @@ def mau(user,permissions,role):
     except Exception as ex:
      print(ex)
      print(f'Error during upload: {ex}')
-     return jsonify({'Error Ocurred' : ex}), 400
+     return jsonify({'message' : ex}), 400
 
 
 @app.route('/generatecsv',methods = ['POST'])
@@ -372,7 +372,7 @@ def financeUpload(user,permissions,role):
     except Exception as ex:
      print(ex)
      print(f'Error during upload: {ex}')
-     return jsonify({'Error Occured' : ex}), 400
+     return jsonify({'message' : ex}), 400
     
 
 
