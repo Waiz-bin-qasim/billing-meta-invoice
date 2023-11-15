@@ -31,7 +31,8 @@ def parseMAUFile(user):
             close_connection(cursor, connection)
             # updateProgress(socketio,"a",80)
             response = {
-                'message': 'success'
+                'message': 'success',
+                'status': 200
             }
         else:
             response = {

@@ -126,7 +126,7 @@ def upload(user,permissions,role):
                 response = dataHandler.run(sql_values,parserChoice,user)
                 # updateProgress(socketio,"ascsac",90)
                 if response['message'] == 'failed':
-                    return jsonify(response),400
+                    raise Exception("File cannot be Uploaded")
     
                 # place after parsing is confirmed
                 if parserChoice == '0':
@@ -141,7 +141,7 @@ def upload(user,permissions,role):
                     file_path = f'./metaInvoiceFiles/{invoice_month}{invoice_year}'
                     shutil.copy(fileName, file_path)
 
-                return jsonify(response),200
+                return jsonify({'message': 'File Uploaded Successfully','status':200}),200
             else:
                 # updateProgress(socketio,"ascsac",90)
                 return jsonify({'message': 'Meta Invoice Already Exists'}), 400
@@ -150,7 +150,7 @@ def upload(user,permissions,role):
             return jsonify(data)
     except Exception as ex:
         print(f'Error during file upload: {ex}')
-        return jsonify({'message': 'An error occurred during file upload.'}), 400
+        return jsonify({'message': str(ex)}), 400
 
 
 #for making token
@@ -184,12 +184,11 @@ def downloadcsv(user,permissions,role):
             response = []
             count = 0
             for name in fileName:
-                updatedtAt = datetime.datetime.fromtimestamp(os.path.getmtime("./excel/"+name))
-                updatedtAt = updatedtAt.strftime('%B %d, %Y ')
-                print(updatedtAt)
-                createdAt = datetime.datetime.fromtimestamp(os.path.getctime("./excel/"+name))
-                createdAt = "Haziq"
-                response.append([count+1,name.split('.')[0],createdAt,updatedtAt]) 
+                createdAt = datetime.datetime.fromtimestamp(os.path.getmtime("./excel/"+name))
+                createdAt = createdAt.strftime('%B %d, %Y ')
+
+                createdBy= user
+                response.append([count+1,name.split('.')[0],createdBy,createdAt]) 
                 count +=1
             return jsonify(response)
     except Exception as ex:
@@ -227,7 +226,7 @@ def mau(user,permissions,role):
                 return jsonify(response)
             else:
                 # updateProgress(socketio,"a",80)
-                return jsonify({'error': 'Bad Request'}), 400
+                return jsonify({'message': 'Bad Request'}), 400
             
          else:
              data = getAllMau()
@@ -235,7 +234,7 @@ def mau(user,permissions,role):
     except Exception as ex:
      print(ex)
      print(f'Error during upload: {ex}')
-     return jsonify({'Error Ocurred' : ex}), 400
+     return jsonify({'message' : ex}), 400
 
 
 @app.route('/generatecsv',methods = ['POST'])
@@ -361,7 +360,7 @@ def financeUpload(user,permissions,role):
             # storing it in folder
             file_path = f'./financeReportFiles/{month}{year}.xlsx'
             shutil.copy(fileName, file_path)
-            return jsonify({'message': 'File uploaded successfully'}),200
+            return jsonify({'message': 'File uploaded successfully','status' : 200}),200
         else:
             param1 = request.args.get('param1')
             param2 = request.args.get('param2')
@@ -374,7 +373,7 @@ def financeUpload(user,permissions,role):
     except Exception as ex:
      print(ex)
      print(f'Error during upload: {ex}')
-     return jsonify({'Error Occured' : ex}), 400
+     return jsonify({'message' : ex}), 400
     
 
 
@@ -679,7 +678,7 @@ def DeleteFinace(user,permissions,role):
 
                 os.remove(file_path)
                 print(f"File '{file_path}' has been deleted")
-                return jsonify({'message': 'File deleted successfully'}),200
+                return jsonify({'message': 'File deleted successfully','status':200}),200
             else:
                 print(f"File '{file_path}' does not exist")
                 raise Exception(f"File '{file_path}' does not exist")
@@ -711,7 +710,7 @@ def DeleteReports(user,permissions,role):
 
                 os.remove(file_path)
                 print(f"File '{file_path}' has been deleted")
-                return jsonify({'message': 'File deleted successfully'}),200
+                return jsonify({'message': 'File deleted successfully','status':200}),200
             else:
                 print(f"File '{file_path}' does not exist")
                 raise Exception(f"File '{file_path}' does not exist")
@@ -746,7 +745,7 @@ def DeleteMetaInvoices(user,permissions,role):
 
                 os.remove(file_path)
                 print(f"File '{file_path}' has been deleted")
-                return jsonify({'message': 'File deleted successfully'}),200
+                return jsonify({'message': 'File deleted successfully','status' :200}),200
             else:
                 print(f"File '{file_path}' does not exist")
                 raise Exception(f"File '{file_path}' does not exist")

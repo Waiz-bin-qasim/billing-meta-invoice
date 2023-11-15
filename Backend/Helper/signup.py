@@ -35,6 +35,7 @@ def addUser(firstName, lastName, email, password,roleId):
         connection.commit()
         return  {
         'message': 'user added',
+        'status':200
         },200
     except Exception as ex:
         print(ex)
@@ -51,7 +52,8 @@ def delUser(user):
         cursor.execute(queryDelete,(user))
         connection.commit()
         return{
-            'message':'user deleted'
+            'message':'user deleted',
+            'status':200
         }
     except Exception as ex:
         print(ex)

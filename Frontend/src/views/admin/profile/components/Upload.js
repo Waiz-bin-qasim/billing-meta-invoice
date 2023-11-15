@@ -12,6 +12,8 @@ import {
 import { MAUPOST } from "api/MAU";
 import { financeReportsPOST } from "api/financeReports";
 import { metaInvoicePOST } from "api/metaInvoice";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // Custom components
 import Card from "components/card/Card.js";
 import IconBox from "components/icons/IconBox";
@@ -30,7 +32,32 @@ export default function Upload(props) {
   const brandColor = useColorModeValue("brand.500", "white");
   const textColorSecondary = "gray.400";
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
-
+  const showToastError = (msg) =>{
+  
+    toast.error(`${msg}`, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+      theme: "light",
+      });
+  }
+  const showToastSuccess = (msg) =>{
+  
+    toast.success(`${msg}`, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+      theme: "light",
+      });
+  }
   const handleImageUpload = async () => {
     let response;
     try {
@@ -43,11 +70,22 @@ export default function Upload(props) {
         } else if (tablename === "Finance Reports") {
           response = await financeReportsPOST(image.image);
         }
+        console.log(response);
+        if(response.status!=200){
+          throw{message:response.message};
+        }
+        else{
+          showToastSuccess(response.message);
+        }
         setLoading(false);
       }
+    else{
+      showToastError("File not Selected");
+    }
     } catch (error) {
       console.log(error);
       setLoading(false);
+      showToastError(error.message);
     }
   };
   return (
@@ -111,6 +149,18 @@ export default function Upload(props) {
               Upload Now
             </Button>
           </Flex>
+          <ToastContainer
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+          />
         </Flex>
       </Flex>
     </Card>
