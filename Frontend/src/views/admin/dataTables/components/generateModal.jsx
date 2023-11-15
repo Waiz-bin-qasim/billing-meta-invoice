@@ -51,6 +51,7 @@ export default function InitialFocus({ isOpen, onClose }) {
       setLoading(false);
       if (res.status == 200) {
         showToastSuccess(res.message);
+        onClose(true);
       } else {
         throw { message: res.message };
       }

@@ -24,7 +24,7 @@ import { MdUpload } from "react-icons/md";
 import Dropzone from "views/admin/profile/components/Dropzone";
 
 export default function Upload(props) {
-  const { used, total, tablename, ...rest } = props;
+  const { used, total, tablename,onClose, ...rest } = props;
   const [image, setImage] = useState();
   const [loading, setLoading] = useState(false);
   // Chakra Color Mode
@@ -76,6 +76,7 @@ export default function Upload(props) {
         }
         else{
           showToastSuccess(response.message);
+          onClose(true);
         }
         setLoading(false);
       }

@@ -76,12 +76,13 @@ def displayTotalPKR(month,year):
         worksheet = workbook['Sheet']
 
         count = 0
-        for row in worksheet.iter_rows(min_row=1, max_row=worksheet.max_row, min_col=1, max_col=6):
-            if row[0].value and 'estimated total' in str(row[0].value).lower():
-                count = count + 1
-                # second estimated total is always PKR
-                if count == 2: 
-                    return (row[5].value)
+        if os.path.exists(file_path):
+            for row in worksheet.iter_rows(min_row=1, max_row=worksheet.max_row, min_col=1, max_col=6):
+                if row[0].value and 'estimated total' in str(row[0].value).lower():
+                    count = count + 1
+                    # second estimated total is always PKR
+                    if count == 2: 
+                        return (row[5].value)
 
 
         workbook.close()
