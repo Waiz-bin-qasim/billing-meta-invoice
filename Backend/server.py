@@ -141,7 +141,7 @@ def upload(user,permissions,role):
                     file_path = f'./metaInvoiceFiles/{invoice_month}{invoice_year}'
                     shutil.copy(fileName, file_path)
 
-                return jsonify({'message': 'File Uploaded Successfully'}),200
+                return jsonify({'message': 'File Uploaded Successfully','status':200}),200
             else:
                 # updateProgress(socketio,"ascsac",90)
                 return jsonify({'message': 'Meta Invoice Already Exists'}), 400
@@ -359,7 +359,7 @@ def financeUpload(user,permissions,role):
             # storing it in folder
             file_path = f'./financeReportFiles/{month}{year}.xlsx'
             shutil.copy(fileName, file_path)
-            return jsonify({'message': 'File uploaded successfully'}),200
+            return jsonify({'message': 'File uploaded successfully','status' : 200}),200
         else:
             param1 = request.args.get('param1')
             param2 = request.args.get('param2')
@@ -677,7 +677,7 @@ def DeleteFinace(user,permissions,role):
 
                 os.remove(file_path)
                 print(f"File '{file_path}' has been deleted")
-                return jsonify({'message': 'File deleted successfully'}),200
+                return jsonify({'message': 'File deleted successfully','status':200}),200
             else:
                 print(f"File '{file_path}' does not exist")
                 raise Exception(f"File '{file_path}' does not exist")
@@ -709,7 +709,7 @@ def DeleteReports(user,permissions,role):
 
                 os.remove(file_path)
                 print(f"File '{file_path}' has been deleted")
-                return jsonify({'message': 'File deleted successfully'}),200
+                return jsonify({'message': 'File deleted successfully','status':200}),200
             else:
                 print(f"File '{file_path}' does not exist")
                 raise Exception(f"File '{file_path}' does not exist")
@@ -744,7 +744,7 @@ def DeleteMetaInvoices(user,permissions,role):
 
                 os.remove(file_path)
                 print(f"File '{file_path}' has been deleted")
-                return jsonify({'message': 'File deleted successfully'}),200
+                return jsonify({'message': 'File deleted successfully','status' :200}),200
             else:
                 print(f"File '{file_path}' does not exist")
                 raise Exception(f"File '{file_path}' does not exist")
