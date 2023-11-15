@@ -8,15 +8,14 @@ import { metaInvoiceGet } from "api/metaInvoice";
 import { MAUGet } from "api/MAU";
 import { reportsGet } from "api/reports";
 import { financeReportsGet } from "api/financeReports";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Settings({ metaData }) {
   // Chakra Color Mode
   const [loading, setLoading] = useState(false);
   const [tableData, setTableData] = useState([]);
-  const showToast = (msg) =>{
-  
+  const showToast = (msg) => {
     toast.error(`${msg}`, {
       position: "top-center",
       autoClose: 5000,
@@ -26,8 +25,8 @@ export default function Settings({ metaData }) {
       draggable: true,
       progress: 0,
       theme: "light",
-      });
-  }
+    });
+  };
   useEffect(async () => {
     let response;
     try {
@@ -56,14 +55,12 @@ export default function Settings({ metaData }) {
         obj.actions = each[1];
         data.push(obj);
       }
-      
+
       setTableData(data);
       setLoading(false);
-    // }
-    
-      
+      // }
     } catch (error) {
-      showToast(error.message)
+      showToast(error.message);
       console.log("error");
       console.log(error);
       setLoading(false);
@@ -102,18 +99,18 @@ export default function Settings({ metaData }) {
           >
             waiz
           </Button> */}
-          <ToastContainer
-              position="top-center"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-          />
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </Box>
     </>
   );

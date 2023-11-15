@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // Chakra imports
 import {
   Box,
@@ -29,10 +29,6 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { login } from "api/login";
 
-
-
-
-
 function SignIn() {
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
@@ -58,8 +54,11 @@ function SignIn() {
   // const toast = useToast()
   // const toastId = 'Error-toast'
 
-  const showToast = (msg) =>{
-  
+  const handleClick = () => {
+    setPassword(!password);
+  };
+
+  const showToast = (msg) => {
     toast.error(`${msg}`, {
       position: "top-center",
       autoClose: 5000,
@@ -69,22 +68,21 @@ function SignIn() {
       draggable: true,
       progress: 0,
       theme: "light",
-      });
-  }
+    });
+  };
   const handleLogin = () => {
-    (async()=>{
+    (async () => {
       try {
         setLoading(true);
-        const res = await login(username,password)        
+        const res = await login(username, password);
         setLoading(false);
       } catch (error) {
-        setError(true)
-        showToast(error.message)
-        console.log(error)
+        setError(true);
+        showToast(error.message);
+        console.log(error);
         setLoading(false);
       }
-    })()
-    
+    })();
   };
 
   return (
@@ -245,16 +243,16 @@ function SignIn() {
             </Button>
           </FormControl>
           <ToastContainer
-              position="top-center"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
           />
           {/* <Flex
             flexDirection='column'

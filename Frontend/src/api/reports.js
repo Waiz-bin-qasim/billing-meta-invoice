@@ -112,7 +112,6 @@ export const reportsDelete = async (filename) => {
 export const generateReport = async (val) => {
   let response;
   try {
-    console.log(val);
     const [year, month] = parseDate(val);
     const url = config.url + `generatecsv?param1=${month}&&param2=${year}`;
     const fetchOptions = {
@@ -122,13 +121,14 @@ export const generateReport = async (val) => {
       },
     };
     response = await fetch(url, fetchOptions);
-    console.log(response);
+    const data = await response.json();
     if (response.ok) {
-      return response.json;
+      return data;
+    } else if (data.message) {
+      throw data;
     }
-    throw "an error occured";
+    throw { message: "an error occured" };
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };

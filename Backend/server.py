@@ -258,6 +258,7 @@ def generateCsv(user,permissions,role):
                 return jsonify({"message":"File was Generated",'status' : 200})
             else:
                 # updateProgress(socketio,socketId,40)
+                print(response)
                 return jsonify(response),400
         else:
             return jsonify({"message":"Please provide both param1 and param2 as query parameters."}),400

@@ -14,13 +14,12 @@ import { metaINvoiceDelete } from "api/metaInvoice";
 import { reportsDelete } from "api/reports";
 import { deleteUser } from "api/user";
 import { useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function DeleteAlert({ isOpen, onClose, tableName, value }) {
   const [loading, setLoading] = useState(false);
-  const showToastError = (msg) =>{
-  
+  const showToastError = (msg) => {
     toast.error(`${msg}`, {
       position: "top-center",
       autoClose: 5000,
@@ -30,10 +29,9 @@ export default function DeleteAlert({ isOpen, onClose, tableName, value }) {
       draggable: true,
       progress: 0,
       theme: "light",
-      });
-  }
-  const showToastSuccess = (msg) =>{
-  
+    });
+  };
+  const showToastSuccess = (msg) => {
     toast.success(`${msg}`, {
       position: "top-center",
       autoClose: 5000,
@@ -43,8 +41,8 @@ export default function DeleteAlert({ isOpen, onClose, tableName, value }) {
       draggable: true,
       progress: 0,
       theme: "light",
-      });
-  }
+    });
+  };
   const handleUserDelete = async () => {
     let response;
     try {
@@ -63,13 +61,14 @@ export default function DeleteAlert({ isOpen, onClose, tableName, value }) {
       }
       setLoading(false);
       console.log(response);
-      if(response.status!=200){
-        throw{message:response.message};
+      if (response.status != 200) {
+        throw { message: response.message };
       }
       showToastSuccess(response.message);
     } catch (error) {
       showToastError(error.message);
     }
+    onClose(true);
   };
   return (
     <>
@@ -105,7 +104,7 @@ export default function DeleteAlert({ isOpen, onClose, tableName, value }) {
               draggable
               pauseOnHover
               theme="light"
-          />
+            />
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

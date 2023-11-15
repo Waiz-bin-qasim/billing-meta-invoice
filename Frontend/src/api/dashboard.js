@@ -4,7 +4,7 @@ export const getDashboard = async (month, year) => {
   let data;
   try {
     const response = await fetch(
-      config.url + "displaydashboard?" + `month=${"Oct"}&&year=${year}`,
+      config.url + "displaydashboard?" + `month=${"Sep"}&&year=${year}`,
       {
         method: "GET",
         headers: {

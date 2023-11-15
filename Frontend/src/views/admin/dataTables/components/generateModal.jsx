@@ -14,13 +14,12 @@ import {
 } from "@chakra-ui/react";
 import { generateReport } from "api/reports";
 import { useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function InitialFocus({ isOpen, onClose }) {
   // const { isOpen, onOpen, onClose } = useDisclosure()
   const [date, setDate] = useState("");
-  const showToastError = (msg) =>{
-  
+  const showToastError = (msg) => {
     toast.error(`${msg}`, {
       position: "top-center",
       autoClose: 5000,
@@ -30,10 +29,9 @@ export default function InitialFocus({ isOpen, onClose }) {
       draggable: true,
       progress: 0,
       theme: "light",
-      });
-  }
-  const showToastSuccess = (msg) =>{
-  
+    });
+  };
+  const showToastSuccess = (msg) => {
     toast.success(`${msg}`, {
       position: "top-center",
       autoClose: 5000,
@@ -43,25 +41,23 @@ export default function InitialFocus({ isOpen, onClose }) {
       draggable: true,
       progress: 0,
       theme: "light",
-      });
-  }
+    });
+  };
   const handleGenerate = async () => {
     let res;
     try {
       setLoading(true);
       res = await generateReport(date);
       setLoading(false);
-      console.log(res);
-      if(res.status==200){
-      showToastSuccess(res.message);
-      }
-      else{
-        throw{message:res.message}
+      if (res.status == 200) {
+        showToastSuccess(res.message);
+      } else {
+        throw { message: res.message };
       }
     } catch (error) {
       console.log(error);
       setLoading(false);
-      showToastError(error.message)
+      showToastError(error.message);
     }
   };
 
@@ -100,18 +96,6 @@ export default function InitialFocus({ isOpen, onClose }) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <ToastContainer
-              position="top-center"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-          />
     </>
   );
 }

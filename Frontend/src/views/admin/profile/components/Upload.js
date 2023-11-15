@@ -41,7 +41,7 @@ export default function Upload(props) {
         } else if (tablename === "Monthly Active Users") {
           response = await MAUPOST(image.image);
         } else if (tablename === "Finance Reports") {
-          response = financeReportsPOST(image.image);
+          response = await financeReportsPOST(image.image);
         }
         setLoading(false);
       }
