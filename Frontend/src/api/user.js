@@ -90,18 +90,46 @@ export const updateUser = async (username, Columns, Values) => {
   try {
     const formdata = new FormData();
     formdata.append("username", username);
-    Columns.forEach((element) => {
-      formdata.append("columns[]", element);
+    Columns.forEach((element, index) => {
+      if (Values[index] == undefined || Values[index] === "") {
+        console.log(element);
+      } else {
+        formdata.append("columns[]", element);
+      }
     });
     Values.forEach((element) => {
-      formdata.append("values[]", element);
+      if (element == undefined || element === "") {
+      } else {
+        formdata.append("values[]", element);
+      }
     });
+    console.log(Columns, Values);
     const response = await fetch(config.url + "adduser", {
       method: "PATCH",
+      headers: {
+        token: getToken,
+      },
       body: formdata,
     });
     data = await response.json();
     console.log(data);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+  return data;
+};
+
+export const getOneUser = async (email) => {
+  let data;
+  try {
+    const response = await fetch(config.url + "user/" + email, {
+      method: "GET",
+      headers: {
+        token: getToken,
+      },
+    });
+    data = await response.json();
   } catch (error) {
     console.log(error);
     throw error;
