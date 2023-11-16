@@ -342,7 +342,7 @@ def getcsv(user, permissions, role):
             )
     except Exception as e:
         print(f"Error during file download: {e}")
-        return jsonify({"Error Ocurred": e}), 400
+        return jsonify({'Error Ocurred' : e}), 400 
 
 
 @app.route("/getpdf", methods=["GET"])
@@ -724,10 +724,11 @@ def addUserData(user, permissions, role):
 
     except Exception as ex:
         print(ex)
-        return jsonify({"error in user module": str(ex)}), 400
+        return jsonify({'error in user module': str(ex)}),400    
+    
+    
 
-
-@app.route("/finance/reports", methods=["get"])
+@app.route('/finance/reports',methods = ['get'])
 @token_required
 def FinanceReport(user, permissions, role):
     try:

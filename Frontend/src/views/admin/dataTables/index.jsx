@@ -52,7 +52,7 @@ export default function Settings({ metaData }) {
           obj.name = each[1];
         }
         obj["created by"] = each[2];
-        obj["created on"] = each[3];
+        obj["created on"] = new Date(each[3]).toDateString();
         obj.actions = each[1];
         data.push(obj);
       }

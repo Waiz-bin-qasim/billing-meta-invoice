@@ -4,6 +4,9 @@ import os
 import PyPDF2
 from datetime import datetime, timedelta
 
+def get_previous_month(month, year):
+    # Convert input month and year to a datetime object
+    current_month = datetime.strptime(f"{year}-{month}-01", "%Y-%m-%d")
 
 def displayTotalClients(month, year):
     try:
