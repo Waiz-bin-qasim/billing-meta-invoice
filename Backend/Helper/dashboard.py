@@ -2,8 +2,43 @@ from Config.dbConfig import establish_connection, close_connection
 import openpyxl
 import os
 import PyPDF2
+from datetime import datetime, timedelta
 
+def get_previous_month(month, year):
+    # Convert input month and year to a datetime object
+    current_month = datetime.strptime(f"{year}-{month}-01", "%Y-%m-%d")
 
+    # Calculate the first day of the previous month
+    previous_month = current_month - timedelta(days=current_month.day)
+
+    # Extract the year and month from the result
+    previous_year = previous_month.year
+    previous_month = previous_month.month
+
+    return previous_month, previous_year
+
+def data_available(month, year):
+    # List of folders where data files may be stored
+    data_directories = ["billingMAUFiles", "financeReportFiles", "excel"]
+
+    # Construct the filename based on the month and year
+    filename = f"{month}{year}.xlsx"
+
+    # Check if the file exists in any of the data directories
+    for data_directory in data_directories:
+        file_path = os.path.join(data_directory, filename)
+        if os.path.exists(file_path):
+            continue
+        else:
+            return False
+    
+    folder = "metaInvoiceFiles"
+    filename = f"{month}{year}.pdf"
+    file_path = os.path.join(folder, filename)
+    if(os.path.exists(file_path)):
+        return True
+    else:
+        return False
 
 
 def displayTotalClients(month,year):

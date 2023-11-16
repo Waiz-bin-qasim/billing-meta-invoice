@@ -37,12 +37,12 @@ def addUser(firstName, lastName, email, password, roleId):
             queryAddUser, (email, encryptedPassword, firstName, lastName, roleId)
         )
         connection.commit()
-        return {"message": "user added", "status": 200}, 200
+        return {"message": "User Added","status":200}
     except Exception as ex:
         print(ex)
         return {
-            "message": str(ex),
-        }, 400
+            "message": str(ex),"status":400
+        }
 
 
 def delUser(user):

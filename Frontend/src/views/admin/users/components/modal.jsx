@@ -39,6 +39,16 @@ export default function InitialFocus({
   const [error, setError] = useState([]);
   const [roleLoading, setRoleLoading] = useState(false);
   
+  
+  const [options, setOptions] = useState([]);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    roleId: "",
+    status: status,
+  });
   const showToastError = (msg) => {
     toast.error(`${msg}`, {
       position: "top-center",

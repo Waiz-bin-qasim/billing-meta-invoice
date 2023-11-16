@@ -44,6 +44,8 @@ from Helper.dashboard import (
     displayTotalPKR,
     displayWhatsappAmount,
     displayBarChart,
+    data_available,
+    get_previous_month
 )
 from flask_mail import Mail, Message
 import secrets
@@ -473,6 +475,11 @@ def displayDashboard(user, permissions, role):
             return jsonify({"message": "Permission Not Given"}), 400
         month = request.args.get("month")
         year = request.args.get("year")
+        
+        if not data_available(month, year):
+            month, year = get_previous_month(month, year)
+            
+            
         data1 = displayTotalUSD(month, year)
 
         data2 = displayTotalPKR(month, year)
@@ -683,11 +690,11 @@ def addUserData(user, permissions, role):
             userEmail = userData["email"]
             userPassword = userData["password"]
             userRoleId = userData["roleId"]
-            response, code = addUser(
+            response = addUser(
                 userFirstName, userLastName, userEmail, userPassword, userRoleId
             )
 
-            return jsonify(response), code
+            return jsonify(response)
         elif request.method == "DELETE":
             user = request.args.get("user")
             response = delUser(user)
@@ -702,9 +709,9 @@ def addUserData(user, permissions, role):
             # columns = request.args.get['username']
             # values = request.args.get['values']
             if len(columns) != len(values):
-                return jsonify({'error': 'Number of columns and values must match'}),400
+                return jsonify({'message': 'Number of columns and values must match'}),400
             updateUser(username,columns,values)
-            return jsonify({'message': 'Update successful'})
+            return jsonify({'message': 'Update successful','status':200})
         else:
             data = displayUsers()
             return jsonify(data)
