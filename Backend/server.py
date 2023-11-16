@@ -281,7 +281,7 @@ def getcsv(user,permissions,role):
             raise Exception("Please provide both param1 and param2 as query parameters.")
     except Exception as e:
         print(f"Error during file download: {e}")
-        return jsonify({'Error Ocurred' : e}), 400 
+        return jsonify({'message' : e}), 400 
 
 
 
@@ -618,7 +618,7 @@ def addUserData(user,permissions,role):
             # columns = request.args.get['username']
             # values = request.args.get['values']
             if len(columns) != len(values):
-                return jsonify({'error': 'Number of columns and values must match'}),400
+                return jsonify({'message': 'Number of columns and values must match'}),400
             updateUser(username,columns,values)
             return jsonify({'message': 'Update successful'})
         else:
@@ -627,7 +627,7 @@ def addUserData(user,permissions,role):
             
     except Exception as ex:
         print(ex)
-        return jsonify({'error in user module': str(ex)}),400    
+        return jsonify({'message': str(ex)}),400    
     
     
 
@@ -687,7 +687,7 @@ def DeleteFinace(user,permissions,role):
 
     except Exception as ex: 
         print(ex)
-        return jsonify({'Error Ocurred' : str(ex)}), 500  
+        return jsonify({'message' : str(ex)}), 500  
     
 
 @app.route('/reports', methods = ['delete'])
@@ -719,7 +719,7 @@ def DeleteReports(user,permissions,role):
 
     except Exception as ex: 
         print(ex)
-        return jsonify({'Error Ocurred' : str(ex)}), 500  
+        return jsonify({'message' : str(ex)}), 500  
 
 
 @app.route('/meta', methods = ['delete'])

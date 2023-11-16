@@ -25,6 +25,30 @@ export default function InitialFocus({ isOpen, onClose, modalTitle, value }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState([]);
   const [roleLoading, setRoleLoading] = useState(false);
+  const showToastError = (msg) => {
+    toast.error(`${msg}`, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+      theme: "light",
+    });
+  };
+  const showToastSuccess = (msg) => {
+    toast.success(`${msg}`, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+      theme: "light",
+    });
+  };
   const [formData, setFormData] = useState(() => {
     console.log(value);
     if (value) {
