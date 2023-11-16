@@ -16,7 +16,7 @@ import { generateReport } from "api/reports";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-export default function InitialFocus({ isOpen, onClose }) {
+export default function InitialFocus({ isOpen, onClose, getTableData }) {
   // const { isOpen, onOpen, onClose } = useDisclosure()
   const [date, setDate] = useState("");
   const showToastError = (msg) => {
@@ -52,6 +52,7 @@ export default function InitialFocus({ isOpen, onClose }) {
       if (res.status == 200) {
         showToastSuccess(res.message);
         onClose(true);
+        await getTableData();
       } else {
         throw { message: res.message };
       }

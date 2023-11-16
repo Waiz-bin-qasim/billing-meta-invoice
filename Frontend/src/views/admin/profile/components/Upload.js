@@ -12,8 +12,8 @@ import {
 import { MAUPOST } from "api/MAU";
 import { financeReportsPOST } from "api/financeReports";
 import { metaInvoicePOST } from "api/metaInvoice";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // Custom components
 import Card from "components/card/Card.js";
 import IconBox from "components/icons/IconBox";
@@ -24,7 +24,7 @@ import { MdUpload } from "react-icons/md";
 import Dropzone from "views/admin/profile/components/Dropzone";
 
 export default function Upload(props) {
-  const { used, total, tablename,onClose, ...rest } = props;
+  const { used, total, tablename, onClose, getTableData, ...rest } = props;
   const [image, setImage] = useState();
   const [loading, setLoading] = useState(false);
   // Chakra Color Mode
@@ -32,8 +32,7 @@ export default function Upload(props) {
   const brandColor = useColorModeValue("brand.500", "white");
   const textColorSecondary = "gray.400";
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
-  const showToastError = (msg) =>{
-  
+  const showToastError = (msg) => {
     toast.error(`${msg}`, {
       position: "top-center",
       autoClose: 5000,
@@ -43,10 +42,9 @@ export default function Upload(props) {
       draggable: true,
       progress: 0,
       theme: "light",
-      });
-  }
-  const showToastSuccess = (msg) =>{
-  
+    });
+  };
+  const showToastSuccess = (msg) => {
     toast.success(`${msg}`, {
       position: "top-center",
       autoClose: 5000,
@@ -56,8 +54,8 @@ export default function Upload(props) {
       draggable: true,
       progress: 0,
       theme: "light",
-      });
-  }
+    });
+  };
   const handleImageUpload = async () => {
     let response;
     try {
@@ -71,18 +69,17 @@ export default function Upload(props) {
           response = await financeReportsPOST(image.image);
         }
         console.log(response);
-        if(response.status!=200){
-          throw{message:response.message};
-        }
-        else{
+        if (response.status != 200) {
+          throw { message: response.message };
+        } else {
           showToastSuccess(response.message);
           onClose(true);
+          await getTableData();
         }
         setLoading(false);
+      } else {
+        showToastError("File not Selected");
       }
-    else{
-      showToastError("File not Selected");
-    }
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -151,16 +148,16 @@ export default function Upload(props) {
             </Button>
           </Flex>
           <ToastContainer
-              position="top-center"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
           />
         </Flex>
       </Flex>

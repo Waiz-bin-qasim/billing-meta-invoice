@@ -17,7 +17,12 @@ import Upload from "views/admin/profile/components/Upload";
 
 // const [first, setfirst] = useState(second)
 
-export default function UploadMenu({ isOpen, onClose, tablename }) {
+export default function UploadMenu({
+  isOpen,
+  onClose,
+  tablename,
+  getTableData,
+}) {
   // const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
@@ -40,7 +45,8 @@ export default function UploadMenu({ isOpen, onClose, tablename }) {
                   pe="20px"
                   pb={{ base: "100px", lg: "20px" }}
                   tablename={tablename}
-                  onClose = {onClose}
+                  onClose={onClose}
+                  getTableData={getTableData}
                 />
               </Grid>
             </Box>

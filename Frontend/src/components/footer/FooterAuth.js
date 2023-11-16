@@ -50,12 +50,13 @@ export default function Footer() {
           </Link> */}
         </Text>
       </Text>
-      <List display="flex">
+      {/* <List display="flex" style={{ color: "#363a77" }}>
         <ListItem
           me={{
             base: "20px",
             md: "44px",
           }}
+          style={{ color: "#363a77" }}
         >
           <Link
             fontWeight="500"
@@ -102,7 +103,7 @@ export default function Footer() {
             Blog
           </Link>
         </ListItem>
-      </List>
+      </List> */}
     </Flex>
   );
 }

@@ -44,6 +44,8 @@ from Helper.dashboard import (
     displayTotalPKR,
     displayWhatsappAmount,
     displayBarChart,
+    get_previous_month,
+    data_available,
 )
 from flask_mail import Mail, Message
 import secrets
@@ -166,8 +168,10 @@ def upload(user, permissions, role):
 
                 elif parserChoice == "1":
                     # new pdf reader
-                    invoice_number, invoice_month, invoice_year = newGetVariables(fileName)
-                    file_path = f'./metaInvoiceFiles/{invoice_month}{invoice_year}'
+                    invoice_number, invoice_month, invoice_year = newGetVariables(
+                        fileName
+                    )
+                    file_path = f"./metaInvoiceFiles/{invoice_month}{invoice_year}.pdf"
                     shutil.copy(fileName, file_path)
 
                 return (
@@ -232,7 +236,7 @@ def downloadcsv(user, permissions, role):
         return jsonify(response)
     except Exception as ex:
         print(f"Error during file download: {ex}")
-        return jsonify({'Error Ocurred' : ex}), 500  
+        return jsonify({"Error Ocurred": ex}), 500
 
 
 @app.route("/mau/upload", methods=["POST", "GET"])
@@ -393,8 +397,8 @@ def getmau(user, permissions, role):
 
     except Exception as e:
         print("Error occured: ", {e})
-        return jsonify({"Error Occured " : e}), 400   
-    
+        return jsonify({"Error Occured ": e}), 400
+
 
 @app.route("/finance/upload", methods=["POST", "GET"])
 @token_required
@@ -473,6 +477,12 @@ def displayDashboard(user, permissions, role):
             return jsonify({"message": "Permission Not Given"}), 400
         month = request.args.get("month")
         year = request.args.get("year")
+
+        if not data_available(month, year):
+            month, year = get_previous_month(month, year)
+
+        print(month)
+        print(year)
         data1 = displayTotalUSD(month, year)
 
         data2 = displayTotalPKR(month, year)
@@ -490,6 +500,7 @@ def displayDashboard(user, permissions, role):
         return jsonify(data1, data2, data3, data4, data5, data6, data7)
 
     except Exception as ex:
+        print(ex)
         return jsonify({"message": "error during displaying dashboard"}), 400
 
 
@@ -555,12 +566,12 @@ def forgetPassword():
             )
             msg.body = f"Code to reset your password: {token}"
             mail.send(msg)
-            return jsonify({'message':'success'})
+            return jsonify({"message": "success"})
         else:
-            return jsonify({'message':'incorrect email'}),400
+            return jsonify({"message": "incorrect email"}), 400
     except Exception as ex:
         print(ex)
-        return jsonify({'message':'error during forget password'}),400
+        return jsonify({"message": "error during forget password"}), 400
 
 
 @app.route("/resetpassword", methods=["POST"])
@@ -579,13 +590,12 @@ def resetPassword():
                 if response == 0:
                     return jsonify({"message": "failed"}), 400
             else:
-                return jsonify({'message': 'passwords does not match'}),400
-        
-            return jsonify({'message':'success'}),200
+                return jsonify({"message": "passwords does not match"}), 400
+
+            return jsonify({"message": "success"}), 200
         else:
-            return jsonify({'message':'incorrect token'}),400
-        
-    
+            return jsonify({"message": "incorrect token"}), 400
+
     except Exception as ex:
         print(ex)
         return jsonify({"message": "error during forget password"}), 400
@@ -729,20 +739,21 @@ def FinanceReport(user, permissions, role):
         response = []
         count = 0
         for name in fileName:
-            updatedtAt = datetime.datetime.fromtimestamp(os.path.getmtime("./financeReportFiles/"+name))
-            updatedtAt = updatedtAt.strftime('%B %d, %Y ')
-            print(updatedtAt)
-            createdAt = datetime.datetime.fromtimestamp(os.path.getctime("./financeReportFiles/"+name))
-            createdAt = createdAt.strftime('%B %d, %Y ')
-            response.append([count+1,name.split('.')[0],updatedtAt,createdAt]) 
-            count +=1
+            createdAt = datetime.datetime.fromtimestamp(
+                os.path.getmtime("./financeReportFiles/" + name)
+            )
+            createdAt = createdAt.strftime("%B %d, %Y ")
+            # print(updatedtAt)
+            createdBy = user
+            response.append([count + 1, name.split(".")[0], createdBy, createdAt])
+            count += 1
         flag = False
         if role == "admin":
             flag = True
         return jsonify(response)
     except Exception as ex:
         print(f"Error during file download: {ex}")
-        return jsonify({'Error Ocurred' : ex}), 500  
+        return jsonify({"Error Ocurred": ex}), 500
 
 
 @app.route("/finance", methods=["delete"])
@@ -774,7 +785,7 @@ def DeleteFinace(user, permissions, role):
 
     except Exception as ex:
         print(ex)
-        return jsonify({"Error Ocurred": str(ex)}), 500
+        return jsonify({"message": str(ex)}), 500
 
 
 @app.route("/reports", methods=["delete"])
@@ -806,7 +817,7 @@ def DeleteReports(user, permissions, role):
 
     except Exception as ex:
         print(ex)
-        return jsonify({"Error Ocurred": str(ex)}), 500
+        return jsonify({"message": str(ex)}), 500
 
 
 @app.route("/meta", methods=["delete"])
@@ -823,9 +834,8 @@ def DeleteMetaInvoices(user, permissions, role):
 
             # deleting from server
             if os.path.exists(file_path):
-
-                #deleting from Database
-                DeleteInvoices(param1,param1)
+                # deleting from Database
+                DeleteInvoices(param1, param2)
 
                 os.remove(file_path)
                 print(f"File '{file_path}' has been deleted")
@@ -842,7 +852,7 @@ def DeleteMetaInvoices(user, permissions, role):
 
     except Exception as ex:
         print(ex)
-        return jsonify({'Error Ocurred' : str(ex)}), 500  
+        return jsonify({"message": str(ex)}), 500
 
 
 @app.route("/mau", methods=["delete"])
@@ -861,12 +871,9 @@ def DeleteMau(user, permissions, role):
             # deleting from server
             if os.path.exists(file_path):
                 # deleting from Database
-                response = DeleteBillingMAU(param1, param1)
+                response = DeleteBillingMAU(param1, param2)
 
-                #deleting from Database
-                response = DeleteBillingMAU(param1,param1)
-                
-                if(response==1):
+                if response == 1:
                     os.remove(file_path)
                     print(f"File '{file_path}' has been deleted")
                     return (
@@ -876,7 +883,10 @@ def DeleteMau(user, permissions, role):
                         200,
                     )
                 else:
-                    return jsonify({'message': 'Error Deleting The file','status' : 400}),200
+                    return (
+                        jsonify({"message": "Error Deleting The file", "status": 400}),
+                        200,
+                    )
             else:
                 print(f"File '{file_path}' does not exist")
                 raise Exception(f"File '{file_path}' does not exist")

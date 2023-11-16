@@ -23,7 +23,7 @@ import {
 import { HSeparator } from "components/separator/Separator";
 import DefaultAuth from "layouts/auth/Default";
 // Assets
-import illustration from "assets/img/auth/Eocean.png";
+import illustration from "assets/img/auth/login-image-half-eef3f2.png";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
@@ -55,7 +55,7 @@ function SignIn() {
   // const toastId = 'Error-toast'
 
   const handleClick = () => {
-    setPassword(!password);
+    setShow(!show);
   };
 
   const showToast = (msg) => {

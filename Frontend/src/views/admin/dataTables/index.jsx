@@ -27,7 +27,8 @@ export default function Settings({ metaData }) {
       theme: "light",
     });
   };
-  useEffect(async () => {
+
+  const getTableData = async () => {
     let response;
     try {
       setLoading(true);
@@ -65,6 +66,10 @@ export default function Settings({ metaData }) {
       console.log(error);
       setLoading(false);
     }
+  };
+
+  useEffect(async () => {
+    await getTableData();
   }, []);
 
   return (
@@ -82,6 +87,7 @@ export default function Settings({ metaData }) {
               columnsData={columnsDataDevelopment}
               tableData={tableData}
               tableName={metaData}
+              getTableData={getTableData}
             />
           )}
         </SimpleGrid>

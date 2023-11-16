@@ -17,7 +17,13 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function DeleteAlert({ isOpen, onClose, tableName, value }) {
+export default function DeleteAlert({
+  isOpen,
+  onClose,
+  tableName,
+  value,
+  getTableData,
+}) {
   const [loading, setLoading] = useState(false);
   const showToastError = (msg) => {
     toast.error(`${msg}`, {
@@ -65,6 +71,7 @@ export default function DeleteAlert({ isOpen, onClose, tableName, value }) {
         throw { message: response.message };
       }
       showToastSuccess(response.message);
+      await getTableData();
     } catch (error) {
       showToastError(error.message);
     }

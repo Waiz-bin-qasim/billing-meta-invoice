@@ -17,8 +17,8 @@ import {
 // Custom components
 import Card from "components/card/Card";
 import React, { useMemo, useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import {
   useGlobalFilter,
@@ -38,7 +38,7 @@ import { reportsDownload } from "api/reports";
 import { financeReportsDownload } from "api/financeReports";
 
 export default function DevelopmentTable(props) {
-  const { columnsData, tableData, tableName, metaData } = props;
+  const { columnsData, tableData, tableName, metaData, getTableData } = props;
   const [selectedRow, setSelectedRow] = useState(false);
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
@@ -88,8 +88,7 @@ export default function DevelopmentTable(props) {
     onClose: onClose3,
   } = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const showToastError = (msg) =>{
-  
+  const showToastError = (msg) => {
     toast.error(`${msg}`, {
       position: "top-center",
       autoClose: 5000,
@@ -99,10 +98,9 @@ export default function DevelopmentTable(props) {
       draggable: true,
       progress: 0,
       theme: "light",
-      });
-  }
-  const showToastSuccess = (msg) =>{
-  
+    });
+  };
+  const showToastSuccess = (msg) => {
     toast.success(`${msg}`, {
       position: "top-center",
       autoClose: 5000,
@@ -112,8 +110,8 @@ export default function DevelopmentTable(props) {
       draggable: true,
       progress: 0,
       theme: "light",
-      });
-  }
+    });
+  };
   const handleDownload = async (filename) => {
     try {
       console.log(filename);
@@ -127,13 +125,13 @@ export default function DevelopmentTable(props) {
       } else if (tableName === "Finance Reports") {
         response = await financeReportsDownload(filename);
       }
-      showToastSuccess("File Downloaded Successfully")
-     if(response.status==400){
-      throw{message:response.message};
-     }
+      showToastSuccess("File Downloaded Successfully");
+      if (response.status == 400) {
+        throw { message: response.message };
+      }
     } catch (error) {
       console.log(error);
-     showToastError(error.message)
+      showToastError(error.message);
     }
   };
   return (
@@ -169,7 +167,11 @@ export default function DevelopmentTable(props) {
             >
               Generate
             </Button>
-            <GenerateModal isOpen={isOpen3} onClose={onClose3} />
+            <GenerateModal
+              isOpen={isOpen3}
+              onClose={onClose3}
+              getTableData={getTableData}
+            />
           </>
         ) : (
           <>
@@ -190,6 +192,7 @@ export default function DevelopmentTable(props) {
               isOpen={isOpen2}
               onClose={onClose2}
               tablename={tableName}
+              getTableData={getTableData}
             />
           </>
         )}
@@ -283,6 +286,7 @@ export default function DevelopmentTable(props) {
                               onClose={onClose}
                               tableName={tableName}
                               value={selectedRow}
+                              getTableData={getTableData}
                             />
                           </Flex>
                         </Flex>
@@ -296,17 +300,17 @@ export default function DevelopmentTable(props) {
         </Tbody>
       </Table>
       <ToastContainer
-              position="top-center"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-          />
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </Card>
   );
 }
