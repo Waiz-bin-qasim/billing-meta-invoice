@@ -1,4 +1,3 @@
-import { useToast } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -14,59 +13,102 @@ import {
   InputRightElement,
   InputGroup,
   Select,
+  RadioGroup,
+  Radio,
+  Stack,
 } from "@chakra-ui/react";
+import { getOneUser } from "api/user";
 import { updateUser } from "api/user";
 import { userPOST } from "api/user";
 import { getRole } from "api/user";
+import { LoadingSpinner } from "components/loading/loadingSpinner";
 import react, { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
-export default function InitialFocus({ isOpen, onClose, modalTitle, value }) {
+export default function InitialFocus({
+  isOpen,
+  onClose,
+  modalTitle,
+  email,
+  role,
+  name,
+  status,
+}) {
   // const toast = useToast();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState([]);
   const [roleLoading, setRoleLoading] = useState(false);
-  const [formData, setFormData] = useState(() => {
-    console.log(value);
-    if (value) {
-      return {
-        firstName: value.name.split(" ")[0],
-        lastName: value.name.split(" ")[1],
-        email: value.email,
-        password: value,
-        roleId: value,
-      };
-    }
-    return {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      roleId: "",
-    };
-  });
   const [options, setOptions] = useState([]);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    roleId: "",
+    status: status,
+  });
+  const showToastError = (msg) => {
+    toast.error(`${msg}`, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+      theme: "light",
+    });
+  };
+  const showToastSuccess = (msg) => {
+    toast.success(`${msg}`, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+      theme: "light",
+    });
+  };
   useEffect(async () => {
     try {
       setRoleLoading(true);
-      let res = await getRole();
-      setOptions(res);
+      if (modalTitle === "Add User") {
+        let res = await getRole();
+        setOptions(res);
+      } else if (modalTitle === "Update User") {
+        let res = await getRole();
+        setOptions(res);
+        console.log(res);
+        // setFormData({
+        //   firstName: name,
+        //   lastName: name,
+        //   email: email,
+        //   password: "",
+        //   roleId: findId(role),
+        //   status: status === "Active" ? "1" : "0",
+        // });
+      }
       setRoleLoading(false);
     } catch (error) {
       setError(error);
+      showToastError(error.message);
     }
   }, []);
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-    // if (modalTitle == 'Update User'){
-    //   const [columns,setColumns] = (['email']);
-    //   const [values,setValues] = ([value]);
-    //   setColumns(name);
-    //   setValues(value);
-    // }
+    if (e == "0" || e == "1") {
+      setFormData((prevData) => ({
+        ...prevData,
+        status: e,
+      }));
+    } else {
+      const { name, value } = e.target;
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
   const [show, setShow] = useState(false);
   const handleClick = () => {
@@ -79,29 +121,51 @@ export default function InitialFocus({ isOpen, onClose, modalTitle, value }) {
             formData.lastName,
             formData.email,
             formData.password,
-            formData.roleId
+            formData.roleId,
+            formData.status
           );
+          if (res.status == 200) {
+            showToastSuccess(res.message);
+          }
           setLoading(false);
           onClose(true);
         } else {
           setLoading(true);
+          console.log(formData);
           const res = await updateUser(
-            formData.email,
-            ["first_name", "last_name", "uesrname", "role_id"],
-            [formData.firstName, formData.lastName, formData.email, "ADM0"]
+            email,
+            ["first_name", "last_name", "username", "role_id", "status"],
+            [
+              formData.firstName,
+              formData.lastName,
+              formData.email,
+              formData.roleId,
+              formData.status,
+            ]
           );
+          if (res.status == 200) {
+            showToastSuccess(res.message);
+          }
           setLoading(false);
           onClose(true);
+          setFormData({});
         }
       } catch (error) {
         console.log(error);
+        showToastError(error.message);
       }
       setLoading(false);
+      setFormData({});
       onClose(true);
     })();
   };
-  const handleUserEdit = () => {
-    setLoading(true);
+
+  const findId = (Role) => {
+    for (let a in options) {
+      if (a.includes(Role)) {
+        return a[0];
+      }
+    }
   };
   return (
     <>
@@ -116,7 +180,12 @@ export default function InitialFocus({ isOpen, onClose, modalTitle, value }) {
         <ModalContent>
           <ModalHeader>{modalTitle}</ModalHeader>
           <ModalCloseButton />
+
           <ModalBody>
+            {/* {roleLoading ? (
+              <LoadingSpinner />
+            ) : (
+              <> */}
             <FormControl>
               <FormLabel>First name</FormLabel>
               <Input
@@ -171,6 +240,7 @@ export default function InitialFocus({ isOpen, onClose, modalTitle, value }) {
             ) : (
               <></>
             )}
+
             <FormControl mt={4}>
               <FormLabel>Role </FormLabel>
               <Select
@@ -178,6 +248,7 @@ export default function InitialFocus({ isOpen, onClose, modalTitle, value }) {
                 value={formData.roleId}
                 onChange={handleChange}
                 name="roleId"
+                // defaultChecked={}
               >
                 {options.map((option) => (
                   <option key={option[0]} value={option[0]}>
@@ -186,6 +257,24 @@ export default function InitialFocus({ isOpen, onClose, modalTitle, value }) {
                 ))}
               </Select>
             </FormControl>
+            {/* </>
+            )} */}
+            <FormLabel>Status </FormLabel>
+            <RadioGroup
+              name="status"
+              onChange={handleChange}
+              value={formData.status}
+              defaultValue={"1"}
+            >
+              <Stack direction="row">
+                <Radio value="1" name="status">
+                  Active
+                </Radio>
+                <Radio value="0" name="status">
+                  In Active
+                </Radio>
+              </Stack>
+            </RadioGroup>
           </ModalBody>
           <ModalFooter>
             <Button
@@ -204,6 +293,18 @@ export default function InitialFocus({ isOpen, onClose, modalTitle, value }) {
           </ModalFooter>
         </ModalContent>
       </Modal>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 }

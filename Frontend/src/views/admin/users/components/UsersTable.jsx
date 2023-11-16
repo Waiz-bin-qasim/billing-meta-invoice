@@ -26,10 +26,14 @@ import Modal from "../../users/components/modal.jsx";
 // import { getUsers } from "api/users.js";
 import DeleteModal from "../../../../components/alert/deleteAlert.jsx";
 import { IoPersonAdd } from "react-icons/io5";
+import { ToastContainer } from "react-toastify";
 
 export default function ColumnsTable(props) {
-  const [selectedRow, setSelectedRow] = useState();
+  const [email, setEmail] = useState();
   const [selectedRow2, setSelectedRow2] = useState();
+  const [name, setName] = useState();
+  const [role, setRole] = useState();
+  const [status, setStatus] = useState();
   const [loading, setLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -124,6 +128,10 @@ export default function ColumnsTable(props) {
               isOpen={isOpen3}
               onClose={onClose3}
               modalTitle={"Add User"}
+              email={""}
+              name={""}
+              role={""}
+              status={""}
             />
           </Button>
         </Flex>
@@ -213,14 +221,23 @@ export default function ColumnsTable(props) {
                                 w="19px"
                                 color={textColor}
                                 onClick={() => {
-                                  setSelectedRow(row.values);
+                                  console.log(row.values.name);
+                                  console.log(row.values.status);
+                                  console.log(row.values.role);
+                                  setEmail(row.values.email);
+                                  setName(row.values.name);
+                                  setRole(row.values.role);
+                                  setStatus(row.values.status);
                                 }}
                               />
                               <Modal
                                 isOpen={isOpen}
                                 onClose={onClose}
                                 modalTitle={"Update User"}
-                                value={selectedRow}
+                                email={email}
+                                name={name}
+                                role={role}
+                                status={status}
                               />
                             </Flex>
                             <Flex onClick={onOpen2}>
@@ -229,9 +246,9 @@ export default function ColumnsTable(props) {
                                 h="18px"
                                 w="19px"
                                 color={deleteColor}
-                                onClick={() =>
-                                  setSelectedRow2(row.values.email)
-                                }
+                                onClick={() => {
+                                  setSelectedRow2(row.values.email);
+                                }}
                               />
                               <DeleteModal
                                 isOpen={isOpen2}
@@ -269,6 +286,18 @@ export default function ColumnsTable(props) {
           </Tbody>
         </Table>
       </Card>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 }
