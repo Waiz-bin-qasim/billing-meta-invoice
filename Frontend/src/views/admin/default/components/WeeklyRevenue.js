@@ -18,7 +18,7 @@ import {
 import { MdBarChart } from "react-icons/md";
 
 export default function WeeklyRevenue(props) {
-  const { data,...rest } = props;
+  const { data, ...rest } = props;
 
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -32,40 +32,45 @@ export default function WeeklyRevenue(props) {
     { bg: "secondaryGray.300" },
     { bg: "whiteAlpha.100" }
   );
-  const dataOptions = () =>{
-    let array= []
-    if(data)
-    {
-      for (let i of data){
-      console.log(barChartOptionsConsumption.xaxis.categories)
-      barChartOptionsConsumption.xaxis.categories.push(i[0])
-      console.log(i[0])
-    }}
-    return barChartOptionsConsumption;
-  }
-  const fineTuneData = () =>{
-    const tempdata  = [{name:"Meta Bill",data:[]},{name:"Our Bill",data:[]}]
-    console.log(data)
-    if(data){
-      for (let i in data){
-        console.log(i)
-        tempdata[0].data.push(data[i][2])
-        console.log(data[i][2])
-        tempdata[1].data.push(data[i][3])
-        console.log(tempdata)
+  const dataOptions = () => {
+    let array = [];
+    if (data) {
+      for (let i of data) {
+        console.log(barChartOptionsConsumption.xaxis.categories);
+        barChartOptionsConsumption.xaxis.categories.push(i[0]);
+        console.log(i[0]);
       }
     }
-    return tempdata
-  }
+    return barChartOptionsConsumption;
+  };
+  const fineTuneData = () => {
+    const tempdata = [
+      { name: "Meta Bill", data: [] },
+      { name: "Our Bill", data: [] },
+    ];
+    console.log(data);
+    if (data) {
+      for (let i in data) {
+        console.log(i);
+        tempdata[0].data.push(data[i][2]);
+        console.log(data[i][2]);
+        tempdata[1].data.push(data[i][3]);
+        console.log(tempdata);
+      }
+    }
+    return tempdata;
+    
+  };
   return (
-    <Card align='center' direction='column' w='100%' {...rest}>
-      <Flex align='center' w='100%' px='15px' py='10px'>
+    <Card align="center" direction="column" w="100%" {...rest}>
+      <Flex align="center" w="100%" px="15px" py="10px">
         <Text
-          me='auto'
+          me="auto"
           color={textColor}
-          fontSize='xl'
-          fontWeight='700'
-          lineHeight='100%'>
+          fontSize="xl"
+          fontWeight="700"
+          lineHeight="100%"
+        >
           Month VS Revenue
         </Text>
         {/* <Button
@@ -84,11 +89,8 @@ export default function WeeklyRevenue(props) {
         </Button> */}
       </Flex>
 
-      <Box h='240px' mt='auto'>
-        <BarChart
-          chartData={fineTuneData()}
-          chartOptions={dataOptions()}
-        />
+      <Box h="240px" mt="auto">
+        <BarChart chartData={fineTuneData()} chartOptions={dataOptions()} />
       </Box>
     </Card>
   );

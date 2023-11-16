@@ -33,6 +33,7 @@ export default function InitialFocus({
   role,
   name,
   status,
+  getUserTableData,
 }) {
   // const toast = useToast();
   const [loading, setLoading] = useState(false);
@@ -126,6 +127,7 @@ export default function InitialFocus({
           );
           if (res.status == 200) {
             showToastSuccess(res.message);
+            await getUserTableData();
           }
           setLoading(false);
           onClose(true);
@@ -145,6 +147,7 @@ export default function InitialFocus({
           );
           if (res.status == 200) {
             showToastSuccess(res.message);
+            await getUserTableData();
           }
           setLoading(false);
           onClose(true);
@@ -205,38 +208,40 @@ export default function InitialFocus({
                 name="lastName"
               />
             </FormControl>
-            <FormControl mt={4}>
-              <FormLabel>Email</FormLabel>
-              <Input
-                onChange={handleChange}
-                placeholder="jhonDeo@example.com"
-                value={formData.email}
-                name="email"
-              />
-            </FormControl>
             {modalTitle === "Add User" ? (
-              <FormControl mt={4}>
-                <FormLabel>Password</FormLabel>
-                <InputGroup size="md">
+              <>
+                <FormControl mt={4}>
+                  <FormLabel>Email</FormLabel>
                   <Input
                     onChange={handleChange}
-                    pr="4.5rem"
-                    value={formData.password}
-                    type={show ? "text" : "password"}
-                    placeholder="Enter password"
-                    name="password"
+                    placeholder="jhonDeo@example.com"
+                    value={formData.email}
+                    name="email"
                   />
-                  <InputRightElement width="4.5rem">
-                    <Button
-                      h="1.75rem"
-                      size="sm"
-                      onClick={() => setShow(!show)}
-                    >
-                      {show ? "Hide" : "Show"}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-              </FormControl>
+                </FormControl>
+                <FormControl mt={4}>
+                  <FormLabel>Password</FormLabel>
+                  <InputGroup size="md">
+                    <Input
+                      onChange={handleChange}
+                      pr="4.5rem"
+                      value={formData.password}
+                      type={show ? "text" : "password"}
+                      placeholder="Enter password"
+                      name="password"
+                    />
+                    <InputRightElement width="4.5rem">
+                      <Button
+                        h="1.75rem"
+                        size="sm"
+                        onClick={() => setShow(!show)}
+                      >
+                        {show ? "Hide" : "Show"}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
+                </FormControl>
+              </>
             ) : (
               <></>
             )}
@@ -259,22 +264,28 @@ export default function InitialFocus({
             </FormControl>
             {/* </>
             )} */}
-            <FormLabel>Status </FormLabel>
-            <RadioGroup
-              name="status"
-              onChange={handleChange}
-              value={formData.status}
-              defaultValue={"1"}
-            >
-              <Stack direction="row">
-                <Radio value="1" name="status">
-                  Active
-                </Radio>
-                <Radio value="0" name="status">
-                  In Active
-                </Radio>
-              </Stack>
-            </RadioGroup>
+            {modalTitle === "Add User" ? (
+              <></>
+            ) : (
+              <>
+                <FormLabel mt={4}>Status </FormLabel>
+                <RadioGroup
+                  name="status"
+                  onChange={handleChange}
+                  value={formData.status}
+                  defaultValue={"1"}
+                >
+                  <Stack direction="row">
+                    <Radio value="1" name="status">
+                      Active
+                    </Radio>
+                    <Radio value="0" name="status">
+                      In Active
+                    </Radio>
+                  </Stack>
+                </RadioGroup>
+              </>
+            )}
           </ModalBody>
           <ModalFooter>
             <Button
@@ -293,18 +304,7 @@ export default function InitialFocus({
           </ModalFooter>
         </ModalContent>
       </Modal>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+
     </>
   );
 }

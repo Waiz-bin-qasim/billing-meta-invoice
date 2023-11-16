@@ -46,7 +46,7 @@ export default function ColumnsTable(props) {
     onOpen: onOpen3,
     onClose: onClose3,
   } = useDisclosure();
-  const { columnsData, tableData } = props;
+  const { columnsData, tableData, getUserTableData } = props;
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
   const tableInstance = useTable(
@@ -132,6 +132,7 @@ export default function ColumnsTable(props) {
               name={""}
               role={""}
               status={""}
+              getUserTableData={getUserTableData}
             />
           </Button>
         </Flex>
@@ -238,6 +239,7 @@ export default function ColumnsTable(props) {
                                 name={name}
                                 role={role}
                                 status={status}
+                                getUserTableData={getUserTableData}
                               />
                             </Flex>
                             <Flex onClick={onOpen2}>
@@ -255,6 +257,7 @@ export default function ColumnsTable(props) {
                                 onClose={onClose2}
                                 value={selectedRow2}
                                 tableName={"Users"}
+                                getTableData={getUserTableData}
                               />
                             </Flex>
                           </Flex>

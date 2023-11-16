@@ -693,11 +693,11 @@ def addUserData(user, permissions, role):
             userEmail = userData["email"]
             userPassword = userData["password"]
             userRoleId = userData["roleId"]
-            response, code = addUser(
+            response = addUser(
                 userFirstName, userLastName, userEmail, userPassword, userRoleId
             )
 
-            return jsonify(response), code
+            return jsonify(response)
         elif request.method == "DELETE":
             user = request.args.get("user")
             response = delUser(user)
@@ -717,7 +717,7 @@ def addUserData(user, permissions, role):
                     400,
                 )
             updateUser(username, columns, values)
-            return jsonify({"message": "Update successful"})
+            return jsonify({"message": "Update successful", "status": 200})
         else:
             data = displayUsers()
             return jsonify(data)

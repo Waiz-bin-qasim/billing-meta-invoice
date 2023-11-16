@@ -143,6 +143,7 @@ export default function Upload(props) {
               fontWeight="500"
               isLoading={loading}
               onClick={handleImageUpload}
+              loadingText="Uploading"
             >
               Upload Now
             </Button>

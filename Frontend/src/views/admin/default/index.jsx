@@ -11,8 +11,8 @@ import {
 import MiniStatistics from "components/card/MiniStatistics";
 import IconBox from "components/icons/IconBox";
 import React, { useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   MdAttachMoney,
   MdBarChart,
@@ -36,8 +36,7 @@ export default function UserReports() {
   const [total, setTotal] = useState([]);
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
-  const showToast = (msg) =>{
-  
+  const showToast = (msg) => {
     toast.error(`${msg}`, {
       position: "top-center",
       autoClose: 5000,
@@ -47,8 +46,8 @@ export default function UserReports() {
       draggable: true,
       progress: 0,
       theme: "light",
-      });
-  }
+    });
+  };
   useEffect(async () => {
     try {
       const months = [
@@ -71,20 +70,22 @@ export default function UserReports() {
       console.log(month, year);
       let res = await getDashboard(month, year);
       setData(res);
-      setEarnings(res[0].toLocaleString('en-US'))
-      setEarnPkr(res[1].toLocaleString('en-US'))
-      setMeta(res[2].toLocaleString('en-US'))
-      setTotal(res[3].toLocaleString('en-US'))
+      setEarnings(res[0].toLocaleString("en-US"));
+      setEarnPkr(res[1].toLocaleString("en-US"));
+      setMeta(res[2].toLocaleString("en-US"));
+      setTotal(res[3].toLocaleString("en-US"));
       setLoading(false);
-    }catch (error) {
+    } catch (error) {
       console.log(error);
-      showToast(error.message)
+      showToast(error.message);
       setError(error);
     }
   }, []);
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      {loading ?<LoadingSpinner/>: (
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
         <>
           <SimpleGrid
             columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}
@@ -203,17 +204,17 @@ export default function UserReports() {
         </>
       )}
       <ToastContainer
-              position="top-center"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-          />
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </Box>
   );
 }
