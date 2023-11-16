@@ -90,11 +90,18 @@ export const updateUser = async (username, Columns, Values) => {
   try {
     const formdata = new FormData();
     formdata.append("username", username);
-    Columns.forEach((element) => {
-      formdata.append("columns[]", element);
+    Columns.forEach((element, index) => {
+      if (Values[index] == undefined || Values[index] === "") {
+        console.log(element);
+      } else {
+        formdata.append("columns[]", element);
+      }
     });
     Values.forEach((element) => {
-      formdata.append("values[]", element);
+      if (element == undefined || element === "") {
+      } else {
+        formdata.append("values[]", element);
+      }
     });
     console.log(Columns, Values);
     const response = await fetch(config.url + "adduser", {

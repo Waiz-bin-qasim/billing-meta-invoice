@@ -697,6 +697,7 @@ def addUserData(user, permissions, role):
             username = request.form["username"]
             columns = request.form.getlist("columns[]")
             values = request.form.getlist("values[]")
+            print(username)
             print(columns)
             print(values)
             # columns = request.args.get['username']

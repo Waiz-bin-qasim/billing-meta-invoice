@@ -131,7 +131,7 @@ export default function InitialFocus({
           onClose(true);
         } else {
           setLoading(true);
-          console.log(formData);
+          // console.log(formData);
           const res = await updateUser(
             email,
             ["first_name", "last_name", "username", "role_id", "status"],
