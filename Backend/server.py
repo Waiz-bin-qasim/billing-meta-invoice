@@ -166,10 +166,8 @@ def upload(user, permissions, role):
 
                 elif parserChoice == "1":
                     # new pdf reader
-                    invoice_number, invoice_month, invoice_year = newGetVariables(
-                        fileName
-                    )
-                    file_path = f"./metaInvoiceFiles/{invoice_month}{invoice_year}.pdf"
+                    invoice_number, invoice_month, invoice_year = newGetVariables(fileName)
+                    file_path = f'./metaInvoiceFiles/{invoice_month}{invoice_year}'
                     shutil.copy(fileName, file_path)
 
                 return (
@@ -234,7 +232,7 @@ def downloadcsv(user, permissions, role):
         return jsonify(response)
     except Exception as ex:
         print(f"Error during file download: {ex}")
-        return jsonify({"Error Ocurred": ex}), 500
+        return jsonify({'Error Ocurred' : ex}), 500  
 
 
 @app.route("/mau/upload", methods=["POST", "GET"])
@@ -395,8 +393,8 @@ def getmau(user, permissions, role):
 
     except Exception as e:
         print("Error occured: ", {e})
-        return jsonify({"Error Occured ": e}), 400
-
+        return jsonify({"Error Occured " : e}), 400   
+    
 
 @app.route("/finance/upload", methods=["POST", "GET"])
 @token_required
@@ -557,12 +555,12 @@ def forgetPassword():
             )
             msg.body = f"Code to reset your password: {token}"
             mail.send(msg)
-            return jsonify({"message": "success"})
+            return jsonify({'message':'success'})
         else:
-            return jsonify({"message": "incorrect email"}), 400
+            return jsonify({'message':'incorrect email'}),400
     except Exception as ex:
         print(ex)
-        return jsonify({"message": "error during forget password"}), 400
+        return jsonify({'message':'error during forget password'}),400
 
 
 @app.route("/resetpassword", methods=["POST"])
@@ -581,12 +579,13 @@ def resetPassword():
                 if response == 0:
                     return jsonify({"message": "failed"}), 400
             else:
-                return jsonify({"message": "passwords does not match"}), 400
-
-            return jsonify({"message": "success"}), 200
+                return jsonify({'message': 'passwords does not match'}),400
+        
+            return jsonify({'message':'success'}),200
         else:
-            return jsonify({"message": "incorrect token"}), 400
-
+            return jsonify({'message':'incorrect token'}),400
+        
+    
     except Exception as ex:
         print(ex)
         return jsonify({"message": "error during forget password"}), 400
@@ -730,24 +729,20 @@ def FinanceReport(user, permissions, role):
         response = []
         count = 0
         for name in fileName:
-            updatedtAt = datetime.datetime.fromtimestamp(
-                os.path.getmtime("./financeReportFiles/" + name)
-            )
-            updatedtAt = updatedtAt.strftime("%B %d, %Y ")
+            updatedtAt = datetime.datetime.fromtimestamp(os.path.getmtime("./financeReportFiles/"+name))
+            updatedtAt = updatedtAt.strftime('%B %d, %Y ')
             print(updatedtAt)
-            createdAt = datetime.datetime.fromtimestamp(
-                os.path.getctime("./financeReportFiles/" + name)
-            )
-            createdAt = createdAt.strftime("%B %d, %Y ")
-            response.append([count + 1, name.split(".")[0], updatedtAt, createdAt])
-            count += 1
+            createdAt = datetime.datetime.fromtimestamp(os.path.getctime("./financeReportFiles/"+name))
+            createdAt = createdAt.strftime('%B %d, %Y ')
+            response.append([count+1,name.split('.')[0],updatedtAt,createdAt]) 
+            count +=1
         flag = False
         if role == "admin":
             flag = True
         return jsonify(response)
     except Exception as ex:
         print(f"Error during file download: {ex}")
-        return jsonify({"Error Ocurred": ex}), 500
+        return jsonify({'Error Ocurred' : ex}), 500  
 
 
 @app.route("/finance", methods=["delete"])
@@ -828,8 +823,9 @@ def DeleteMetaInvoices(user, permissions, role):
 
             # deleting from server
             if os.path.exists(file_path):
-                # deleting from Database
-                DeleteInvoices(param1, param1)
+
+                #deleting from Database
+                DeleteInvoices(param1,param1)
 
                 os.remove(file_path)
                 print(f"File '{file_path}' has been deleted")
@@ -846,7 +842,7 @@ def DeleteMetaInvoices(user, permissions, role):
 
     except Exception as ex:
         print(ex)
-        return jsonify({"Error Ocurred": str(ex)}), 500
+        return jsonify({'Error Ocurred' : str(ex)}), 500  
 
 
 @app.route("/mau", methods=["delete"])
@@ -867,7 +863,10 @@ def DeleteMau(user, permissions, role):
                 # deleting from Database
                 response = DeleteBillingMAU(param1, param1)
 
-                if response == 1:
+                #deleting from Database
+                response = DeleteBillingMAU(param1,param1)
+                
+                if(response==1):
                     os.remove(file_path)
                     print(f"File '{file_path}' has been deleted")
                     return (
@@ -877,10 +876,7 @@ def DeleteMau(user, permissions, role):
                         200,
                     )
                 else:
-                    return (
-                        jsonify({"message": "Error Deleting The file", "status": 400}),
-                        200,
-                    )
+                    return jsonify({'message': 'Error Deleting The file','status' : 400}),200
             else:
                 print(f"File '{file_path}' does not exist")
                 raise Exception(f"File '{file_path}' does not exist")

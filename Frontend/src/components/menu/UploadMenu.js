@@ -40,6 +40,7 @@ export default function UploadMenu({ isOpen, onClose, tablename }) {
                   pe="20px"
                   pb={{ base: "100px", lg: "20px" }}
                   tablename={tablename}
+                  onClose = {onClose}
                 />
               </Grid>
             </Box>

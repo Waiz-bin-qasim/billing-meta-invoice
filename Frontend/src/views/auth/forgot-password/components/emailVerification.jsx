@@ -57,10 +57,9 @@ export default function EmailVerification({setStepOnePassed,username,setUsername
       const res = await forgetPassword(username);
       console.log(res);
       setLoading(false);
-      if(res.message == "success"){
+      if(res.message == "Success"){
         setStepOnePassed(true);
         setUsername(username);
-        console.log("haziq");
       }
       else{
       throw {message:res.message};
