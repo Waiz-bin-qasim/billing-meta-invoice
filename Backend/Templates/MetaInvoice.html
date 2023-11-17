@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="{{ url_for('static', filename='img/waiz.png') }}">
+  <title>Billing | Meta Invoice</title>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{url_for('static',filename='css/metaInvoice.css')}}" />
+  <link
+      rel="stylesheet"
+      href="{{url_for('static',filename='css/loading.css')}}"
+    />
+</head>
+
+<body>
+
+  <div class="sidebar">
+    <header>
+      <img class="headerLogo" src="{{url_for('static',filename='img/dclogo.png')}}" style="width:2rem" />
+      <span class="headerTitle"> Billing </span>
+    </header>
+    <ul class="navList">
+      <li>
+        <a href="/downloadcsv"
+          ><i class="fas fa-file-invoice-dollar"></i>Reports</a
+        >
+      </li>
+      <li>
+        <a href="/finance/reports"
+          ><i class="fas fa-file-invoice-dollar"></i>Finance Reports</a
+        >
+      </li>
+      <li>
+        <a href="/upload"><i class="fas fa-file-invoice"></i>Meta Invoices</a>
+      </li>
+      <li>
+        <a href="/mau/upload"
+          ><i class="fas fa-file-invoice-dollar"></i>Billing MAUs</a
+        >
+      </li>
+      <li>
+        <a
+          class="Logout"
+          onclick="handleLogout()"
+          style="cursor: pointer; !important"
+          ><i class="fas fa-sign-out-alt"></i>Logout</a
+        >
+      </li>
+    </ul>
+  </div>
+  <div class="loading-modal">
+    <div class="loader"></div>
+    <h3>Loading...</h3>
+  </div>
+  <section>
+    <div class="title text">Meta Invoices</div>
+
+    <!-- MetaInvoice Modal -->
+    <div id="MetaInvoice" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content container">
+        <span class="close">&times;</span>
+        <header>Upload Invoice</header>
+        <div class="login form">
+          <form id="login-form" action="/api" method="post" enctype="multipart/form-data">
+            <label for="input-file" id="drop-area">
+              <input type="file" class='form-control' accept="file/pdf" id="input-file" onchange="loadFile(event)"
+                name="file" hidden />
+              <div id="img-view">
+                <img id="show-uploaded-image" src="{{url_for('static',filename='img/508-icon.png')}}"
+                  accept="application/pdf" />
+                <p class="para-text">
+                  Upload any Invoice from Desktop
+                </p>
+                <span class="span-text">Upload any Invoice from Desktop</span>
+              </div>
+            </label>
+            <div class="row">
+              <button id="oldParser" type="submit" class="btn column" value="0" onclick="setParserChoice(0)">
+                Old Parser
+              </button>
+              <button id="newParser" type="submit" class="btn column" value="1" onclick="setParserChoice(1)">
+                New Parser
+              </button>
+            </div>
+          </form>
+          <div id="progress" class="progress-container wrapper">
+            <div class="progress-bar">
+              <span id="progressBar" data-width="0%"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="card">
+      <div class="table">
+        <table id="example" class="display" style="width: 100%">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Year</th>
+              <th>Created By</th>
+              <th>Created On </th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in data %}
+            <tr>
+              <td>{{ item[0] }}</td>
+              <td>{{ item[1] }}</td>
+              <td>{{ item[2] }}</td>
+              <td>{{ item[3] }}</td>
+              <td> <button class="btn" value="{{item[0] + item[1]}}" onclick="downloadFile(this.value)">
+                  <i class="fa fa-download" aria-hidden="true" style="padding-right: 4px"></i>Download
+                </button></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  </section>
+  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="{{url_for('static',filename='js/LoadingBarSockets.js')}}"></script>
+  <script src="{{url_for('static',filename='js/MetaInvoice.js')}}"></script>
+  <script src="{{url_for('static',filename='js/Logout.js')}}"></script>
+  <script src="{{url_for('static',filename='js/Loading.js')}}"></script>
+
+</body>
+
+</html>
